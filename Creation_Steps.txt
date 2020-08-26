@@ -1,0 +1,37 @@
+
+Hello! This file contains project developing business logic description. It'll be update in each commit.
+
+Application represents simplified social network contains components such as
+    "online-chat",
+    "private messages",
+    "music"..and other components
+
+To have deeper process understanding i decided to create REST application on JAVA EE "8" technology stack
+    writing more logic-code and finding configuration troubleshooting solutions(from xml-based to annotation-based).
+
+Deploying will be done by "Apache Tomcat " servlet container and in next steps it will transfered on glassfish web server.
+
+Project dependencies will be described in "pom.xml" and deployment rules will be write in "web.xml" depl. descriptor
+
+========================================================================================================================
+
+STEP 1: Project structure and controller submodule creating...
+
+    Project logic will implements MVC pattern. It will be contain 3 submodules:
+        "controller" - requests/responses/sessions/listeners/context managing;
+
+        "model" - contains dao layer logic;
+
+        "view" duties will execute servlets by forwarding/redirecting,
+            representations will be store in "webapp" directory,
+            deployment descriptor will be store same path.
+            Also, "webapp" diretory will be contain "resources" of formats "html, css, png, mp3..".
+
+Before start i create "log4j.properties" in "src/main/resources" to configure logger.
+
+First of all i begin to describe "controller" submodule to have standart client-server interaction. For example:
+    -receiving clients requestы by "FILTER CHAIN"(realize "CHAIN OF RESPONSIBILITY" pattern),
+     checking it on specific parameters(attributes) by current web filter filling request/response object
+     with new attributes and forward/redirect them to appropriate servlet or pass it to next filter chain element.
+
+

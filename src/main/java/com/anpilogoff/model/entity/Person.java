@@ -1,4 +1,8 @@
 package com.anpilogoff.model.entity;
 
-public class Person {
+import com.anpilogoff.model.dao.Dao;
+
+
+public class Person   {
+
 }

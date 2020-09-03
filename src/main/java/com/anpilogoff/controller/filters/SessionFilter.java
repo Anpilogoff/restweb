@@ -38,19 +38,13 @@ public class SessionFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-        System.out.println(request.getRequestURL());
-        System.out.println(request.getSession(false));
 
         if (session != null && session.getAttribute("authStatus").equals("authorized")) {
-            System.out.println(request.getSession(false).getAttribute("credentials") + "   from session filter");
-            System.out.println(request.getSession(false).getAttribute("authStatus"));
             if (session.getAttribute("authStatus").equals("non authorized")) {
-                System.out.println("equls");
                 request.getRequestDispatcher("login").forward(request, response);
             }
            filterChain.doFilter(request, response);
         } else {
-            System.out.println("home");
             request.getRequestDispatcher("login").forward(request, response);
 
         }

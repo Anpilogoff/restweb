@@ -44,24 +44,18 @@ public class LoginPageFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession(false);
-        System.out.println(session + " from login filter");
-        System.out.println(request.getSession(false).getAttribute("authStatus") + " from log filter");
 
         if (session != null && session.getAttribute("authStatus").equals("authorized")) {
-            System.out.println("1");
             if (request.getRequestURI().endsWith("login")) {
-                System.out.println("2");
 //                response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
                 request.getRequestDispatcher("userhome").forward(request,response);
             }
             request.getRequestDispatcher("/userhome").forward(request, response);
 
         } else if (session != null && !session.getAttribute("authStatus").equals("authorized")) {
-            System.out.println("3");
             response.sendRedirect(request.getServletContext().getContextPath() + "/login");
 
         } else {
-            System.out.println("4");
             response.sendRedirect(request.getServletContext().getContextPath() + "/login");
         }
     }

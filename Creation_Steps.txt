@@ -15,23 +15,79 @@ Project dependencies will be described in "pom.xml" and deployment rules will be
 
 ========================================================================================================================
 
-STEP 1: Project structure and controller submodule creating...
+STEP 1: Project structure and controller layer creating...
 
-    Project logic will implements MVC pattern. It will be contain 3 submodules:
-        "controller" - requests/responses/sessions/listeners/context managing;
+    Before start i create "log4j.properties" in "src/main/resources" to configure logger.
 
-        "model" - contains dao layer logic;
-
-        "view" duties will execute servlets by forwarding/redirecting,
-            representations will be store in "webapp" directory,
-            deployment descriptor will be store same path.
-            Also, "webapp" diretory will be contain "resources" of formats "html, css, png, mp3..".
-
-Before start i create "log4j.properties" in "src/main/resources" to configure logger.
-
-First of all i begin to describe "controller" submodule to have standart client-server interaction. For example:
-    -receiving clients requestы by "FILTER CHAIN"(realize "CHAIN OF RESPONSIBILITY" pattern),
+First of all i begin to describe "controller" submodule to have standart serverside functionality interaction. For example:
+    -receiving clients requests by "FILTER CHAIN"(implemets "CHAIN OF RESPONSIBILITY" pattern),
      checking it on specific parameters(attributes) by current web filter filling request/response object
-     with new attributes and forward/redirect them to appropriate servlet or pass it to next filter chain element.
+     with new attributes and forward/redirect them to appropriate servlet or pass it to the next filter chain element
+     for next checking.
+
+     (f81866)
+
+                   |\
+                   | \
+===================|  \
+                   |   \
+I) CONTROLLER LAYER|   /
+                   |  /
+===================| /
+                   |/
+
+
+      All incoming requests will come to Session Filter - his task is checking incoming request on "opened-session" parameter
+      and in a case if:
+                        1)Http-Session is not null;
+                        -Http-Session contains "authStatus" attribute equals "authorized"
+      pass request/response objects to the next filter-chain-element Login Page Filter where request uri checks to prevent
+      users with an open session from accessing the login and registration pages and
+      in a case if:
+                        2)Request http-session  is not null;
+                        -Request URI ends with a string "login"
+       it will be redirected to "/userhome"-servlet GET-method which forward to "userhome.html"-page
+       but in a case if:
+                        3)Http-Session is not null;
+                        -Http-Session contains "authStatus" and status attribute equals value "non authorized"
+      session filter will forward request to Login-Servlet GET-method where request will be checked on:
+                        4)Http-Session is null;
+      and in a case if it's null:
+                        -new session will be created;
+                        -"authStatus" attribute value "non authorized" will be added to a new session attributes
+                        which will be checked by Session-Filter each time client requests server(each request);
+                        -forwarding request to "login.html" page for a next request processing(user credentials obtaining).
+      as soon as:
+                        5)login/password fields will be filled;
+                        -<submit-button> will be pushed by user in "login.html" page
+      POST-request containing request parameters(login/password will be sent to Apache Tomcat  and transferred it to the
+       first filter-chain element - Session Filter already waiting incoming request to check(1);
+
+       That process diagram you can see by path resources/info/controller-diagram
+
+
+
+========================================================================================================================
+
+
+
+                   |\
+                   | \
+                   |  \
+===================|   \
+                   |    \
+II) DAO LAYER      |    /
+                   |   /
+===================|  /
+                   | /
+                   |/
+
+
+    DAO-logic will give me opportunity to store data i need
+
+
+
+
+
 
 

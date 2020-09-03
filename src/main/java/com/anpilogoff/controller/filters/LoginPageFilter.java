@@ -47,7 +47,7 @@ public class LoginPageFilter implements Filter {
 
         if (session != null && session.getAttribute("authStatus").equals("authorized")) {
             if (request.getRequestURI().endsWith("login")) {
-//                response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
+                response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
                 request.getRequestDispatcher("userhome").forward(request,response);
             }
             request.getRequestDispatcher("/userhome").forward(request, response);
@@ -61,9 +61,7 @@ public class LoginPageFilter implements Filter {
     }
 
 
-    /**
-     * make filter config object as NULL
-     */
+    /** make filter config object as NULL */
     public void destroy() {
         this.config = null;
     }

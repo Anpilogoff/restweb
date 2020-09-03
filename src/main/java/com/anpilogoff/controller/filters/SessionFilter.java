@@ -16,7 +16,6 @@ import java.io.IOException;
 public class SessionFilter implements Filter {
     private FilterConfig config;
 
-
     /**
      * Method called by Servlet Container, initialize filter object with values from web descriptor
      *
@@ -30,26 +29,28 @@ public class SessionFilter implements Filter {
     /**
      * @param servletRequest  contains request attributes
      * @param servletResponse designing during request dispatching
-     * @param filterChain     contains all web filters described in deployment descriptor
-     * @throws IOException
-     * @throws ServletException
-     */
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
+     * @param filterChain     contains all web filters described in deployment descriptor */
+        public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
-        if (session != null && session.getAttribute("authStatus").equals("authorized")) {
-            if (session.getAttribute("authStatus").equals("non authorized")) {
+        try {
+            if (session != null && session.getAttribute("authStatus").equals("authorized")) {
+                if (session.getAttribute("authStatus").equals("non authorized")) {
+                    request.getRequestDispatcher("login").forward(request, response);
+                }
+                filterChain.doFilter(request, response);
+            } else {
                 request.getRequestDispatcher("login").forward(request, response);
-            }
-           filterChain.doFilter(request, response);
-        } else {
-            request.getRequestDispatcher("login").forward(request, response);
 
+            }
+        }catch (ServletException e){
+            System.out.println("sx");
+        }catch (IOException e){
+            System.out.println("s");
         }
     }
-
 
 
         public void destroy () {

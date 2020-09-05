@@ -12,4 +12,6 @@ import lombok.*;
 public class UserCredentials {
 
 
+    public UserCredentials(String login, String password) {
+    }
 }

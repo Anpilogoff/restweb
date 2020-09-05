@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
                     //todo: dao logic|| comparing parameters with data in db and if compare ++ ->
                     //todo: +++ encrypt password
 
-                    UserCredentials credentials = new UserCredentials(login, password, null/* DAO nickname */, null/* DAO role */);
+                    UserCredentials credentials = new UserCredentials(login, password);
                     session.setAttribute("credentials", credentials);
                     session.removeAttribute("authStatus");
                     session.setAttribute("authStatus", "authorized");

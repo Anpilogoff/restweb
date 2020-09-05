@@ -83,7 +83,50 @@ II) DAO LAYER      |    /
                    |/
 
 
-    DAO-logic will give me opportunity to store data i need
+    DAO-logic will give me opportunity to keep data  from requests and store and add data to the sending responses.
+    On current step interaction between  "model.service" and  database will produced with a standart  java sql API
+    to show my skill in using of standart jdbc interaction-solutions but next commits jdbc-responsibilities will be shift
+     to persistence-specification(..and it's realization) also like database connection will obtain through Conn.pool.
+
+    So, to store data i need database(creation steps):
+        1)create database;
+        2)create tables:
+            -CREATE TABLE users(
+                id int (20) not null auto_increment,
+                login varchar (15) unique not null,
+                password char (20) not null,
+                nickname char (15) not null,
+                email char (25) not null,
+                role varchar (5) not null,
+                primary key (id)
+                );
+
+             -CREATE TABLE profiles(
+                   id int (20),
+                   user_nickname char (20) not null,
+                   name varchar (15) not null,
+                   surname varchar (20) not null,
+                   age int (2),
+                   gender varchar (6) not null,
+                   country varchar (20),
+                   primary key (user_nickname)
+             );
+
+
+             -CREATE TABLE rdbms_users(
+                user_nickname char (20) primary key,
+                login varchar (15) unique not null,
+                password char (20) not null,
+                foreign key (user_nickname) references users (nickname)
+                on delete cascade on update cascade
+             );
+
+              -ALTER TABLE profiles ADD CONSTRAINT FOREIGN KEY (user_nickname) references users (nickname);
+
+
+
+
+    
 
 
 

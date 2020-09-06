@@ -85,7 +85,7 @@ II) DAO LAYER      |    /
 
     DAO-logic will give me opportunity to keep data  from requests and store and add data to the sending responses.
     On current step interaction between  "model.service" and  database will produced with a standart  java sql API
-    to show my skill in using of standart jdbc interaction-solutions but next commits jdbc-responsibilities will be shift
+    to show my skill in using of default jdbc interaction-solutions but next commits jdbc-responsibilities will be shift
      to persistence-specification(..and it's realization) also like database connection will obtain through Conn.pool.
 
     So, to store data i need database(creation steps):

@@ -31,26 +31,31 @@ public class SessionFilter implements Filter {
      * @param servletResponse designing during request dispatching
      * @param filterChain     contains all web filters described in deployment descriptor */
         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(false);
+            HttpServletRequest request = (HttpServletRequest) servletRequest;
+            HttpServletResponse response = (HttpServletResponse) servletResponse;
+            HttpSession session = request.getSession(false);
 
-        try {
-            if (session != null && session.getAttribute("authStatus").equals("authorized")) {
-                if (session.getAttribute("authStatus").equals("non authorized")) {
-                    request.getRequestDispatcher("login").forward(request, response);
+            try {
+                if (session == null) {
+                    if (request.getRequestURI().endsWith("login") && request.getMethod().equals("POST")) {
+                        request.getRequestDispatcher("/login").forward(request, response);
+                    }else if (request.getRequestURI().endsWith("login") && request.getMethod().equals("GET")) {
+                        request.getRequestDispatcher("login.html").forward(request, response);
+                    } else if (request.getRequestURI().endsWith("registration")) {
+                        request.getRequestDispatcher("registration.html").forward(request, response);
+                    }else if(request.getRequestURI().endsWith("userhome")){
+                        response.sendRedirect(request.getServletContext().getContextPath()+ "/login");
+                    }
+                } else {
+                    filterChain.doFilter(request,response);
                 }
-                filterChain.doFilter(request, response);
-            } else {
-                request.getRequestDispatcher("login").forward(request, response);
-
+            } catch (ServletException e) {
+                System.out.println();
+            }catch (IOException e){
+                System.out.println();
             }
-        }catch (ServletException e){
-            System.out.println("sx");
-        }catch (IOException e){
-            System.out.println("s");
         }
-    }
+
 
 
         public void destroy () {

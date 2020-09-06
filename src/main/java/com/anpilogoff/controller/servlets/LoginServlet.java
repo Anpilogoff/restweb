@@ -1,7 +1,10 @@
 package com.anpilogoff.controller.servlets;
 
+import com.anpilogoff.model.dao.Dao;
+import com.anpilogoff.model.dao.UserDAO;
 import com.anpilogoff.model.entity.UserCredentials;
 import org.apache.log4j.Logger;
+import org.w3c.dom.UserDataHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -25,26 +28,15 @@ import java.io.IOException;
  */
 @WebServlet
 public class LoginServlet extends HttpServlet {
-    Logger log = Logger.getLogger(LoginServlet.class);
-
-    /**
-     * @param request  is object created by Tomcat after request receiving and initialized with request attributes
-     * @param response is empty-object created by Tomcat after request receiving(will be initialized when method
-     * @see HttpServlet#service(ServletRequest, ServletResponse) will be called */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-
-            session = request.getSession(true);
-            session.setAttribute("authStatus", "non authorized");
-            request.getRequestDispatcher("login.html").forward(request, response);
-        }
-
-
-        if (session.getAttribute("authStatus").equals("non authorized")) {
-            request.getRequestDispatcher("login.html").forward(request, response);
-        }
-    }
+  private static final  Logger log = Logger.getLogger(LoginServlet.class);
+//    /**
+//     * @param request  is object created by Tomcat after request receiving and initialized with request attributes
+//     * @param response is empty-object created by Tomcat after request receiving(will be initialized when method
+//     * @see HttpServlet#service(ServletRequest, ServletResponse) will be called */
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        System.out.println("forard");
+//        request.getRequestDispatcher("login.html").forward(request,response);
+//    }
 
     /**
      * @param req  is object created by Tomcat after request receiving and initialized with request attributes
@@ -52,29 +44,23 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#service(ServletRequest, ServletResponse) will be called */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
 
-        if (session != null) {
-            if (session.getAttribute("authStatus").equals("non authorized")) {
-                if (req.getParameter("login") != null && req.getParameter("password") != null) {
+
+        System.out.println("login");
+                if (!req.getParameter("login").equals("") && !req.getParameter("password").equals("")) {
                     String login = req.getParameter("login");
                     String password = req.getParameter("password");
+                    System.out.println("params: "+ login + " " + password);
 
                     //todo: dao logic|| comparing parameters with data in db and if compare ++ ->
                     //todo: +++ encrypt password
+                    HttpSession session = req.getSession(true);
 
                     UserCredentials credentials = new UserCredentials(login, password);
                     session.setAttribute("credentials", credentials);
-                    session.removeAttribute("authStatus");
-                    session.setAttribute("authStatus", "authorized");
                     resp.sendRedirect( req.getServletContext().getContextPath() +"/userhome");
                 } else {
                     resp.sendRedirect("login");
                 }
-            } else if (!session.getAttribute("authStatus").equals("non authorized")) {
-                session.invalidate();
-                resp.sendRedirect(req.getServletContext().getContextPath() + " /login");
             }
         }
-    }
-}

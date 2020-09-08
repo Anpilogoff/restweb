@@ -1,23 +1,27 @@
 package com.anpilogoff.controller.servlets;
 
+import com.anpilogoff.model.connection.DBconnector;
+import com.anpilogoff.model.dao.UserDAO;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 public class RegistrationServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/registration.html").forward(req,resp);
-    }
-
+    private UserDAO dao;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login =  req.getParameter("login");
         String password = req.getParameter("password");
+        String nickname = req.getParameter("nickname");
+        String email = req.getParameter("email");
+
 
         ///todo: dao registration logic
-        System.out.println("register");
+        dao = new UserDAO();
+        dao.setConnectionBuilder(new DBconnector());
+        req.getRequestDispatcher("registerprofile.html").forward(req,resp);
     }
 }

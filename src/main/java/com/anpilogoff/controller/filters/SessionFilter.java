@@ -9,8 +9,9 @@ import java.io.IOException;
 
 
 /**
- * That class object will check all incoming requests attribute and forward/redirect them to appropriate servlet
- * or next chain element
+ * That class object will check all incoming requests sessions for null value and their mapping values for compliance
+ * with "login","registration" or "userhome" strings values and forward/redirect them to appropriate servlet/.html page
+ * or dispatch to next filter chain element.
  */
 @WebFilter
 public class SessionFilter implements Filter {
@@ -18,7 +19,6 @@ public class SessionFilter implements Filter {
 
     /**
      * Method called by Servlet Container, initialize filter object with values from web descriptor
-     *
      * @param filterConfig will be initialized with Servlet Container
      */
     public void init(FilterConfig filterConfig) {
@@ -27,6 +27,9 @@ public class SessionFilter implements Filter {
 
 
     /**
+     * Method check session for null value and in a case of session is null - will check their mappings for compliance
+     * with "login","registration","userhome" values and in a case of success result will forward/redirect current req
+     * to a next filter chain element or dispatch it to a next filter chain element processing
      * @param servletRequest  contains request attributes
      * @param servletResponse designing during request dispatching
      * @param filterChain     contains all web filters described in deployment descriptor */
@@ -35,15 +38,21 @@ public class SessionFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             HttpSession session = request.getSession(false);
 
+            System.out.println(request.getRequestURI());
+            System.out.println(request.getMethod());
+
             try {
                 if (session == null) {
                     if (request.getRequestURI().endsWith("login") && request.getMethod().equals("POST")) {
                         request.getRequestDispatcher("/login").forward(request, response);
                     }else if (request.getRequestURI().endsWith("login") && request.getMethod().equals("GET")) {
                         request.getRequestDispatcher("login.html").forward(request, response);
-                    } else if (request.getRequestURI().endsWith("registration")) {
-                        request.getRequestDispatcher("registration.html").forward(request, response);
-                    }else if(request.getRequestURI().endsWith("userhome")){
+                    } else if (request.getRequestURI().endsWith("registration") && request.getMethod().equals("POST")) {
+                        request.getRequestDispatcher("registration").forward(request, response);
+                    }else if(request.getRequestURI().endsWith("registration") && request.getMethod().equals("GET")){
+                        request.getRequestDispatcher("registration.html").forward(request,response);
+                    }
+                    else if(request.getRequestURI().endsWith("userhome")){
                         response.sendRedirect(request.getServletContext().getContextPath()+ "/login");
                     }
                 } else {
@@ -57,8 +66,10 @@ public class SessionFilter implements Filter {
         }
 
 
-
-        public void destroy () {
+    /**
+     * Method is call by servlet container to destroy Servlet object
+     */
+    public void destroy () {
             config = null;
         }
     }

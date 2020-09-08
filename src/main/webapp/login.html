@@ -6,25 +6,21 @@
 <title>login.</title>
 <style>
     body{
-        position: absolute;
+        background-color: dimgray;
     }
-    .form{
-        position: relative;
-        top: 400px;
-        left: 500px;
-
-    }
-    .fields{
-        position: relative;
-
-    }
+table{
+    box-shadow: black 0 0 2px 2px;
+    position: absolute;
+    top: 400px ;
+    left: 800px;
+}
 
 </style>
 </head>
 
 <body>
 <form class="form" name="login_form" method="post">
-
+<table>
         <tr class="fields">
             <td>Login</td>
             <td><input type="text" id="login" name="login"></td>
@@ -37,8 +33,10 @@
 
 
         <tr>
-            <td><input type="submit" value="Log in"> <a href="registration"></td>
+            <td></td>
+            <td><input type="submit" value="Log in"> <input type="button" onclick="location.href='/registration.html'">REGISTRATION</td>
         </tr>
+</table>
 </form>
 
 </body>

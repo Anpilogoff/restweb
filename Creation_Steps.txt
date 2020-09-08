@@ -37,31 +37,25 @@ I) CONTROLLER LAYER|   /
                    |/
 
 
-      All incoming requests will come to Session Filter - his task is checking incoming request on "opened-session" parameter
-      and in a case if:
-                        1)Http-Session is not null;
-                        -Http-Session contains "authStatus" attribute equals "authorized"
-      pass request/response objects to the next filter-chain-element Login Page Filter where request uri checks to prevent
-      users with an open session from accessing the login and registration pages and
-      in a case if:
-                        2)Request http-session  is not null;
-                        -Request URI ends with a string "login"
-       it will be redirected to "/userhome"-servlet GET-method which forward to "userhome.html"-page
-       but in a case if:
-                        3)Http-Session is not null;
-                        -Http-Session contains "authStatus" and status attribute equals value "non authorized"
-      session filter will forward request to Login-Servlet GET-method where request will be checked on:
-                        4)Http-Session is null;
-      and in a case if it's null:
-                        -new session will be created;
-                        -"authStatus" attribute value "non authorized" will be added to a new session attributes
-                        which will be checked by Session-Filter each time client requests server(each request);
-                        -forwarding request to "login.html" page for a next request processing(user credentials obtaining).
-      as soon as:
-                        5)login/password fields will be filled;
-                        -<submit-button> will be pushed by user in "login.html" page
-      POST-request containing request parameters(login/password will be sent to Apache Tomcat  and transferred it to the
-       first filter-chain element - Session Filter already waiting incoming request to check(1);
+    1) All incoming requests will come to the first filter chain element - Session Filter - his task is checking
+       incoming request on "opened-session" parameter and request mapping:
+
+       I) In a case of nullable session and  "/login" or "/registration" mapping with GET-request method will forward
+          request processing to same mapping-name html pages;
+
+       II) In a case of nullable session and "/login" mapping but with POST-request method will forward processing to login servlet
+           in which dao login logic will be performed and  new HttpSession will be opened with post redirecting to home page
+
+    2)If session isn't null request processing will forward to the next filter chain element - NotNullSessionFilter -
+      his main duty is to protect "login" and "register" pages from accessing by non-authorized users:
+
+       I)If session isn't null and request mapping ends with "..login" or "..registration"  - request will be redirect
+         to "userhome.html" pages
+      II)If session isn't null and request mapping ends with "..userhome" - request processing will forward to userhome page.
+
+
+
+
 
        That process diagram you can see by path resources/info/controller-diagram
 
@@ -112,16 +106,50 @@ II) DAO LAYER      |    /
                    primary key (user_nickname)
              );
 
-
-             -CREATE TABLE rdbms_users(
-                user_nickname char (20) primary key,
-                login varchar (15) unique not null,
-                password char (20) not null,
-                foreign key (user_nickname) references users (nickname)
-                on delete cascade on update cascade
-             );
-
               -ALTER TABLE profiles ADD CONSTRAINT FOREIGN KEY (user_nickname) references users (nickname);
+
+              -CREATE USER
+
+
+    I haven't found a more convenient way to connect to the database via jdbc than the connection pool..so i start to
+     realize it here:
+
+     I) Configure datasource:
+
+
+     1)Adding to web.xml Data Source reference:
+        <resource-ref>
+                <description>DB Connection</description>
+                <res-ref-name>jdbc/MyLocalDB</res-ref-name>
+                <res-type>javax.sql.DataSource</res-type>
+                <res-auth>Container</res-auth>
+        </resource-ref>
+
+
+         JNDI Data Source definition Application specific Configuration:
+     2)Adding context.xml file to META-INF directory + Resource Link to server context "Tomcat/conf/context.xml"-file:
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Context>
+         <Resource
+                 name="jdbc/MyLocalDB"
+                 type="javax.sql.DataSource"
+                 maxTotal="100" maxIdle="30"
+                 maxWaitMillis="10000"
+                 username="root" password="root"
+                 driverClassName="com.mysql.cj.jdbc.Driver"
+                 url="jdbc:mysql://localhost:3306/restwebDB">
+         </Resource>
+        </Context>
+
+     3)UserDAO "registerNewUser"/"registerNewProfile"  methods describing:
+        1)To register new User with values getting by servlets from "registration"/"registerprofile"-pages
+
+
+
+
+
+
+
 
 
 

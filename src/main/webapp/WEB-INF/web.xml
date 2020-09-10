@@ -23,7 +23,7 @@
 
     <servlet>
         <servlet-name>registerprofile</servlet-name>
-        <servlet-class>com.anpilogoff.controller.servlets.RegistrationServlet</servlet-class>
+        <servlet-class>com.anpilogoff.controller.servlets.ProfileRegistrationServlet</servlet-class>
     </servlet>
     
     <servlet>

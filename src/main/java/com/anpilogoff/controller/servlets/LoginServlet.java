@@ -66,7 +66,6 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = req.getSession(true);
                     UserCredentials credentials = new UserCredentials(login, password);
                     session.setAttribute("credentials", credentials);
-                    dao.registerNewUser();
                     resp.sendRedirect( "userhome");
                 } else {
                     resp.sendRedirect("login");

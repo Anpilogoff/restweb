@@ -44,18 +44,37 @@ public class SessionFilter implements Filter {
             try {
                 if (session == null) {
                     if (request.getRequestURI().endsWith("login") && request.getMethod().equals("POST")) {
-                        request.getRequestDispatcher("/login").forward(request, response);
-                    }else if (request.getRequestURI().endsWith("login") && request.getMethod().equals("GET")) {
+                        request.getRequestDispatcher("login").forward(request, response);
+                    }
+                    else if (request.getRequestURI().endsWith("login") && request.getMethod().equals("GET")) {
                         request.getRequestDispatcher("login.html").forward(request, response);
-                    } else if (request.getRequestURI().endsWith("registration") && request.getMethod().equals("POST")) {
+                    }
+                    else if (request.getRequestURI().endsWith("registration") && request.getMethod().equals("POST")) {
                         request.getRequestDispatcher("registration").forward(request, response);
-                    }else if(request.getRequestURI().endsWith("registration") && request.getMethod().equals("GET")){
+                    }
+                    else if(request.getRequestURI().endsWith("registration") && request.getMethod().equals("GET") ||
+                            request.getRequestURI().endsWith("registration.html") && request.getMethod().equals("GET")){
                         request.getRequestDispatcher("registration.html").forward(request,response);
+                    }
+                    else if(request.getRequestURI().endsWith("registerprofile") && request.getMethod().equals("GET")){
+                        System.out.println("forward from session filter to  html registerprofile");
+
+                        request.getRequestDispatcher("registerprofile.html").forward(request,response);
+                    }
+                    else if(request.getRequestURI().endsWith("registerprofile") && request.getMethod().equals("POST")){
+                        System.out.println("forward to reg profile servlet  by session filter");
+                        request.getRequestDispatcher("registerprofile").forward(request,response);
+                    }
+
+
+                    else if(request.getRequestURI().endsWith("registerprofile") && request.getMethod().equals("POST")){
+                        request.getRequestDispatcher("registerprofile").forward(request,response);
                     }
                     else if(request.getRequestURI().endsWith("userhome")){
                         response.sendRedirect(request.getServletContext().getContextPath()+ "/login");
                     }
                 } else {
+                    System.out.println("dof");
                     filterChain.doFilter(request,response);
                 }
             } catch (ServletException e) {

@@ -16,6 +16,9 @@ import java.sql.*;
  when the interaction with the database was completed.
  */
 public class DBconnector implements ConnectionBuilder {
+    /** Just logger for logging. */
+    private static final Logger log = Logger.getLogger(DBconnector.class);
+
 
     /**
      * Interface variable which Object after initializing will typically be
@@ -24,10 +27,7 @@ public class DBconnector implements ConnectionBuilder {
      */
     private DataSource dataSource;
 
-    /**
-     * Just logger for logging.
-     */
-    private static final Logger log = Logger.getLogger(DBconnector.class);
+
 
     /**
      * Constructor implements InitialContext initialization. All JNDI operations executed relative to context, so
@@ -40,6 +40,7 @@ public class DBconnector implements ConnectionBuilder {
             dataSource = (DataSource) context.lookup("java:comp/env/jdbc/MyLocalDB");
         } catch (NamingException e) {
             log.warn("Data Source lookup exception:  " + e.getCause());
+
         }
     }
 
@@ -51,7 +52,9 @@ public class DBconnector implements ConnectionBuilder {
      * @throws SQLException in a case of login-timeout exceeding.
      */
     public Connection getPoolConnection() throws SQLException {
-        return dataSource.getConnection();
+        Connection connection =  dataSource.getConnection();
+        connection.setAutoCommit(false);
+        return connection;
     }
 }
 

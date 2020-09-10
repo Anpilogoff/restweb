@@ -31,12 +31,16 @@ public class NotNullSessionFilter implements Filter {
      * @param servletRequest  contains request attributes
      * @param servletResponse designing during request dispatching
      * @param filterChain     contains all web filters described in deployment descriptor */
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
         if (session != null) {
+            if(request.getSession(false).getAttribute("userNickname")!= null && request.getRequestURI().endsWith("registerprofile")
+            && request.getMethod().equals("POST")){
+                request.getRequestDispatcher("registerprofile").forward(request,response);
+            }
             try {
                 if (request.getRequestURI().endsWith("login")) {
                     response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
@@ -46,7 +50,6 @@ public class NotNullSessionFilter implements Filter {
                     request.getRequestDispatcher("userhome.html").forward(request, response);
                 }
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
         }

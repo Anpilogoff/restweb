@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 <Resource
-        auth="Container"
         name="jdbc/MyLocalDB"
         type="javax.sql.DataSource"
         maxTotal="100"

@@ -10,5 +10,6 @@ public interface Dao{
     Profile registerNewProfile(String nickname,String name, String surname, int age, String gender, String country);
     boolean deleteUser();
     boolean blockUser();
+    boolean loginUser();
 
 }

@@ -6,6 +6,7 @@ import com.anpilogoff.model.entity.User;
 import com.mysql.cj.protocol.Resultset;
 import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -108,13 +109,11 @@ public class UserDAO implements Dao {
 
             int isInserted= statement.executeUpdate();
             if(isInserted==1){
+                statement.close();
                 connection.commit();
                 connection.close();
-
                 System.out.println("secondIsinserted "+isInserted );
-
             }
-
         } catch (SQLException e) {
             log.warn("SQL exception during method \"registerprofile\": " + e.getCause());
             e.printStackTrace();
@@ -126,7 +125,13 @@ public class UserDAO implements Dao {
         return new Profile(nickname,name,surname,age,gender,country);
     }
 
+    @Override
+    public boolean loginUser() {
+        return false;
+    }
+
     public boolean deleteUser() { return false; }
 
     public boolean blockUser() { return false; }
+
 }

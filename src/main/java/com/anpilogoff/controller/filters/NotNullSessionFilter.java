@@ -24,8 +24,12 @@ public class NotNullSessionFilter implements Filter {
         this.config = filterConfig;
     }
 
+
+
     /**
-     * Method check session for non-null value and in a case of nullable session will check it's mappings for compliance
+     * The logic described in the methods of this class will be executed only if the request "session" attribute doesn't
+     * correspond to "null"-value
+     * That method will run and in a case of nullable session will check it's mappings for compliance
      * with "login","registration","userhome" values and in a case of success result will forward/redirect current req
      * to appropriate servlet or dispatch it to a next filter chain element processing
      * @param servletRequest  contains request attributes
@@ -36,6 +40,9 @@ public class NotNullSessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
+        if(session != null && request.getRequestURI().contains("sounds/system/")|| request.getRequestURI().contains("resources/")){
+            filterChain.doFilter(request,response);
+        }
         if (session != null) {
             if(request.getSession(false).getAttribute("userNickname")!= null && request.getRequestURI().endsWith("registerprofile")
             && request.getMethod().equals("POST")){
@@ -44,7 +51,7 @@ public class NotNullSessionFilter implements Filter {
             try {
                 if (request.getRequestURI().endsWith("login")) {
                     response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
-                } else if (request.getRequestURI().endsWith("registration")) {
+                } else if (request.getRequestURI().endsWith("registration") || request.getRequestURI().endsWith("registration.html")) {
                     response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
                 } else if (request.getRequestURI().endsWith(request.getServletContext().getContextPath()+"/userhome")) {
                     request.getRequestDispatcher("userhome.html").forward(request, response);
@@ -54,6 +61,7 @@ public class NotNullSessionFilter implements Filter {
             }
         }
     }
+
 
     /**
      * Method is call by servlet container to destroy Servlet object

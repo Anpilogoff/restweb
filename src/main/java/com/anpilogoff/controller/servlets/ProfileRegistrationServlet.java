@@ -27,9 +27,9 @@ public class ProfileRegistrationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getSession(false).getAttribute("userNickname"));
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String nickname = (String) req.getSession(false).getAttribute("userNickname");
+        System.out.println("nickname:  "+ nickname);
 
         if (req.getSession(false).getAttribute("userNickname") != null) {
             String name = req.getParameter("name");
@@ -39,10 +39,6 @@ public class ProfileRegistrationServlet extends HttpServlet {
             String country = req.getParameter("country");
 
             Profile profile = dao.registerNewProfile(nickname, name, surname, age, gender, country);
-
-          //  User user = (User) req.getSession(false).getAttribute("user");
-
-            //System.out.println(user + "     userfrom profile reg serv");
             System.out.println(profile + "   by usrerdao");
 
             req.getSession(false).invalidate();

@@ -32,13 +32,11 @@ public class RegistrationServlet extends HttpServlet {
         String email = req.getParameter("email");
 
         User user = new User(login, password, nickname, email);
-
         user = dao.registerNewUser(user);
 
         if (user != null) {
             HttpSession session = req.getSession(true);
             session.setAttribute("userNickname",user.getNickname());
-         //   session.setAttribute("user", user);
             System.out.println("forward to rg profile html");
             req.getRequestDispatcher("registerprofile.html").forward(req,resp);
         }else resp.getWriter().write("sorry but user with same credentials are already registered");

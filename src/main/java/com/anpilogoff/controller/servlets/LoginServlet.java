@@ -60,10 +60,9 @@ public class LoginServlet extends HttpServlet {
                     String login = req.getParameter("login");
                     String password = req.getParameter("password");
 
-                    //todo: dao logic|| comparing parameters with data in db and if compare ++ ->
-                    //todo: +++ encrypt password
-
                     HttpSession session = req.getSession(true);
+
+
                     UserCredentials credentials = new UserCredentials(login, password);
                     session.setAttribute("credentials", credentials);
                     resp.sendRedirect( "userhome");

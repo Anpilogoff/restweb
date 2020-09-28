@@ -3,23 +3,48 @@
 
 <head>
 
-<title>login.</title>
+<title>Login-Page</title>
 <style>
+
+    
+
+
+
+
     body{
-        background-color: dimgray;
+        cursor: pointer;
+        background-color: #000000;
     }
+
+
 table{
+    cursor: pointer;
+    text-shadow: white 0 0 3px 3px;
+
     box-shadow: black 0 0 2px 2px;
     position: absolute;
     top: 400px ;
     left: 800px;
 }
+    table:hover{
+        transition-duration: 1900ms;
+        box-shadow: #c60101 0 0 2px 2px;
+    }
+    submit{
+        cursor: pointer;
+    }
+
 
 </style>
+
 </head>
 
 <body>
+
+
+
 <form class="form" name="login_form" method="post">
+
 <table>
         <tr class="fields">
             <td>Login</td>
@@ -34,10 +59,14 @@ table{
 
         <tr>
             <td></td>
-            <td><input type="submit" value="Log in"> <a href="registration.html">REGISTRATION</a>></td>
+            <td><input type="submit" value="Log in"> <a href="registration.html" id="hrefka">REGISTRATION</a>></td>
         </tr>
 </table>
 </form>
 
 </body>
+
+
+
+
 </html>

@@ -143,6 +143,11 @@ II) DAO LAYER      |    /
 
      3)UserDAO "registerNewUser"/"registerNewProfile"  methods describing:
         1)To register new User with values getting by servlets from "registration"/"registerprofile"-pages
+            //todo:describe current part logic but...
+
+            After last windows update MySQL Server became unavailaible and through 15 hours i decided to install
+            postgreSQL service which gives me opportunity to relocate my DB-dump...
+
 
 
 

@@ -4,9 +4,35 @@
     body{
         background-color: gray;
     }
+
+    form {
+        width: 280px;
+        height: 200px;
+    }
+    #unknown{
+        width: 120px;
+        height: 160px;
+    }
+    #avatar{
+        width: 117px;
+        height: 21px;
+    }
 </style>
 </head>
 <body>
-USER HOME PAGE
+<audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
+
+<form name="photo_upload" enctype='multipart/form-data' method="post" action="uploadservlet">
+    <img src="resources/who.png" alt="UNKNOWN"  id="unknown">
+    <p>
+    <input type="file" multiple accept="image/*" name="avatar">
+    </p>
+
+    <p>
+        <input type="submit" value="send photo" id="submit_button">
+    </p>
+
+</form>
+
 </body>
 </html>

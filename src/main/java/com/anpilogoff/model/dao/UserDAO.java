@@ -3,15 +3,14 @@ package com.anpilogoff.model.dao;
 import com.anpilogoff.model.connection.ConnectionBuilder;
 import com.anpilogoff.model.entity.Profile;
 import com.anpilogoff.model.entity.User;
-import com.mysql.cj.protocol.Resultset;
+import com.anpilogoff.model.entity.UserCredentials;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 /** The class implements logic getting from connection pool , as it contains a private variable of the ConnectionBuilder class and a setter for
@@ -19,8 +18,6 @@ import java.sql.SQLException;
  */
 public class UserDAO implements Dao {
     private static final Logger log = Logger.getLogger(UserDAO.class);
-
-
 
     private ConnectionBuilder connectionBuilder;
 
@@ -30,14 +27,16 @@ public class UserDAO implements Dao {
     private Connection getPoolConnection() throws SQLException
     { return connectionBuilder.getPoolConnection(); }
 
+    private final Gson gson = new Gson();
+
+
     @SneakyThrows
     public synchronized User registerNewUser(User user) {
         String GET_USER_FROM_DB = "SELECT * FROM users WHERE login = " + Character.toString('\'') +user.getLogin() + Character.toString('\'');
         String INSERT_USER_IN_TABLE = "INSERT INTO users(login,password,nickname,email,role) VALUES (?,?,?,?,?)";
-        System.out.println(GET_USER_FROM_DB);
         Connection connection = null;
+
         boolean isEmpty = true;
-        System.out.println(isEmpty);
 
         try {
             connection = getPoolConnection();
@@ -50,14 +49,13 @@ public class UserDAO implements Dao {
                 return null;
             }
             if (isEmpty) {
-                System.out.println("resulset is null");
                 preparedStatement = connection.prepareStatement(INSERT_USER_IN_TABLE);
 
                 preparedStatement.setString(1,user.getLogin());
                 preparedStatement.setString(2,user.getPassword());
                 preparedStatement.setString(3,user.getNickname());
                 preparedStatement.setString(4,user.getEmail());
-                preparedStatement.setString(5,"user");
+                preparedStatement.setString(5,user.getRole());
 
                 int isInserted = preparedStatement.executeUpdate();
 
@@ -66,27 +64,17 @@ public class UserDAO implements Dao {
                 if(isInserted == 1){
                     preparedStatement.close();
                     connection.close();
-
-                    user.setLogin(user.getLogin());
-                    user.setPassword(user.getPassword());
-                    user.setNickname(user.getNickname());
-                    user.setEmail(user.getEmail());
-                    System.out.println(user+ " user");
-                    System.out.println("return user: userdao");
-                  //  return user;
                 }
             }
         } catch (SQLException e) {
             log.error("Exception during connection receiving from ConnectionPool:  " + e.getCause());
             e.printStackTrace();
-            return user; //nullable
+            return null; //nullable
         } finally {
             if (connection != null) {
                 connection.close();
-                System.out.println("in finally block :  "  + connection.isClosed() + " connection closed?");
             }
         }
-        System.out.println(connection + "before class return");
         return user;
     }
 
@@ -112,25 +100,162 @@ public class UserDAO implements Dao {
                 statement.close();
                 connection.commit();
                 connection.close();
-                System.out.println("secondIsinserted "+isInserted );
             }
         } catch (SQLException e) {
             log.warn("SQL exception during method \"registerprofile\": " + e.getCause());
             e.printStackTrace();
             if (connection!=null) {
                 connection.close();
+                return  null;
             }
-            return  null;
         }
-        return new Profile(nickname,name,surname,age,gender,country);
+        Profile profile = new Profile(nickname,name,surname,age,gender,country);
+        return profile;
     }
 
     @Override
-    public boolean loginUser() {
-        return false;
+    public JsonArray loginUser(String login, String password) throws SQLException {
+        String IS_DB_CONTAIN_USER = "SELECT * FROM users where login = " + Character.toString('\'') + login + Character.toString('\'') +
+                " and password = " + Character.toString('\'') + password + Character.toString('\'');
+        String IF_USER_CONTAINS_SELECT_PROFILE = "SELECT * FROM profiles WHERE user_nickname = ?";
+
+        User user = null;
+
+        String nickname = null;
+        String loginx = null;
+        String passwordx = null;
+
+        String name = null;
+        String surname = null;
+        int age = 0;
+        String gender = null;
+        String country = null;
+        String role = "user";
+
+       Connection connection = getPoolConnection();
+
+        if (connection != null) {
+            PreparedStatement statement = connection.prepareStatement(IS_DB_CONTAIN_USER);
+            ResultSet resultset = statement.executeQuery();
+            while (resultset.next()) {
+                nickname = resultset.getString("nickname");
+                loginx = resultset.getString("login");
+                passwordx = resultset.getString("password");
+                user = new User(nickname, loginx, passwordx, role);
+            }
+
+            if (nickname != null && loginx != null && passwordx != null) {
+                statement = connection.prepareStatement(IF_USER_CONTAINS_SELECT_PROFILE);
+                statement.setString(1, user.getNickname());
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        name = resultSet.getString("name");
+                        surname = resultSet.getString("surname");
+                        age = resultSet.getInt("age");
+                        gender = resultSet.getString("gender");
+                        country = resultSet.getString("country");
+                    }
+                    statement.close();
+                    connection.close();
+                }
+            }else{
+                return null;
+            }
+        }
+
+        Profile profile = new Profile(nickname,name,surname,age,gender,country);
+        UserCredentials credentials = new UserCredentials(login,password);
+
+
+        JsonObject userJson = new JsonObject();
+        assert user != null;
+
+
+        userJson.addProperty("nickname",user.getNickname());
+        userJson.addProperty("role",user.getRole());
+        userJson.addProperty("email",user.getEmail());
+
+        JsonObject profileJson = new JsonObject();
+        profileJson.addProperty("name", profile.getName());
+        profileJson.addProperty("surname",profile.getSurname());
+        profileJson.addProperty("age", profile.getAge());
+        profileJson.addProperty("gender",profile.getGender());
+        profileJson.addProperty("country",profile.getCountry());
+
+        JsonObject credentialsJson = new JsonObject();
+        credentialsJson.addProperty("login",user.getLogin());
+        //todo: encrypting.....
+        credentialsJson.addProperty("password", user.getPassword());
+
+        JsonArray array = new JsonArray(3);
+        array.add(userJson);
+        array.add(profileJson);
+        array.add(credentialsJson);
+
+        connection.close();
+
+        return array;
     }
 
-    public boolean deleteUser() { return false; }
+
+    public String uploadPhoto(String nickname, String file_name) {
+        String insertPhoto = "INSERT INTO AVATARS(user_nickname, file_name) VALUES ('" + nickname + "', '" + file_name + "')";
+
+        Connection connection = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restwebDB?serverTimezone=Europe/Moscow&useSSL=no","root","");
+            connection.setAutoCommit(false);
+            PreparedStatement statement = connection.prepareStatement(insertPhoto);
+            int result = statement.executeUpdate();
+
+            if (result == 1) {
+                connection.commit();
+                statement.close();
+                connection.close();
+            } else {
+                log.warn("A problem occured during inserting avatar-file-name into table 'avatars'");
+                return null;
+            }
+        } catch (SQLException | ClassNotFoundException exception) {
+            exception.printStackTrace();
+        }
+
+
+        return file_name;
+    }
+
+    @Override
+    public String getUserAvatar(String nickname) {
+        String getQuery = "SELECT * FROM avatars WHERE user_nickname = '" + nickname +"';";
+        Connection connection;
+        String file_name = null;
+        try{
+            connection = getPoolConnection();
+            PreparedStatement statement = connection.prepareStatement(getQuery);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet != null){
+                while(resultSet.next()){
+                    file_name = resultSet.getString("file_name");
+                }
+                statement.close();
+                connection.close();
+            }else{
+                statement.close();
+                connection.close();
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return file_name;
+    }
+
+    public boolean deleteUser() {
+       return false;
+    }
 
     public boolean blockUser() { return false; }
 

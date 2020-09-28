@@ -1,5 +1,7 @@
 package com.anpilogoff.controller.filters;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +26,7 @@ import java.io.IOException;
 @WebFilter
 public class SessionFilter implements Filter {
 
-
+    private static final Logger log = Logger.getLogger(SessionFilter.class);
     private FilterConfig config;
 
     /**
@@ -50,12 +52,12 @@ public class SessionFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-
-        System.out.println(request.getRequestURI());
-        System.out.println(request.getMethod());
-
         try {
             if (session == null) {
+                if(request.getRequestURI().endsWith("home") || request.getRequestURI().endsWith("userhome") ||
+                request.getRequestURI().endsWith("uploadservlet")){
+                    response.sendRedirect(request.getServletContext().getContextPath() + "/login");
+                }
                 if (request.getRequestURI().endsWith("login") && request.getMethod().equals("POST")) {
                     request.getRequestDispatcher("login").forward(request, response);
                 } else if (request.getRequestURI().endsWith("login") && request.getMethod().equals("GET")) {
@@ -66,23 +68,18 @@ public class SessionFilter implements Filter {
                         request.getRequestURI().endsWith("registration.html") && request.getMethod().equals("GET")) {
                     request.getRequestDispatcher("registration.html").forward(request, response);
                 } else if (request.getRequestURI().endsWith("registerprofile") && request.getMethod().equals("GET")) {
-                    System.out.println("forward from session filter to  html registerprofile");
-
                     request.getRequestDispatcher("registerprofile.html").forward(request, response);
                 } else if (request.getRequestURI().endsWith("registerprofile") && request.getMethod().equals("POST")) {
-                    System.out.println("forward to reg profile servlet  by session filter");
                     request.getRequestDispatcher("registerprofile").forward(request, response);
                 } else if (request.getRequestURI().endsWith("registerprofile") && request.getMethod().equals("POST")) {
                     request.getRequestDispatcher("registerprofile").forward(request, response);
-                } else if (request.getRequestURI().endsWith("userhome")) {
-                    response.sendRedirect(request.getServletContext().getContextPath() + "/login");
                 }
             } else {
-                System.out.println("dof");
                 filterChain.doFilter(request, response);
             }
         } catch (ServletException | IOException e) {
-            System.out.println();
+            log.warn("exception" + e.getCause());
+            e.printStackTrace();
         }
     }
 

@@ -1,15 +1,18 @@
 package com.anpilogoff.model.entity;
 
 
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 public class UserCredentials {
     String login;
     String password;
+
     String nickname;
 
     public UserCredentials(String login, String password, String nickname) {

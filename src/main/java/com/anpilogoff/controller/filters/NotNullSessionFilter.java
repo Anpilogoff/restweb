@@ -1,8 +1,6 @@
 package com.anpilogoff.controller.filters;
 
 import org.apache.log4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +10,15 @@ import java.io.IOException;
 /**
  * That class object will check all incoming requests mapping values for compliance with "login","registration" or
  * "userhome" strings values and forward/redirect them to appropriate servlet/.html page or dispatch to next filter.elem
+ * The logic described in the methods of this class will be executed only if the  request "session" attribute doesn't
+ * correspond to "null"-value
  */
 public class NotNullSessionFilter implements Filter {
     private static final Logger log = Logger.getLogger(NotNullSessionFilter.class);
+
     FilterConfig config;
+
+
     /**
      * Method called by Servlet Container, initialize filter object with values from web descriptor
      * @param filterConfig will be initialized with Servlet Container
@@ -25,10 +28,7 @@ public class NotNullSessionFilter implements Filter {
     }
 
 
-
     /**
-     * The logic described in the methods of this class will be executed only if the request "session" attribute doesn't
-     * correspond to "null"-value
      * That method will run and in a case of nullable session will check it's mappings for compliance
      * with "login","registration","userhome" values and in a case of success result will forward/redirect current req
      * to appropriate servlet or dispatch it to a next filter chain element processing
@@ -36,31 +36,28 @@ public class NotNullSessionFilter implements Filter {
      * @param servletResponse designing during request dispatching
      * @param filterChain     contains all web filters described in deployment descriptor */
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws ServletException, IOException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(false);
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        HttpSession session = req.getSession(false);
 
-        if(session != null && request.getRequestURI().contains("sounds/system/")|| request.getRequestURI().contains("resources/")){
-            filterChain.doFilter(request,response);
-        }
         if (session != null) {
-            if(request.getSession(false).getAttribute("userNickname")!= null && request.getRequestURI().endsWith("registerprofile")
-            && request.getMethod().equals("POST")){
-                request.getRequestDispatcher("registerprofile").forward(request,response);
+            if(req.getRequestURI().contains("uploadservlet") && req.getMethod().equals("POST") ){
+                req.getRequestDispatcher("/uploadservlet").forward(req,resp);
             }
-            try {
-                if (request.getRequestURI().endsWith("login")) {
-                    response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
-                } else if (request.getRequestURI().endsWith("registration") || request.getRequestURI().endsWith("registration.html")) {
-                    response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
-                } else if (request.getRequestURI().endsWith(request.getServletContext().getContextPath()+"/userhome")) {
-                    request.getRequestDispatcher("userhome.html").forward(request, response);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (req.getRequestURI().contains("sounds/system/") || req.getRequestURI().contains("resources/")) {
+                filterChain.doFilter(req, resp); }
+
+            if (req.getSession(false).getAttribute("userNickname") != null &&
+                    req.getRequestURI().endsWith("registerprofile") && req.getMethod().equals("POST"))
+            {
+                req.getRequestDispatcher("registerprofile").forward(req, resp);
             }
+                filterChain.doFilter(req,resp);
         }
-    }
+        else log.warn("Invalid \"session\" value in Filter chain SESSION IS NULL: "+ req.getRequestURI());}
+
+
 
 
     /**

@@ -51,9 +51,15 @@ public class DBconnector implements ConnectionBuilder {
      * @see Connection class which represents connection to DataSource
      * @throws SQLException in a case of login-timeout exceeding.
      */
-    public Connection getPoolConnection() throws SQLException {
-        Connection connection =  dataSource.getConnection();
-        connection.setAutoCommit(false);
+    public Connection getPoolConnection() {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            log.warn("SQL Exception during connection receiving:  "+e.getCause());
+            e.printStackTrace();
+        }
         return connection;
     }
 }

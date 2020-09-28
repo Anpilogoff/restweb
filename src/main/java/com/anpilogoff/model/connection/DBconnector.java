@@ -38,6 +38,7 @@ public class DBconnector implements ConnectionBuilder {
         try{
             Context context = new InitialContext();
             dataSource = (DataSource) context.lookup("java:comp/env/jdbc/MyLocalDB");
+            System.out.println(dataSource);
         } catch (NamingException e) {
             log.warn("Data Source lookup exception:  " + e.getCause());
 
@@ -51,9 +52,16 @@ public class DBconnector implements ConnectionBuilder {
      * @see Connection class which represents connection to DataSource
      * @throws SQLException in a case of login-timeout exceeding.
      */
-    public Connection getPoolConnection() throws SQLException {
-        Connection connection =  dataSource.getConnection();
-        connection.setAutoCommit(false);
+    public Connection getPoolConnection() {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            System.out.println(connection + " FROM DBConnector class - getPoolConnection Method");
+        } catch (SQLException e) {
+            log.warn("SQL Exception during connection receiving:  "+e.getCause());
+            e.printStackTrace();
+        }
         return connection;
     }
 }

@@ -7,7 +7,7 @@
         maxIdle="30"
         maxWaitMillis="5000"
         username="root"
-        password="root"
+        password=""
         driverClassName="com.mysql.cj.jdbc.Driver"
-        url="jdbc:mysql://localhost:3306/restwebDB"/>
+        url="jdbc:mysql://localhost:3306/restwebDB?serverTimezone=Europe/Moscow"/>
 </Context>

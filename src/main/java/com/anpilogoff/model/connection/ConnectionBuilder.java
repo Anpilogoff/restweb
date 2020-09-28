@@ -8,5 +8,5 @@ import java.sql.SQLException;
  * @see DBconnector class to receive Connection from Connection Pool
  */
 public interface ConnectionBuilder {
-    Connection getPoolConnection() throws SQLException;
+    Connection getPoolConnection();
 }

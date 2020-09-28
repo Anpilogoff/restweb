@@ -56,6 +56,7 @@ public class DBconnector implements ConnectionBuilder {
         try {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
+            System.out.println(connection + " FROM DBConnector class - getPoolConnection Method");
         } catch (SQLException e) {
             log.warn("SQL Exception during connection receiving:  "+e.getCause());
             e.printStackTrace();
@@ -63,4 +64,5 @@ public class DBconnector implements ConnectionBuilder {
         return connection;
     }
 }
+
 

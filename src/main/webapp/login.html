@@ -6,7 +6,8 @@
 <title>login.</title>
 <style>
     body{
-        background-color: dimgray;
+        position: absolute;
+        background-image: url("resources/w.jpg");
     }
 table{
     box-shadow: black 0 0 2px 2px;
@@ -19,7 +20,7 @@ table{
 </head>
 
 <body>
-<form class="form" name="login_form" method="post">
+<form class="form" name="login_form" method="post" action="login">
 <table>
         <tr class="fields">
             <td>Login</td>
@@ -34,7 +35,7 @@ table{
 
         <tr>
             <td></td>
-            <td><input type="submit" value="Log in"> <a href="registration.html">REGISTRATION</a>></td>
+            <td><input type="submit" value="Log in"> <a href="registration">REGISTRATION</a>></td>
         </tr>
 </table>
 </form>

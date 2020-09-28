@@ -115,7 +115,7 @@ public class UserDAO implements Dao {
 
     @Override
     public JsonArray loginUser(String login, String password) throws SQLException {
-        String IS_DB_CONTAIN_USER = "SELECT * FROM users where login = " + Character.toString('\'') + login + Character.toString('\'') +
+        String IS_DB_CONTAIN_USER = "SELECT * FROM users where login = " + ('\'') + login + ('\'') +
                 " and password = " + Character.toString('\'') + password + Character.toString('\'');
         String IF_USER_CONTAINS_SELECT_PROFILE = "SELECT * FROM profiles WHERE user_nickname = ?";
 
@@ -187,6 +187,7 @@ public class UserDAO implements Dao {
         credentialsJson.addProperty("login",user.getLogin());
         //todo: encrypting.....
         credentialsJson.addProperty("password", user.getPassword());
+        
 
         JsonArray array = new JsonArray(3);
         array.add(userJson);
@@ -221,8 +222,6 @@ public class UserDAO implements Dao {
         } catch (SQLException | ClassNotFoundException exception) {
             exception.printStackTrace();
         }
-
-
         return file_name;
     }
 

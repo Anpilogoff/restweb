@@ -5,15 +5,14 @@ import com.anpilogoff.model.dao.UserDAO;
 import com.anpilogoff.model.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import jdk.nashorn.internal.parser.JSONParser;
-import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.*;
 import java.net.URI;
 import java.nio.file.Files;
@@ -41,9 +40,6 @@ public class UploadServlet extends HttpServlet {
         //to do rewrite path on Jelastic disk space path
 
         User user = gson.fromJson((JsonElement) req.getSession(false).getAttribute("user"), User.class);
-        System.out.println(user);
-
-
         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
 
         Part part = req.getPart("avatar");
@@ -74,11 +70,13 @@ public class UploadServlet extends HttpServlet {
 
             String uploadedFile = dao.uploadPhoto(user.getNickname(),f_name);
             log("bytes successfully wrote to file:  " + avatar_file);
-           if(uploadedFile.length()>0){
-               req.getSession(false).setAttribute("avatar_name",uploadedFile);
-               resp.setContentType("img/*");
-               resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
-           }
+            if(uploadedFile.length()>0){
+
+                resp.setContentType("img/*");
+
+                req.getSession(false).setAttribute("avatar",uploadedFile);
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
+            }
 
         }
     }

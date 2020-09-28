@@ -14,7 +14,7 @@ import java.io.IOException;
  * correspond to "null"-value
  */
 public class NotNullSessionFilter implements Filter {
-    private static final Logger log = Logger.getLogger(NotNullSessionFilter.class);
+    private Logger log;
 
     FilterConfig config;
 
@@ -25,8 +25,8 @@ public class NotNullSessionFilter implements Filter {
      */
     public void init(FilterConfig filterConfig) throws ServletException {
         this.config = filterConfig;
+        log = Logger.getLogger(NotNullSessionFilter.class);
     }
-
 
     /**
      * That method will run and in a case of nullable session will check it's mappings for compliance
@@ -39,24 +39,24 @@ public class NotNullSessionFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession(false);
+        String uri = req.getRequestURI();
 
         if (session != null) {
-            if(req.getRequestURI().contains("uploadservlet") && req.getMethod().equals("POST") ){
-                req.getRequestDispatcher("/uploadservlet").forward(req,resp);
-            }
-
-            if (req.getRequestURI().contains("sounds/system/") || req.getRequestURI().contains("resources/")) {
-                filterChain.doFilter(req, resp); }
-
-            if (req.getSession(false).getAttribute("userNickname") != null &&
-                    req.getRequestURI().endsWith("registerprofile") && req.getMethod().equals("POST"))
-            {
-                req.getRequestDispatcher("registerprofile").forward(req, resp);
-            }
+            if(uri.contains("user") || uri.contains("home")){
                 filterChain.doFilter(req,resp);
-        }
-        else log.warn("Invalid \"session\" value in Filter chain SESSION IS NULL: "+ req.getRequestURI());}
+            }
+            if (uri.contains("sounds/system/") || uri.contains("resources/")) {
+                filterChain.doFilter(req, resp);
+            }
+            if(req.getRequestURI().contains("uploadservlet") && req.getMethod().equals("POST") ){
+                filterChain.doFilter(req,resp);
+            }
 
+            filterChain.doFilter(req,resp);
+        }else{
+            log.warn("Invalid \"session\" value in Filter chain SESSION IS NULL: "+ req.getRequestURI());
+        }
+    }
 
 
 

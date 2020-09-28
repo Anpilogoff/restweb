@@ -19,7 +19,7 @@ import java.util.Enumeration;
 public class ProfileRegistrationServlet extends HttpServlet {
 
     private UserDAO dao;
-    private  Logger log = null;
+    private Logger log = null;
 
     @Override
     public void init() {
@@ -28,33 +28,35 @@ public class ProfileRegistrationServlet extends HttpServlet {
         log = Logger.getLogger(ProfileRegistrationServlet.class);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("registerprofile.html").forward(req,resp);
-    }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (req.getSession(false) != null) {
-            if (req.getSession(false).getAttribute("userNickname") != null) {
-               String nickname = (String) req.getSession(false).getAttribute("userNickname");
-                String name = req.getParameter("name");
-                String surname = req.getParameter("surname");
-                int age = Integer.parseInt(req.getParameter("age"));
-                String gender = req.getParameter("gender");
-                String country = req.getParameter("country");
-
-                Profile profile = dao.registerNewProfile(nickname, name, surname, age, gender, country);
-                if (profile != null) {
-                    log.info("profile created:  "+ profile);
-                    req.getSession(false).invalidate();
-                    resp.sendRedirect("login");
-                } else {req.getRequestDispatcher(req.getServletContext().getContextPath() + "registerprofile");}
+        try {
+            if (req.getSession(false).getAttribute("userNickname") == null) {
+                //  req.getSession(false).invalidate();
+                resp.sendRedirect(req.getServletContext().getContextPath() + "login");
             }
-        } else if (req.getSession(false) != null && req.getSession(false).getAttribute("userNickname") == null) {
-            req.getSession(false).invalidate();
-            resp.sendRedirect(req.getServletContext().getContextPath() + "login");
+            String nickname = (String) req.getSession(false).getAttribute("userNickname");
+            String name = req.getParameter("name");
+            String surname = req.getParameter("surname");
+            int age = Integer.parseInt(req.getParameter("age"));
+            String gender = req.getParameter("gender");
+            String country = req.getParameter("country");
+
+            Profile profile = dao.registerNewProfile(nickname, name, surname, age, gender, country);
+            if (profile != null) {
+                log.info("profile created:  " + profile);
+                req.getSession(false).invalidate();
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
+            } else {
+
+                req.getRequestDispatcher(req.getServletContext().getContextPath() + "/registerprofile").forward(req, resp);
+            }
+            }catch(ServletException e){
+            e.printStackTrace();
         }
     }
 }
+
+
 

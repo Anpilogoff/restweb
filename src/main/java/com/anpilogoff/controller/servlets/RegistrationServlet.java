@@ -26,11 +26,9 @@ public class RegistrationServlet extends HttpServlet {
     private Logger log = null;
 
 
-    /**
-     * just forward incoming request to registration.html processing */
-
-
-    @Override
+/**
+ * just forward incoming request to registration.html processing */
+@Override
     public void init() {
         dao = new UserDAO();
         dao.setConnectionBuilder(new DBconnector());
@@ -49,14 +47,13 @@ public class RegistrationServlet extends HttpServlet {
         String password = req.getParameter("password");
         String nickname = req.getParameter("nickname");
         String email = req.getParameter("email");
-
         User user = new User(login, password, nickname, email,"user");
         user = dao.registerNewUser(user);
-
         if (user != null) {
             log.info("New user registered:  " + user);
             HttpSession session = req.getSession(true);
             session.setAttribute("userNickname", user.getNickname());
+
             req.getRequestDispatcher("registerprofile.html").forward(req,resp);
         }else {
             resp.getWriter().write("sorry but user with same credentials are already registered");

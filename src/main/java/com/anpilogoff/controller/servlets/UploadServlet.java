@@ -41,43 +41,49 @@ public class UploadServlet extends HttpServlet {
 
         User user = gson.fromJson((JsonElement) req.getSession(false).getAttribute("user"), User.class);
         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
+        System.out.println("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
+
 
         Part part = req.getPart("avatar");
         String f_name = part.getSubmittedFileName();
-
+String uploadedFile = null;
         if (!Files.exists(userDir)) {
             Files.createDirectory(userDir);
             log.info("directory successfully created:  " + userDir);
+            System.out.println("directory successfully created:  " + userDir);
 
-
-            File avatar_file = new File(userDir + "\\" + part.getSubmittedFileName());
+            File avatar_file = new File(userDir + File.separator + part.getSubmittedFileName());
             Files.createFile(Paths.get(String.valueOf(avatar_file)));
             log.info("empty avatar file successfully created" + avatar_file);
 
             BufferedInputStream is = new BufferedInputStream(part.getInputStream());
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(avatar_file));
 
-            final byte[] bytes = new byte[1024];
-            long x = System.nanoTime();
+            final byte[] bytes = new byte[4*1024];
+          //  long x = System.nanoTime();
             while (is.read(bytes) != -1) {
                 bos.write(bytes);
             }
-            long y = System.nanoTime();
-            System.out.println(x-y);
+          //  long y = System.nanoTime();
+          //  System.out.println(x-y);
 
             bos.close();
             is.close();
+            log.info("bytes successfully wrote to file:  " + avatar_file);
 
-            String uploadedFile = dao.uploadPhoto(user.getNickname(),f_name);
-            log("bytes successfully wrote to file:  " + avatar_file);
-            if(uploadedFile.length()>0){
-
-                resp.setContentType("img/*");
-
-                req.getSession(false).setAttribute("avatar",uploadedFile);
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
+            uploadedFile = dao.uploadPhoto(user.getNickname(),f_name);
             }
 
+        if(uploadedFile.length()>0  ){
+            resp.setContentType("img/jpeg");
+
+            req.getSession(false).setAttribute("avatar",uploadedFile);
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
         }
     }
 }

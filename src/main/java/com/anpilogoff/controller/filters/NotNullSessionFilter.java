@@ -17,6 +17,7 @@ public class NotNullSessionFilter implements Filter {
     private Logger log;
 
     FilterConfig config;
+    private boolean f;
 
 
     /**
@@ -41,24 +42,30 @@ public class NotNullSessionFilter implements Filter {
         HttpSession session = req.getSession(false);
         String uri = req.getRequestURI();
 
+        System.out.println("filter sterp 2");
+        if (uri.contains("resources") || uri.contains("dynamic")) {
+            filterChain.doFilter(req, resp);
+        }
         if (session != null) {
-            if(uri.contains("user") || uri.contains("home")){
-                filterChain.doFilter(req,resp);
-            }
-            if (uri.contains("sounds/system/") || uri.contains("resources/")) {
+            if (uri.contains("home")) {
+                filterChain.doFilter(req, resp);
+            }else if (uri.contains("sounds/system/") || uri.contains("resources") || uri.contains("dynamic")) {
+                System.out.println("res");
                 filterChain.doFilter(req, resp);
             }
-            if(req.getRequestURI().contains("uploadservlet") && req.getMethod().equals("POST") ){
-                filterChain.doFilter(req,resp);
+            if (req.getRequestURI().endsWith("uploadservlet") && req.getMethod().equals("POST")) {
+                filterChain.doFilter(req, resp);
+                //  req.getRequestDispatcher("uploadservlet").forward(req,resp);
             }
 
-            filterChain.doFilter(req,resp);
-        }else{
-            log.warn("Invalid \"session\" value in Filter chain SESSION IS NULL: "+ req.getRequestURI());
+            System.out.println("ne res");
+            filterChain.doFilter(req, resp);
+        } else {
+
+
+            log.warn("Invalid \"session\" value in Filter chain SESSION IS NULL: " + req.getRequestURI());
         }
     }
-
-
 
     /**
      * Method is call by servlet container to destroy Servlet object

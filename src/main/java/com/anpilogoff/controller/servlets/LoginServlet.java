@@ -19,6 +19,7 @@ import java.sql.SQLException;
 
 /**
  * receive req/resp object from
+ *
  * @see com.anpilogoff.controller.filters.SessionFilter
  * In a case when session is null
  * @see LoginServlet#doGet creates a session with attribute name "authStatus" and its value "non authorized"
@@ -43,45 +44,52 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.html").forward(req,resp);
+        req.getRequestDispatcher("/login.html").forward(req, resp);
     }
 
-/**
- * @param req  is object created by Tomcat after request receiving and initialized with request attributes
- * @param resp is empty-object created by Tomcat after request receiving(will be initialized when method
- *  * @see HttpServlet#service(ServletRequest, ServletResponse) will be called**/
+    /**
+     * @param req  is object created by Tomcat after request receiving and initialized with request attributes
+     * @param resp is empty-object created by Tomcat after request receiving(will be initialized when method
+     *             * @see HttpServlet#service(ServletRequest, ServletResponse) will be called
+     **/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-try {
+        try {
 
-    JsonArray array = dao.loginUser(login, password);
-    HttpSession session = req.getSession(true);
+            JsonArray array = dao.loginUser(login, password);
+            HttpSession session = req.getSession(true);
 
-    JsonElement object = array.get(0);
-    User user = gson.fromJson(object, User.class);
 
-    String nickname = user.getNickname();
-    String file_name = dao.getUserAvatar(nickname);
-    session.setAttribute("user", array.get(0));
-    session.setAttribute("profile", array.get(1));
-    session.setAttribute("credentials", array.get(2));
+            JsonElement object = array.get(0);
+            User user = gson.fromJson(object, User.class);
 
-    if (array.size() == 0) {
-        resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
-    }
-    if (file_name != null) {
-        session.setAttribute("avatar", file_name);
-        //    resp.sendRedirect(req.getServletContext().getContextPath() + "userhomePhoto.jsp");
-        resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
-    } else {
-        resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
-    }
-}catch (SQLException e ){
-    //todo:
-    log.warn("SQLexc");
-}
+            String nickname = user.getNickname();
+            String file_name = dao.getUserAvatar(nickname);
+            session.setAttribute("user", array.get(0));
+            session.setAttribute("profile", array.get(1));
+            session.setAttribute("credentials", array.get(2));
+
+
+            if (array.size() == 0) {
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
+            }
+
+            if (file_name != null) {
+                session.setAttribute("avatar", file_name);
+                System.out.println("filename from login servlet" + file_name);
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
+            } else {
+                session.setAttribute("avatar", null);
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
+            }
+
+        } catch (SQLException e) {
+            log.warn("SQLexcp:  "+ e.getCause() );
+        } catch (NullPointerException e) {
+            req.getRequestDispatcher("login.html").forward(req, resp);
+        }
     }
 }
 

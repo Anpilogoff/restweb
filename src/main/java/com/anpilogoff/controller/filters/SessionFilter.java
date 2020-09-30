@@ -52,45 +52,42 @@ public class SessionFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
-
         String uri = request.getRequestURI();
+
         try {
             if (session == null) {
-                if(uri.contains("home") || uri.contains("upload") || uri.contains("registerprofile")){
-                    response.sendRedirect("login");
+                if (uri.contains("home") || uri.contains("uploadoad") || uri.contains("register")) {
+                    response.sendRedirect("login"); }
+                if (request.getMethod().equals("GET")) {
+                    if (uri.contains("resources")) {
+                        filterChain.doFilter(request, response);
+                    } else if (uri.endsWith("login") ) {
+                        request.getRequestDispatcher("login.html").forward(request, response);
+                    } else if (uri.endsWith("registration")) {
+                        request.getRequestDispatcher("registration.html").forward(request, response); }
+                } else if (request.getMethod().equals("POST")) {
+                    if (uri.endsWith("login")) {
+                        request.getRequestDispatcher("login").forward(request, response);
+                    } else if (uri.endsWith("registration")) {
+                        request.getRequestDispatcher("registration").forward(request, response); }
                 }
-               if(request.getMethod().equals("GET")){
-                   if(uri.endsWith("login")){
-                       request.getRequestDispatcher("login.html").forward(request,response);
-                   }else if(uri.endsWith("registration")){
-                       request.getRequestDispatcher("registration.html").forward(request,response);
-                   }
-               } else if (request.getMethod().equals("POST")) {
-                   if (uri.endsWith("login")) {
-                       request.getRequestDispatcher("login").forward(request,response);
-                   }else if(uri.endsWith("registration")){
-                       request.getRequestDispatcher("registration").forward(request,response);
-                   }
-               }
-            } else{
+            } else {
+                if (request.getRequestURI().endsWith("registerprofile") && request.getSession(false).getAttribute("userNickname") != null) {
+                    request.getRequestDispatcher("registerprofile").forward(request, response);
+                }
                 filterChain.doFilter(request, response);
             }
-        }catch (IOException  | ServletException e){
-            //todo
-            System.out.println();
-        }
-
-
-    }
-
-
-
-        /**
-         * Method is call by servlet container to destroy Servlet object
-         */
-        public void destroy () {
-            config = null;
+        } catch (IOException | ServletException e) {
+            e.printStackTrace();
         }
     }
+
+    /**
+     * Method is call by servlet container to destroy Servlet object
+     */
+    public void destroy() {
+        config = null;
+    }
+}
 
 

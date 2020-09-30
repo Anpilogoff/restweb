@@ -33,9 +33,10 @@ public class ProfileRegistrationServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             if (req.getSession(false).getAttribute("userNickname") == null) {
-                //  req.getSession(false).invalidate();
+                req.getSession(false).invalidate();
                 resp.sendRedirect(req.getServletContext().getContextPath() + "login");
             }
+
             String nickname = (String) req.getSession(false).getAttribute("userNickname");
             String name = req.getParameter("name");
             String surname = req.getParameter("surname");
@@ -47,9 +48,9 @@ public class ProfileRegistrationServlet extends HttpServlet {
             if (profile != null) {
                 log.info("profile created:  " + profile);
                 req.getSession(false).invalidate();
+                log.info("session invalidated "+ req.getSession(false));
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
             } else {
-
                 req.getRequestDispatcher(req.getServletContext().getContextPath() + "/registerprofile").forward(req, resp);
             }
             }catch(ServletException e){

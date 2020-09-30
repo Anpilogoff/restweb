@@ -160,6 +160,7 @@ public class UserDAO implements Dao {
                     connection.close();
                 }
             }else{
+                System.out.println(nickname + " " + loginx + " " + passwordx);
                 return null;
             }
         }
@@ -203,7 +204,7 @@ public class UserDAO implements Dao {
     public String uploadPhoto(String nickname, String file_name) {
         String insertPhoto = "INSERT INTO AVATARS(user_nickname, file_name) VALUES ('" + nickname + "', '" + file_name + "')";
 
-        Connection connection = null;
+        Connection connection;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/restwebDB?serverTimezone=Europe/Moscow&useSSL=no","root","");

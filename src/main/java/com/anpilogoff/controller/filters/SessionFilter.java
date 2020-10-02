@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Enumeration;
 
 
 /**
@@ -22,6 +23,7 @@ import java.io.IOException;
  * 3) Depending on previous actions  result of , redirects to a specific servlet required method;
  * <p>
  * But if "session" isn't null ->  request's dispathcing will be executed by next filter chain element.
+ * prevent pages from unchecked access
  */
 @WebFilter
 public class SessionFilter implements Filter {
@@ -42,7 +44,7 @@ public class SessionFilter implements Filter {
     /**
      * Method check session for null value and in a case of session is null - will check their mappings for compliance
      * with "login","registration","userhome" values and in a case of success result will forward/redirect current req
-     * to a next filter chain element or dispatch it to a next filter chain element processing
+     * to appropriate servlet(or .html/jsp) or dispatch it to a next filter chain element processing
      *
      * @param servletRequest  contains request attributes
      * @param servletResponse designing during request dispatching
@@ -56,28 +58,33 @@ public class SessionFilter implements Filter {
 
         try {
             if (session == null) {
-                if (uri.contains("home") || uri.contains("uploadoad") || uri.contains("register")) {
-                    response.sendRedirect("login"); }
+                if (uri.contains("home") || uri.contains("upload") || uri.contains("register")) {
+                    response.sendRedirect("login");
+                }
                 if (request.getMethod().equals("GET")) {
                     if (uri.contains("resources")) {
                         filterChain.doFilter(request, response);
-                    } else if (uri.endsWith("login") ) {
+                    } else if (uri.endsWith("login")) {
                         request.getRequestDispatcher("login.html").forward(request, response);
                     } else if (uri.endsWith("registration")) {
-                        request.getRequestDispatcher("registration.html").forward(request, response); }
+                        request.getRequestDispatcher("registration.html").forward(request, response);
+                    }
                 } else if (request.getMethod().equals("POST")) {
                     if (uri.endsWith("login")) {
                         request.getRequestDispatcher("login").forward(request, response);
                     } else if (uri.endsWith("registration")) {
-                        request.getRequestDispatcher("registration").forward(request, response); }
+                        request.getRequestDispatcher("registration").forward(request, response);
+                    }
                 }
             } else {
                 if (request.getRequestURI().endsWith("registerprofile") && request.getSession(false).getAttribute("userNickname") != null) {
                     request.getRequestDispatcher("registerprofile").forward(request, response);
+                } else {
+                    filterChain.doFilter(request, response);
                 }
-                filterChain.doFilter(request, response);
             }
         } catch (IOException | ServletException e) {
+            //todo
             e.printStackTrace();
         }
     }

@@ -59,32 +59,25 @@ public class LoginServlet extends HttpServlet {
         try {
 
             JsonArray array = dao.loginUser(login, password);
-            HttpSession session = req.getSession(true);
 
 
             JsonElement object = array.get(0);
             User user = gson.fromJson(object, User.class);
+            HttpSession session = req.getSession(true);
 
-            String nickname = user.getNickname();
-            String file_name = dao.getUserAvatar(nickname);
+           // String nickname = user.getNickname();
+            String file_name = dao.getUserAvatar(user.getNickname());
             session.setAttribute("user", array.get(0));
             session.setAttribute("profile", array.get(1));
             session.setAttribute("credentials", array.get(2));
 
-
-            if (array.size() == 0) {
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
-            }
-
             if (file_name != null) {
                 session.setAttribute("avatar", file_name);
-                System.out.println("filename from login servlet" + file_name);
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
             } else {
                 session.setAttribute("avatar", null);
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
             }
-
         } catch (SQLException e) {
             log.warn("SQLexcp:  "+ e.getCause() );
         } catch (NullPointerException e) {

@@ -21,22 +21,32 @@ public class HomePageFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
-        System.out.println("filter sterp 3");
-
-        if (request.getRequestURI().contains("login") && request.getMethod().equals("GET") ||
-                request.getRequestURI().contains("upload") && request.getMethod().equals("GET") ||
-                request.getRequestURI().contains("registration")) {
-            System.out.println("aga");
-            response.sendRedirect(request.getServletContext().getContextPath() + "/home");
-        }
-        if (request.getRequestURI().endsWith("home")) {
-            if (request.getSession(false).getAttribute("avatar") != null) {
+        if (session != null) {
+            if (request.getSession(false).getAttribute("avatar") != null && request.getRequestURI().endsWith("restweb/home")) {
                 request.getRequestDispatcher("home.jsp").forward(request, response);
-            } else request.getRequestDispatcher("userhome.html").forward(request, response);
-        }
-
-        if (request.getRequestURI().contains("resources") || request.getRequestURI().contains("dynamic")) {
-            filterChain.doFilter(request, response);
+            } else if (request.getSession(false).getAttribute("avatar") == null && request.getRequestURI().endsWith("userhome")) {
+                request.getRequestDispatcher("userhome.html").forward(request, response);
+            } else if (request.getSession(false).getAttribute("avatar") == null && request.getRequestURI().endsWith("restweb/home")) {
+                response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
+            } else if (request.getSession(false).getAttribute("avatar") != null && request.getRequestURI().endsWith("restweb/userhome")) {
+                response.sendRedirect(request.getServletContext().getContextPath() + "/home");
+            }
+            if (request.getRequestURI().contains("resources") || request.getRequestURI().contains("dynamic")) {
+                filterChain.doFilter(request, response);
+            } else if (request.getMethod().equals("GET")) {
+                if (request.getRequestURI().contains("login") || request.getRequestURI().contains("upload") || request.getRequestURI().contains("registration") ||
+                        request.getRequestURI().contains("registerprofile") || request.getRequestURI().contains("uploadservlet")) {
+                    if (request.getSession(false).getAttribute("avatar") != null) {
+                        response.sendRedirect(request.getServletContext().getContextPath() + "/home");
+                    } else if (request.getSession(false).getAttribute("avatar") == null) {
+                        response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
+                    }
+                }
+            }
+        } else {
+            if (request.getRequestURI().contains("resources") || request.getRequestURI().contains("dynamic")) {
+                filterChain.doFilter(request, response);
+            }
         }
     }
 

@@ -19,6 +19,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
+/**Servlet will use to get file from html form, write it on disk space(directory) and insert uploaded file name to DB
+ * 
+ */
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
     private Dao dao;
@@ -37,7 +41,7 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /** user content-storing-directory variable initialized with "Path"-object returned as result of calling
          * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
-        //to do rewrite path on Jelastic disk space path
+        //todo rewrite path on Jelastic disk space path
 
         User user = gson.fromJson((JsonElement) req.getSession(false).getAttribute("user"), User.class);
         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
@@ -46,11 +50,11 @@ public class UploadServlet extends HttpServlet {
 
         Part part = req.getPart("avatar");
         String f_name = part.getSubmittedFileName();
-String uploadedFile = null;
+        String uploadedFile = null;
+
         if (!Files.exists(userDir)) {
             Files.createDirectory(userDir);
             log.info("directory successfully created:  " + userDir);
-            System.out.println("directory successfully created:  " + userDir);
 
             File avatar_file = new File(userDir + File.separator + part.getSubmittedFileName());
             Files.createFile(Paths.get(String.valueOf(avatar_file)));
@@ -66,9 +70,10 @@ String uploadedFile = null;
             }
           //  long y = System.nanoTime();
           //  System.out.println(x-y);
-
+            bos.flush();
             bos.close();
             is.close();
+
             log.info("bytes successfully wrote to file:  " + avatar_file);
 
             uploadedFile = dao.uploadPhoto(user.getNickname(),f_name);

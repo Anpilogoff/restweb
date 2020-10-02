@@ -115,6 +115,7 @@ II) DAO LAYER      |    /
      realize it here:
 
      I) Configure datasource:
+     _________________________
 
 
      1)Adding to web.xml Data Source reference:
@@ -141,8 +142,152 @@ II) DAO LAYER      |    /
          </Resource>
         </Context>
 
-     3)UserDAO "registerNewUser"/"registerNewProfile"  methods describing:
-        1)To register new User with values getting by servlets from "registration"/"registerprofile"-pages
+
+
+
+
+     II) Describing DML-methods of UserDAO class:
+     ______________________________________________
+
+
+      1)Describing  of RegisterServlet(POST-method)  and UserDAO(registerNewUser-method) interaction:
+
+        -To register new User with values obtained  by servlets from same registration.html page  next steps will performed:
+
+            Values will be use to initialize new user entity object which will use as argument in "dao.registerNewUser"- method
+            after which execution same user entity object will be reinitialized...
+                              ..in a case of success it will be initialized with same user-object values
+                              ..in unsuccess case it will be initialized with value of null
+            and then checking that user object checking on null will be performed and..
+                               ..in case of (user != null) RegisterServlet will create new session with attribute("nickname")
+                               which will be use in POST-method of ProfileRegistrationServlet
+                               ..in case of (user == null..in case if user with same values are already exist) - current
+                                 client will be redirect to LoginServlet(GET-method)
+                                 GET-method from which request processing will be forward to "login.html"-page
+
+      2)Describing  of ProfileRegisterServlet(POST-method) and UserDAO(registerNewProfile-method) interaction:
+
+        -That step will perform only in success collective executing of upper-described methods(session creating and attrs setting):
+
+            Current request session attribute "nickName"-value will and registerprofile-html page values will be used as
+            arguments of UserDAO(registerNewProfile-method) which executing result(null-if profile values were not inserted ||
+             new profile object, if profile values were successuflly added in restwebdb.profiles table) will use
+            in next not null checking and..
+
+                                ..in case of not null ->current session will be invalidated and  client will be redirect to LoginServlet(GET-method)
+                                ..in null case -> client will be forward to "registerprofile.html-page"
+
+
+          After success executing of 2 previous described steps new user and it's profile will be successfully created,
+          hence(следовательно), that user can pass authentication described below..in step (3)
+
+      3)Describing of LoginServlet(POST-method) and UserDAO(loginUser-method) interaction:
+        -To execute UserDAO(loginUser-method) - LoginServlet(POST-method) will obtain @login and @password values from login.html page
+         and insert them as arguments to UserDAO(login-method) inside whom will initialize(inside dao method)
+         JsonObjects("user","profile","credentials") and add them into returnable  JsonArray-type array, which elements will use to..
+                                ..initialize the object of the current user that is trying to log in and whose "get-name" method,
+                                    when executed, will return a string representation of the current username, which is used further
+                                    for checking current user avatar on exist in database table and in a true-case
+                                        ->  set current user as session attribute
+                                            or in case of false
+                                        -> set current session attribute avatar-file_name with null value
+
+                                ..use to set as session attributes for further  logic performing by appropriate servlets and filters
+
+
+      4)Describingof UploadServlet and UserDAO(dao.uploadPhoto) interaction:
+       -After successful authorization user will be redirected on "userhome.html"-page, where instead of the "avatar"
+            of real user, the photo of "unknown user" will be displayed with 2 buttons "select"/"send" below it and in case if
+            user is on "userhome.html" page and clicks on "select" button - a file selection window will open, upon further
+            clicking on "send" button - "POST"-request, addressed to the "UploadServlet" servlet will be sent to the application
+            server...
+         After "POST" request received by application server and passed to "UploadServlet" servlet  -  upload servlet
+            doPost method inside whom will realized UploadServlet class "doPost" method and UserDAO  class "uploadPhoto" method interaction
+
+        -User photo uploading from "userhome.html" and it's further writing to pre created package and file of the uploaded photo
+            will be performed by UPLOADSERVLET, and file name of this photo will be inserted to "restwebdb.avatars" table
+            by UserDAO class (uploadPhoto-method):
+
+         -The way to upload file from html i selected is "Multipart-File-Uploading" so in "userhome.html" page
+            form attribute "enchtype" will be "multipart/form-data" <--- encoding type which give opportunity to send files
+            without special encoding and with absence of necessity(отстутс. необх-ти) to additional decode performing..
+            So the servlet will be tagged with @MultipartConfig annotation(on current moment without inside params) and
+            during it's performing:
+                        +User class object will be initialized with parsed session "user" attribute which represents as Json Element;
+
+                        +On file system way "E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" will be create new package
+                        with a name of appropriate user Nickname(curUserNickname*)
+
+                        +On file system way "E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\curUserNickname\\
+
+                        +using an object of class Part, the uploaded file will be received (in the form of a Part object),
+                          and then based on the directory created in the previous step for the current user avatar and the name
+                          of the uploaded file, an object of the File class (argument to OutputStream) will be initialized.
+
+                        +using the Files class, an EMPTY file will be created in the file system with uploadable file name.
+
+                        +InputStream will be received from the previously created Part object
+
+                        +Recording from BufferedInputStream with parameter of InputStream received from previously created Part object
+                         to BufferedOutputStream with parameter of OutputStream containing File object and representing empty file
+                         earlier created in file system
+
+         -After successfully uploading the photo file, UploadServlet will redirect the current user request to the resource
+          whose URI ends with "/ home" and then after intercepting with a one of filter chain elements it will be forward to "home.html" page
+          on which instead of "unknown user" -  uploaded avatar will shown.
+
+
+        5)Describing of LoginServlet(doPost-method) and UserDAO(getUserAvatar) interaction:
+          -dao.getUserAvatar will be used by LoginServlet to set the file name contained in table "restwebdb.avatars"
+           as a session attribute to redirect the user to the "home.jsp" (not "userhome.html") page where using the scriptlet
+           the previously uploaded avatar will be shown.
+
+
+
+                   |\
+                   | \
+                   |  \
+===================|   \
+                   |    \
+III) FILTER CHAIN   |    /
+                   |   /
+===================|  /
+                   | /
+                   |/
+
+
+-           //todo: Describing of Filter Chain..
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -18,14 +18,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * receive req/resp object from
- *
- * @see com.anpilogoff.controller.filters.SessionFilter
- * In a case when session is null
- * @see LoginServlet#doGet creates a session with attribute name "authStatus" and its value "non authorized"
- * and forwad request to login.html from where with "submit"-button pushing request will be received by
- * @see LoginServlet#doPost (HttpServletRequest, HttpServletResponse) method will be called
- * Otherwise (if session isn't null -
+ * That class in case of nullable session will get "login"/"password" string values from "login.html"-page, and after that
+ * will create variable of type
+ * @see JsonArray which will be initialized with returnable JsonArray class object through executing  method
+ * @see UserDAO#loginUser(String, String), and after it's initializing - objct of class
+ * @see User will be declare and initialize by parcing of 1-st element of returned JsonArray class array and use to get
+ * current trying to login user's nickname(to get avatar-file name from data base) and other array element to set them
+ * as session attributes..
+ * In case of NPE(array not initialized) - user will forward to same "login.html" page, in success case - avatar file
+ * name will be checks on null and depending on this fact user will be redirect on "/home" or "/userhome" uri
  **/
 @WebServlet
 public class LoginServlet extends HttpServlet {

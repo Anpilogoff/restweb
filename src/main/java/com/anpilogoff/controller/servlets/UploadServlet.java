@@ -18,11 +18,16 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
 
 
-/**Servlet will use to get file from html form, write it on disk space(directory) and insert uploaded file name to DB
- * 
+/**That servlet is use to get uploading from html page img/* avatar file, create directory with current user nickname,
+ * create avatar file in that directory, write bytes in it and insert this file name to database for further loading
+ * during "home.html" page rendering
+ * @see MultipartConfig annotation gives opportunity to get uploading file without special decoding using
+ * @see Part class object
  */
+
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
     private Dao dao;
@@ -39,19 +44,46 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /** user content-storing-directory variable initialized with "Path"-object returned as result of calling
-         * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
-        //todo rewrite path on Jelastic disk space path
+
+
 
         User user = gson.fromJson((JsonElement) req.getSession(false).getAttribute("user"), User.class);
+
+        /**
+         * user content-storing-directory variable initialized with "Path"-object returned as result of calling
+         * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
+        //todo rewrite path on Jelastic disk space path
         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
-        System.out.println("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
 
-
+        /**
+         * @see Part - class represents a part or form item that was received within a multipart/form-data POST request
+         */
         Part part = req.getPart("avatar");
-        String f_name = part.getSubmittedFileName();
+
+        /**
+         * Variable represents uploaded file name, inserted in data base and setted as current session attribute
+         */
         String uploadedFile = null;
 
+
+        /**
+         * That method use to create directory/(if not exists) for current user's images represents as
+         * @see Path variable initialized with a result of
+         * @see Paths#get(Uri iri) method with income string argument such as:
+         * string "E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + "nickname" of current request  user
+         * Then method creates and initialize object of future file-system file representing through
+         * @see File class object with income string value  argument obtained on previous step and then with a help of
+         * @see Files class
+         * @see Files#createFile(Path, FileAttribute[]) method - creates an EMPTY-file in file-system...
+         * After file has been created - method get InputStream from
+         * @see Part class object using it's method
+         * @see Part#getInputStream(),
+         * create OutputStream with injected as argument previously created new EMPTY-file, wrap that streams to
+         * BufferedIn/Output streams and exucute it's bytes writing..
+         * After streams closing - current user's nickname and uploaded file are using as argument in
+         * @see UserDAO#uploadPhoto(String, String) method which returnable result initialize  previous declared
+         * string variable "uploadedFile" which will be set as sessiaon attribute
+         */
         if (!Files.exists(userDir)) {
             Files.createDirectory(userDir);
             log.info("directory successfully created:  " + userDir);
@@ -70,13 +102,12 @@ public class UploadServlet extends HttpServlet {
             }
           //  long y = System.nanoTime();
           //  System.out.println(x-y);
-            bos.flush();
             bos.close();
             is.close();
 
             log.info("bytes successfully wrote to file:  " + avatar_file);
 
-            uploadedFile = dao.uploadPhoto(user.getNickname(),f_name);
+            uploadedFile = dao.uploadPhoto(user.getNickname(),part.getSubmittedFileName());
             }
 
         if(uploadedFile.length()>0  ){

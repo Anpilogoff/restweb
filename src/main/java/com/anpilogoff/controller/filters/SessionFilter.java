@@ -12,18 +12,25 @@ import java.util.Enumeration;
 
 
 /**
- * Each of the incoming requests will go through the session filter and if requests \"session\" attribute value  of the will be zero - SessionFilter will check the request, and more specifically:
- * 1) checking request  mapping-string ends with:
- * -'login',
- * -'registration',
+ * Each of the incoming requests will go through the session filter and if requests \"session\" attribute value  is
+ *  be zero - SessionFilter will check the request on:
+ * 1) containing one of below words in URI:
+ * -/home,
+ * -/upload,
  * -'registerprofile '
  * <p>
  * 2) checks the request type
  * <p>
  * 3) Depending on previous actions  result of , redirects to a specific servlet required method;
  * <p>
- * But if "session" isn't null ->  request's dispathcing will be executed by next filter chain element.
- * prevent pages from unchecked access
+ * But if "session" isn't null -> request URi will check on equals to "registerprofile" and it's session "nick" attribute
+ * and in success case - request processing will forward to
+ * @see com.anpilogoff.controller.servlets.ProfileRegistrationServlet ("/registerprofile"), else -
+ * @see FilterChain#doFilter(ServletRequest, ServletResponse) will be called and request's processing will be perform
+ * by the next filter chain element.
+ *
+ * In case when session is "null"
+ *
  */
 @WebFilter
 public class SessionFilter implements Filter {
@@ -31,25 +38,19 @@ public class SessionFilter implements Filter {
     private static final Logger log = Logger.getLogger(SessionFilter.class);
     private FilterConfig config;
 
-    /**
-     * Method called by Servlet Container, initialize filter object with values from deployment descriptor
-     *
-     * @param filterConfig will be initialized with Servlet Container
-     */
+    /*** Method called by Servlet Container, initialize filter object with values from deployment descriptor
+     * @param filterConfig will be initialized with Servlet Container*/
     public void init(FilterConfig filterConfig) {
         this.config = filterConfig;
     }
 
 
-    /**
-     * Method check session for null value and in a case of session is null - will check their mappings for compliance
+    /*** Method check session for null value and in a case of session is null - will check their mappings for compliance
      * with "login","registration","userhome" values and in a case of success result will forward/redirect current req
-     * to appropriate servlet(or .html/jsp) or dispatch it to a next filter chain element processing
-     *
+     * to appropriate servlet(html/jsp). In "not null session case - request processing will pass to the next FCE(elemt)
      * @param servletRequest  contains request attributes
      * @param servletResponse designing during request dispatching
-     * @param filterChain     contains all web filters described in deployment descriptor
-     */
+     * @param filterChain     contains all web filters described in deployment descriptor*/
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;

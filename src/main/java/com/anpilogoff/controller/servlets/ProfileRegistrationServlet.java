@@ -15,6 +15,15 @@ import java.lang.management.GarbageCollectorMXBean;
 import java.util.Enumeration;
 
 /**
+ *That servlet will be use after servlet
+ * @see RegistrationServlet which open a new session and add attribute "userNickname" in it, and role of
+ * @see ProfileRegistrationServlet is to get "userNickname" attribute from earlier opened http-session as well as
+ * "registerprofile.html" page parameters such as:
+ * name, surname, age, gender, country.. and use them as income arguments in method of
+ * @see UserDAO class
+ * @see UserDAO#registerNewProfile(String, String, String, int, String, String)  method returnable result of which
+ * will initialize object of
+ * @see Profile class, and in case of success profile registration - client will be redirect on resource "/login"
  *
  */
 public class ProfileRegistrationServlet extends HttpServlet {

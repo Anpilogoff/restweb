@@ -1,6 +1,9 @@
 package com.anpilogoff.controller.filters;
 
 import org.apache.log4j.Logger;
+import org.ehcache.CacheManager;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.xml.XmlConfiguration;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -8,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Enumeration;
 
 
@@ -57,6 +61,10 @@ public class SessionFilter implements Filter {
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
 
+
+        System.out.println("URI:  " + uri);
+        System.out.println("Session:  " + session);
+
         try {
             if (session == null) {
                 if (uri.contains("home") || uri.contains("upload") || uri.contains("register")) {
@@ -77,9 +85,13 @@ public class SessionFilter implements Filter {
                         request.getRequestDispatcher("registration").forward(request, response);
                     }
                 }
-            } else {
+            }else {
                 if (request.getRequestURI().endsWith("registerprofile") && request.getSession(false).getAttribute("userNickname") != null) {
                     request.getRequestDispatcher("registerprofile").forward(request, response);
+                }else if (request.getRequestURI().endsWith("logout")){
+                    request.getRequestDispatcher("/logout").forward(request,response);
+                }else if(request.getRequestURI().contains("index.html")){
+                    request.getRequestDispatcher("index.html").forward(request,response);
                 } else {
                     filterChain.doFilter(request, response);
                 }

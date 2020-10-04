@@ -1,23 +1,33 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.anpilogoff.model.entity.User" %>
 <%@ page import="com.google.gson.JsonElement" %>
+<%@ page import="java.io.File" %>
 <html>
 <head>
     <style>
         body{
             position: absolute;
-            background-image: url("/resources/w.jpg");
+            background-image: url("resources/w.jpg");
+        }
+
+        #logout{
+
+        }
+
+        #logout:hover{
+            box-shadow: 0 0 1px 1px red;
+
         }
         form {
-            position: absolute;
+            position: relative;
             width: 280px;
             height: 200px;
         }
         table{
-            position: absolute;
+            position: relative;
         }
         #unknown{
-            position: absolute;
+            position: relative;
             box-shadow: #2b542c 5px 5px 15px 15px;
             margin-top: 65px;
             margin-left: 20px;
@@ -30,23 +40,43 @@
             width: 120px;
         }
 
-    </style>cccccc
+        #logout{
+            position: relative;
+            top: 150px;
+            left: 1000px;
+
+
+        }
+
+    </style>
 
     <% Gson gson = new Gson();
         User user =  gson.fromJson((JsonElement) request.getSession(false).getAttribute("user"), User.class);
-        String file = (String) request.getSession(false).getAttribute("avatar");
-        System.out.println(file);%>
+        String avatar = (String) request.getSession(false).getAttribute("avatar");
+        String nickname = user.getNickname();%>
+
 </head>
 <body>
 <audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
 
 <form name="photo_upload" enctype='multipart/form-data' method="post" action="uploadservlet">
-    <table><img src="dynamic/images/avatars/<%=user.getNickname()%>/<%= file%>" datatype="img/*" id="unknown">
+    <section>
 
         <tr>
-            <td><input type="file" multiple accept="image/*" id="x" name="avatar"></td><td><input type="submit" value="send photo" id="submit_button"></td>
+            <td><a href="chat.jsp">Let's CHAT</a></td>
+
+            <td><a href="logout" id="logout">Log_out</a></td>
         </tr>
-    </table>
+
+        <th>
+
+        <td>
+            <img src="dynamic/images/avatars/<%=user.getNickname()%>/<%= avatar%>" datatype="img/*" id="unknown">
+        </td>
+
+
+        </th>
+    </section>
 
 
 

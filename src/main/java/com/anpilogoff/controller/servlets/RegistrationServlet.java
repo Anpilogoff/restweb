@@ -3,14 +3,14 @@ package com.anpilogoff.controller.servlets;
 import com.anpilogoff.model.connection.DBconnector;
 import com.anpilogoff.model.dao.UserDAO;
 import com.anpilogoff.model.entity.User;
-import org.apache.log4j.Logger;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import org.apache.log4j.Logger;
+
 
 
 /**
@@ -53,7 +53,6 @@ public class RegistrationServlet extends HttpServlet {
             log.info("New user registered:  " + user);
             HttpSession session = req.getSession(true);
             session.setAttribute("userNickname", user.getNickname());
-
             req.getRequestDispatcher("registerprofile.html").forward(req,resp);
         }else {
             resp.getWriter().write("sorry but user with same credentials are already registered");

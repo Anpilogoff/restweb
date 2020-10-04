@@ -31,9 +31,11 @@ import java.sql.SQLException;
 @WebServlet
 public class LoginServlet extends HttpServlet {
     private Logger log;
-
     private UserDAO dao;
     private Gson gson;
+
+
+
 
     @Override
     public void init() {
@@ -43,31 +45,39 @@ public class LoginServlet extends HttpServlet {
         log = Logger.getLogger(LoginServlet.class);
     }
 
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/login.html").forward(req, resp);
     }
 
+
+
+
+
     /**
      * @param req  is object created by Tomcat after request receiving and initialized with request attributes
      * @param resp is empty-object created by Tomcat after request receiving(will be initialized when method
-     *             * @see HttpServlet#service(ServletRequest, ServletResponse) will be called
+     * @see HttpServlet#service(HttpServletRequest, HttpServletResponse) will be called
      **/
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         try {
-
             JsonArray array = dao.loginUser(login, password);
-
 
             JsonElement object = array.get(0);
             User user = gson.fromJson(object, User.class);
-            HttpSession session = req.getSession(true);
 
-           // String nickname = user.getNickname();
+            System.out.println("object userJson from LOGINSERVLET post method:       " + object);
+            System.out.println("user parsed from userJson object " + user.getNickname());
+
+
+            HttpSession session = req.getSession(true);
             String file_name = dao.getUserAvatar(user.getNickname());
+
             session.setAttribute("user", array.get(0));
             session.setAttribute("profile", array.get(1));
             session.setAttribute("credentials", array.get(2));
@@ -80,7 +90,7 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
             }
         } catch (SQLException e) {
-            log.warn("SQLexcp:  "+ e.getCause() );
+            log.warn("SQLexception:  " + e.getCause() );
         } catch (NullPointerException e) {
             req.getRequestDispatcher("login.html").forward(req, resp);
         }

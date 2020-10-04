@@ -125,6 +125,7 @@ public class UserDAO implements Dao {
         String nickname = null;
         String loginx = null;
         String passwordx = null;
+        String email = null;
 
         String name = null;
         String surname = null;
@@ -139,44 +140,46 @@ public class UserDAO implements Dao {
             PreparedStatement statement = connection.prepareStatement(IS_DB_CONTAIN_USER);
             ResultSet resultset = statement.executeQuery();
             while (resultset.next()) {
-                nickname = resultset.getString("nickname");
+
                 loginx = resultset.getString("login");
                 passwordx = resultset.getString("password");
-                user = new User(nickname, loginx, passwordx, role);
+                nickname = resultset.getString("nickname");
+                email = resultset.getString("email");
+                user = new User(loginx, passwordx, nickname, email, role);
             }
-
-            if (nickname != null && loginx != null && passwordx != null) {
-                statement = connection.prepareStatement(IF_USER_CONTAINS_SELECT_PROFILE);
-                statement.setString(1, user.getNickname());
-                ResultSet resultSet = statement.executeQuery();
-                if (resultSet != null) {
-                    while (resultSet.next()) {
-                        name = resultSet.getString("name");
-                        surname = resultSet.getString("surname");
-                        age = resultSet.getInt("age");
-                        gender = resultSet.getString("gender");
-                        country = resultSet.getString("country");
+            if (login.equals(loginx) && password.equals(passwordx)) {
+                if (nickname != null && loginx != null && passwordx != null) {
+                    statement = connection.prepareStatement(IF_USER_CONTAINS_SELECT_PROFILE);
+                    statement.setString(1, user.getNickname());
+                    ResultSet resultSet = statement.executeQuery();
+                    if (resultSet != null) {
+                        while (resultSet.next()) {
+                            name = resultSet.getString("name");
+                            surname = resultSet.getString("surname");
+                            age = resultSet.getInt("age");
+                            gender = resultSet.getString("gender");
+                            country = resultSet.getString("country");
+                        }
+                        statement.close();
+                        connection.close();
                     }
-                    statement.close();
-                    connection.close();
+                } else {
+                    System.out.println(nickname + " " + loginx + " " + passwordx);
+                    return null;
                 }
-            }else{
-                System.out.println(nickname + " " + loginx + " " + passwordx);
-                return null;
             }
         }
-
         Profile profile = new Profile(nickname,name,surname,age,gender,country);
         UserCredentials credentials = new UserCredentials(login,password);
 
 
         JsonObject userJson = new JsonObject();
-        assert user != null;
-
 
         userJson.addProperty("nickname",user.getNickname());
         userJson.addProperty("role",user.getRole());
         userJson.addProperty("email",user.getEmail());
+
+        System.out.println(userJson.get("nickname") + "  nickname from userJson USERDAO login method");
 
         JsonObject profileJson = new JsonObject();
         profileJson.addProperty("name", profile.getName());

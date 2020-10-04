@@ -35,7 +35,7 @@ public class HomePageFilter implements Filter {
                 filterChain.doFilter(request, response);
             } else if (request.getMethod().equals("GET")) {
                 if (request.getRequestURI().contains("login") || request.getRequestURI().contains("upload") || request.getRequestURI().contains("registration") ||
-                        request.getRequestURI().contains("registerprofile") || request.getRequestURI().contains("uploadservlet")) {
+                        request.getRequestURI().contains("registerprofile")|| request.getRequestURI().contains("uploadservlet")) {
                     if (request.getSession(false).getAttribute("avatar") != null) {
                         response.sendRedirect(request.getServletContext().getContextPath() + "/home");
                     } else if (request.getSession(false).getAttribute("avatar") == null) {
@@ -43,10 +43,12 @@ public class HomePageFilter implements Filter {
                     }
                 }
             }
+            filterChain.doFilter(request,response);
         } else {
             if (request.getRequestURI().contains("resources") || request.getRequestURI().contains("dynamic")) {
                 filterChain.doFilter(request, response);
             }
+            filterChain.doFilter(request,response);
         }
     }
 

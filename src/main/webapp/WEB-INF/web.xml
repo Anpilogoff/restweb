@@ -51,6 +51,11 @@
         <servlet-class>com.anpilogoff.controller.servlets.HomeServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.anpilogoff.controller.servlets.LogoutServlet</servlet-class>
+    </servlet>
+
     <filter-mapping>
         <filter-name>sessionFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -93,6 +98,11 @@
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
     <resource-ref>

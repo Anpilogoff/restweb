@@ -195,7 +195,7 @@ II) DAO LAYER      |    /
                                 ..use to set as session attributes for further  logic performing by appropriate servlets and filters
 
 
-      4)Describingof UploadServlet and UserDAO(dao.uploadPhoto) interaction:
+      4)Describing of UploadServlet and UserDAO(dao.uploadPhoto) interaction:
        -After successful authorization user will be redirected on "userhome.html"-page, where instead of the "avatar"
             of real user, the photo of "unknown user" will be displayed with 2 buttons "select"/"send" below it and in case if
             user is on "userhome.html" page and clicks on "select" button - a file selection window will open, upon further

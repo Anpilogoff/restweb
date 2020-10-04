@@ -5,16 +5,26 @@ import com.anpilogoff.model.dao.UserDAO;
 import com.anpilogoff.model.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
-
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.xml.XmlConfiguration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URI;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,28 +42,26 @@ import java.nio.file.attribute.FileAttribute;
 public class UploadServlet extends HttpServlet {
     private Dao dao;
     private Gson gson;
-    private Logger log = null;
+    private Logger log = Logger.getLogger(UploadServlet.class);
 
 
     @Override
     public void init() {
         dao = new UserDAO();
         gson = new Gson();
-        log = Logger.getLogger(UploadServlet.class);
     }
 
+
+    @SneakyThrows
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         User user = gson.fromJson((JsonElement) req.getSession(false).getAttribute("user"), User.class);
 
         /**
          * user content-storing-directory variable initialized with "Path"-object returned as result of calling
          * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
-        //todo rewrite path on Jelastic disk space path
-        Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
+         //todo rewrite path on Jelastic disk space path
+         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
 
         /**
          * @see Part - class represents a part or form item that was received within a multipart/form-data POST request
@@ -96,30 +104,36 @@ public class UploadServlet extends HttpServlet {
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(avatar_file));
 
             final byte[] bytes = new byte[4*1024];
-          //  long x = System.nanoTime();
+
+
+
+            //long x = System.nanoTime();
             while (is.read(bytes) != -1) {
                 bos.write(bytes);
             }
-          //  long y = System.nanoTime();
-          //  System.out.println(x-y);
+            //long y = System.nanoTime();
+
+
             bos.close();
             is.close();
-
             log.info("bytes successfully wrote to file:  " + avatar_file);
 
             uploadedFile = dao.uploadPhoto(user.getNickname(),part.getSubmittedFileName());
-            }
+            System.out.println("photo uploaded...user has been redirected to login.html");
+            req.getSession(false).setAttribute("avatar", avatar_file);
 
-        if(uploadedFile.length()>0  ){
-            resp.setContentType("img/jpeg");
-
-            req.getSession(false).setAttribute("avatar",uploadedFile);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
+            }
+
+//        if(uploadedFile.length()>0  ){
+//            resp.setContentType("img/*");
+//
+//            req.getSession(false).setAttribute("avatar",uploadedFile);
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+
         }
     }
-}

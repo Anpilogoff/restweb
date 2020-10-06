@@ -11,7 +11,7 @@ import java.util.*;
 /**
  * WebSocket endpoint for the chat messages.
  */
-@ServerEndpoint(value = "/endpoint")
+@ServerEndpoint(value = "/chat")
 public class ChatEndpoint {
     private static Map<RemoteEndpoint.Basic, Session> sessions = Collections.synchronizedMap(new HashMap<>());
 
@@ -46,6 +46,7 @@ public class ChatEndpoint {
 
     @OnClose
     public void onClose(Session session) {
+        System.out.println("opened session: "+ sessions);
         sessions.remove(session.getBasicRemote());
 
     }

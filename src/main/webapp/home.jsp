@@ -44,22 +44,21 @@
             position: relative;
             top: 150px;
             left: 1000px;
-
-
         }
 
     </style>
 
     <% Gson gson = new Gson();
         User user =  gson.fromJson((JsonElement) request.getSession(false).getAttribute("user"), User.class);
-        String avatar = (String) request.getSession(false).getAttribute("avatar");
+       String avatar = (String) request.getSession(false).getAttribute("avatar");
+//        String file = (String) request.getSession(false).getAttribute("avatar");
         String nickname = user.getNickname();%>
 
 </head>
 <body>
 <audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
 
-<form name="photo_upload" enctype='multipart/form-data' method="post" action="uploadservlet">
+<form name="photo_upload" enctype='multipart/form-data' method="post" action="uploadservlet" >
     <section>
 
         <tr>
@@ -68,14 +67,16 @@
             <td><a href="logout" id="logout">Log_out</a></td>
         </tr>
 
-        <th>
 
+        <!-- Someday it'll  -->
         <td>
-            <img src="dynamic/images/avatars/<%=user.getNickname()%>/<%= avatar%>" datatype="img/*" id="unknown">
+            <img src="C:/Tomcat8/temp/<%= user.getNickname()%>/<%=avatar%>" datatype="img/*" id="unknown">
         </td>
 
 
-        </th>
+        <! --  http://localhost:8080/temp/<=nickname>/<=avatar>  --->
+
+
     </section>
 
 

@@ -61,7 +61,6 @@ public class SessionFilter implements Filter {
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
 
-
         System.out.println("URI:  " + uri);
         System.out.println("Session:  " + session);
 

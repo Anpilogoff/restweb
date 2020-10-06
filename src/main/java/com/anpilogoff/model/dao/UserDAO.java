@@ -44,7 +44,7 @@ public class UserDAO implements Dao {
             log.info("Connection was  created succesfully:  " + connection);
             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_FROM_DB);
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            
             if (resultSet.next()) {
                 isEmpty = false;
                 return null;
@@ -63,6 +63,7 @@ public class UserDAO implements Dao {
                 connection.commit();
 
                 if(isInserted == 1){
+                    System.out.println(isInserted);
                     preparedStatement.close();
                     connection.close();
                 }

@@ -26,15 +26,13 @@ import java.sql.SQLException;
  * current trying to login user's nickname(to get avatar-file name from data base) and other array element to set them
  * as session attributes..
  * In case of NPE(array not initialized) - user will forward to same "login.html" page, in success case - avatar file
- * name will be checks on null and depending on this fact user will be redirect on "/home" or "/userhome" uri
+ * name will be checked on null and depending on this fact user will be redirect on "/home" or "/userhome" uri
  **/
 @WebServlet
 public class LoginServlet extends HttpServlet {
     private Logger log;
     private UserDAO dao;
     private Gson gson;
-
-
 
 
     @Override
@@ -51,9 +49,6 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/login.html").forward(req, resp);
     }
-
-
-
 
 
     /**
@@ -92,6 +87,8 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException e) {
             log.warn("SQLexception:  " + e.getCause() );
         } catch (NullPointerException e) {
+            //проверка наличия файла в папке temp
+            //else - redirect на userhome
             req.getRequestDispatcher("login.html").forward(req, resp);
         }
     }

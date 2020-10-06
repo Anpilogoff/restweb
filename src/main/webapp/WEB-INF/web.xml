@@ -112,4 +112,8 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <listener>
+        <listener-class>com.anpilogoff.controller.listeners.ActiveSessionListener</listener-class>
+    </listener>
+
 </web-app>

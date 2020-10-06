@@ -6,7 +6,7 @@ window.addEventListener("load", function () {
         messageInput = document.getElementById("message");
 
         // Connect to the WebSocket server
-        socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restweb/endpoint");
+        socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restweb/chat");
 
         // Receive WebSocket messages
         socket.onmessage = function (message) {

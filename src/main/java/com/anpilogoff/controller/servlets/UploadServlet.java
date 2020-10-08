@@ -49,15 +49,13 @@ public class UploadServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        User user = gson.fromJson((JsonElement  ) req.getSession(false).getAttribute("user"), User.class);
+        User user = gson.fromJson((JsonElement) req.getSession(false).getAttribute("user"), User.class);
         /**
          * user content-storing-directory variable initialized with "Path"-object returned as result of calling
          * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
-         //todo rewrite path on Jelastic disk space path
-         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
-         Path userTempDir = Paths.get("C:\\Tomcat8\\temp\\"+user.getNickname()+"\\" );
-
-
+        //todo rewrite path on Jelastic disk space path
+        Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
+     Path dirFileNameTempDir = Paths.get("C:\\Tomcat8\\temp\\" + user.getNickname());
 
 
         /**
@@ -66,13 +64,11 @@ public class UploadServlet extends HttpServlet {
         Part part = req.getPart("avatar");
 
 
-
-
         /**
          * Variable represents uploaded file name, inserted in data base and setted as current session attribute
          */
         String uploadedFile = null;
-
+        File avatar_file = null;
 
         /**
          * That method use to create directory/(if not exists) for current user's images represents as
@@ -96,71 +92,84 @@ public class UploadServlet extends HttpServlet {
             Files.createDirectory(userDir);
             log.info("User directory successfully created:  " + userDir);
 
-            File avatar_file = new File(userDir + File.separator + part.getSubmittedFileName());
+            avatar_file = new File(userDir + File.separator + part.getSubmittedFileName());
             Files.createFile(Paths.get(String.valueOf(avatar_file)));
             log.info("Empty avatar file successfully created:  " + avatar_file);
 
+            File tempfile = File.createTempFile(part.getName(),".jpg",new File("C:\\Tomcat8\\temp"));
+            System.out.println("Temporary file successfully created: " + tempfile.getAbsolutePath());
             BufferedInputStream is = new BufferedInputStream(part.getInputStream());
             BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(avatar_file));
+            BufferedOutputStream boos = new BufferedOutputStream(new FileOutputStream(tempfile));
 
-            final byte[] bytes = new byte[4*1024];
+            final byte[] bytes = new byte[16 * 1024];
 
             while (is.read(bytes) != -1) {
                 bos.write(bytes);
+                boos.write(bytes);
             }
 
             log.info("bytes successfully wrote to file:  " + avatar_file);
-
+            boos.close();
             bos.close();
             is.close();
 
-            if(!Files.exists(userTempDir)){
-                Files.createDirectory(userTempDir);
-                log.info("User'temporary directory successfully created: " + userTempDir);
+            System.out.println("upload dao method worked correctly:  dao methods!!!");
 
-                File temp_file = new File(userTempDir + File.separator + part.getSubmittedFileName());
-                Files.copy(avatar_file.toPath(),new FileOutputStream(temp_file));
+            uploadedFile = dao.uploadPhoto(user.getNickname(), part.getSubmittedFileName());
+            System.out.println("upload method warker successfully");
+            System.out.println("photo uploaded...user has been redirected to login.html");
 
-               // Files.createFile(Paths.get(String.valueOf(temp_file)));
-                log.info("Empty avatar temporary file successully created: " + temp_file );
-                System.out.println(temp_file);
-                System.out.println("file has been copied");
-
-                JsonElement userJson = (JsonElement) req.getSession(false).getAttribute("user");
-                JsonElement profileJson = (JsonElement) req.getSession(false).getAttribute("profile");
-                JsonElement credentials = (JsonElement) req.getSession(false).getAttribute("credentials");
-
-                req.getSession(false).invalidate();
-                HttpSession session = req.getSession(true);
-
-                User userFromSession = gson.fromJson(userJson, User.class);
-
-                session.setAttribute("user", userJson);
-                session.setAttribute("profile", profileJson);
-                session.setAttribute("credentials",credentials);
+            req.getSession(false).setAttribute("avatar", uploadedFile);
+            Thread.sleep(5000);
 
 
-                //req.getRequestDispatcher("/home").forward(req,resp);
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
-            }
+//           path.toFile().deleteOnExit();
+
+//            if(!File.createTempFile(userTempDir)){
+//                Files.createDirectory(userTempDir);
+//                log.info("User'temporary directory successfully created: " + userTempDir);
+//
+//                File temp_file = new File(userTempDir + File.separator + part.getSubmittedFileName());
+//                Files.copy(avatar_file.toPath(),new FileOutputStream(temp_file));
+//
+//               // Files.createFile(Paths.get(String.valueOf(temp_file)));
+//                log.info("Empty avatar temporary file successully created: " + temp_file );
+//                System.out.println(temp_file);
+//                System.out.println("file has been copied");
+//
+//                JsonElement userJson = (JsonElement) req.getSession(false).getAttribute("user");
+//                JsonElement profileJson = (JsonElement) req.getSession(false).getAttribute("profile");
+//                JsonElement credentials = (JsonElement) req.getSession(false).getAttribute("credentials");
+//
+//                req.getSession(false).invalidate();
+//                HttpSession session = req.getSession(true);
+//
+//                User userFromSession = gson.fromJson(userJson, User.class);
+//
+//                session.setAttribute("user", userJson);
+//                session.setAttribute("profile", profileJson);
+//                session.setAttribute("credentials",credentials);
+//
+//
+//                //req.getRequestDispatcher("/home").forward(req,resp);
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
         }
-
-
 
 
 //
 //            BufferedInputStream iss = new BufferedInputStream(part.getInputStream());
 //            BufferedOutputStream boos = new BufferedOutputStream(new FileOutputStream(temp_file));
+//========================================================================================================
+//        uploadedFile = dao.uploadPhoto(user.getNickname(), part.getSubmittedFileName());
+//
+//
+//        System.out.println("photo uploaded...user has been redirected to login.html");
+//
+//        req.getSession(false).setAttribute("avatar", uploadedFile);
+//        Thread.sleep(3500);
+//        resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
 
-            uploadedFile = dao.uploadPhoto(user.getNickname(),part.getSubmittedFileName());
-
-
-            System.out.println("photo uploaded...user has been redirected to login.html");
-
-            req.getSession(false).setAttribute("avatar", uploadedFile);
-            Thread.sleep(3500);
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
-            }
 
 //        if(uploadedFile.length()>0  ){
 //            resp.setContentType("img/*");
@@ -172,5 +181,6 @@ public class UploadServlet extends HttpServlet {
 //                e.printStackTrace();
 //            }
 
-        }
 
+    }
+}

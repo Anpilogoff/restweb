@@ -1,5 +1,6 @@
 <html>
 <head>
+
     <style>
         body{
             position: absolute;
@@ -36,9 +37,69 @@
             box-shadow: 0 0 1px 1px red;
         }
 
+        #navbar ul {
+            display: none;
+            background-color: #f90;
+            position: absolute;
+            top: 100%;
+        }
+        #navbar li:hover ul { display: block; }
+        #navbar, #navbar ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+        #navbar {
+            text-shadow: white 0 0 1px 1px;
+            opacity: 50%;
+            width: 1890px;
+            height: 30px;
+            background-color: #666;
+            padding-left: 25px;
+            min-width: 470px;
+        }
+        #navbar li {
+
+            text-align: center;
+            float: left;
+            position: relative;
+            height: 100%;
+        }
+        #navbar li a {
+            display: block;
+            padding: 6px;
+            width: 100px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+        }
+        #navbar ul li { float: none; }
+        #navbar li:hover {
+            background-color: #eadecd; }
+        #navbar ul li:hover { background-color: #666; }
+
     </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="soung.js"></script>
 </head>
+
 <body>
+<ul id="navbar">
+    <li class="music1" ondrag="soundLink.play()"><a  href="chat.jsp">CHA</a>
+        <audio id="sound-link" preload="auto">
+            <source src="dynamic/sounds/system/jbl.mp3" type="audio/mp3 ">
+        </audio>
+    </li>
+    <li><a class="button music1" href="#">News</a></li>
+    <li><a class="utton music1" href="#">Contacts</a>
+        <ul>
+            <li><a href="#">address</a></li>
+            <li><a href="#">phone</a></li>
+            <li><a href="#">mail</a></li>
+        </ul>
+    </li>
+    <li><a href="#">О нас</a></li>
+</ul>
 <audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
 
 <form name="photo_upload" enctype='multipart/form-data' method="post" action="uploadservlet">
@@ -54,5 +115,7 @@
     </table>
 </form>
 
+
 </body>
+
 </html>

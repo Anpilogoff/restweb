@@ -60,29 +60,37 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+
+        System.out.println("login:  " + login.length());
+        System.out.println("password:  "+ password);
+
         try {
-            JsonArray array = dao.loginUser(login, password);
+            if(login.length()==0|| password.length()==0){
+                resp.sendRedirect(req.getServletContext().getContextPath()+"/login");
+            }else {
+                JsonArray array = dao.loginUser(login, password);
 
-            JsonElement object = array.get(0);
-            User user = gson.fromJson(object, User.class);
+                JsonElement object = array.get(0);
+                User user = gson.fromJson(object, User.class);
 
-            System.out.println("object userJson from LOGINSERVLET post method:       " + object);
-            System.out.println("user parsed from userJson object " + user.getNickname());
+                System.out.println("object userJson from LOGINSERVLET post method:       " + object);
+                System.out.println("user parsed from userJson object " + user.getNickname());
 
 
-            HttpSession session = req.getSession(true);
-            String file_name = dao.getUserAvatar(user.getNickname());
+                HttpSession session = req.getSession(true);
+                String file_name = dao.getUserAvatar(user.getNickname());
 
-            session.setAttribute("user", array.get(0));
-            session.setAttribute("profile", array.get(1));
-            session.setAttribute("credentials", array.get(2));
+                session.setAttribute("user", array.get(0));
+                session.setAttribute("profile", array.get(1));
+                session.setAttribute("credentials", array.get(2));
 
-            if (file_name != null) {
-                session.setAttribute("avatar", file_name);
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
-            } else {
-                session.setAttribute("avatar", null);
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
+                if (file_name != null) {
+                    session.setAttribute("avatar", file_name);
+                    resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
+                } else {
+                    session.setAttribute("avatar", null);
+                    resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
+                }
             }
         } catch (SQLException e) {
             log.warn("SQLexception:  " + e.getCause() );

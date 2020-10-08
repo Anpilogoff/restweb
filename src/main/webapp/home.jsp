@@ -2,7 +2,7 @@
 <%@ page import="com.anpilogoff.model.entity.User" %>
 <%@ page import="com.google.gson.JsonElement" %>
 <%@ page import="java.io.File" %>
-<html>
+<html datatype="img/*">
 <head>
     <style>
         body{
@@ -70,7 +70,7 @@
 
         <!-- Someday it'll  -->
         <td>
-            <img src="C:/Tomcat8/temp/<%= user.getNickname()%>/<%=avatar%>" datatype="img/*" id="unknown">
+            <img src="resources/<%=avatar%>" datatype="img/jpg" id="unknown">
         </td>
 
 

@@ -249,7 +249,7 @@ II) DAO LAYER      |    /
                    |  \
 ===================|   \
                    |    \
-III) FILTER CHAIN   |    /
+III) FILTER CHAIN  |    /
                    |   /
 ===================|  /
                    | /
@@ -257,7 +257,7 @@ III) FILTER CHAIN   |    /
 
 
 -           //todo: Describing of Filter Chain..
-
+-           //todo: Describing of Chat connecting
 
 
 

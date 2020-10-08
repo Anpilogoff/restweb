@@ -58,7 +58,8 @@ public class NotNullSessionFilter implements Filter {
         } else {
             if (req.getRequestURI().contains("resources")) {
                 filterChain.doFilter(req, resp);
-            }filterChain.doFilter(req,resp);
+            }
+            filterChain.doFilter(req,resp);
         }
     }
 

@@ -9,6 +9,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.function.DoubleToIntFunction;
 
 
 /**
@@ -56,9 +57,14 @@ public class DBconnector implements ConnectionBuilder {
         try {
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
-            System.out.println(connection + " FROM DBConnector class - getPoolConnection Method");
         } catch (SQLException e) {
             log.warn("SQL Exception during connection receiving:  "+e.getCause());
+            e.printStackTrace();
+        }
+        System.out.println(connection);
+        try {
+            System.out.println(connection.getClientInfo());
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;

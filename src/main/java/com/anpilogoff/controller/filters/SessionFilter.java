@@ -63,11 +63,9 @@ public class SessionFilter implements Filter {
 
         System.out.println("URI:  " + uri);
         System.out.println("Session:  " + session);
-        if(request.getSession(false)!= null){
-            System.out.println(request.getSession(false).getAttributeNames());
 
-        }
-        System.out.println();
+
+
 
         try {
             if (session == null) {

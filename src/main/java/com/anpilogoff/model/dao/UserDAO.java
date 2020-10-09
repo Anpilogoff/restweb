@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
 
@@ -26,7 +27,10 @@ public class UserDAO implements Dao {
     { this.connectionBuilder = connectionBuilder; }
 
     private Connection getPoolConnection() throws SQLException
-    { return connectionBuilder.getPoolConnection(); }
+    {
+
+        return connectionBuilder.getPoolConnection();
+    }
 
     private final Gson gson = new Gson();
 

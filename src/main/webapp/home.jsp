@@ -51,14 +51,15 @@
     <% Gson gson = new Gson();
         User user =  gson.fromJson((JsonElement) request.getSession(false).getAttribute("user"), User.class);
        String avatar = (String) request.getSession(false).getAttribute("avatar");
-//        String file = (String) request.getSession(false).getAttribute("avatar");
+        String temp_avatar = (String) request.getSession(false).getAttribute("temp_avatar");
+
         String nickname = user.getNickname();%>
 
 </head>
 <body>
 <audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
 
-<form name="photo_upload" enctype='multipart/form-data' method="post" action="uploadservlet" >
+<form name="photo_upload" enctype='multipart/form-data'  method="post" action="uploadservlet" >
     <section>
 
         <tr>
@@ -70,17 +71,14 @@
 
         <!-- Someday it'll  -->
         <td>
-            <img src="resources/<%=avatar%>" datatype="img/jpg" id="unknown">
+            <img src="media/<%=temp_avatar%>" datatype="img/jpg" id="unknown">
         </td>
 
-
+<!-- "resources/%avatar...
         <! --  http://localhost:8080/temp/<=nickname>/<=avatar>  --->
 
 
     </section>
-
-
-
 </form>
 
 </body>

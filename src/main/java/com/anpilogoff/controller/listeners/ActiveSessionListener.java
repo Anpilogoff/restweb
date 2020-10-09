@@ -1,5 +1,6 @@
 package com.anpilogoff.controller.listeners;
 
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -7,7 +8,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-
+@WebListener
 public class ActiveSessionListener implements HttpSessionListener {
 
 

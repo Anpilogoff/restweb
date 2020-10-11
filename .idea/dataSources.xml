@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/restwebDB?serverTimezone=Europe/Moscow&amp;useSSL=no" uuid="7ddbe285-5cc4-487f-8193-f8bf3feb1745">
+      <driver-ref>mysql.8</driver-ref>
+      <configured-by-url>true</configured-by-url>
+      <auto-commit>false</auto-commit>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/restwebDB?serverTimezone=Europe/Moscow&amp;useSSL=no</jdbc-url>
+    </data-source>
+  </component>
+</project>

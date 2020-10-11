@@ -52,11 +52,12 @@ public class RegistrationServlet extends HttpServlet {
         if (user != null) {
             log.info("New user registered:  " + user);
             HttpSession session = req.getSession(true);
-            session.setAttribute("userNickname", user.getNickname());
-            req.getRequestDispatcher("registerprofile.html").forward(req,resp);
+            session.setAttribute("nickname", user.getNickname());
+           // req.getRequestDispatcher("registerprofile.html").forward(req,resp);
+            resp.sendRedirect(req.getServletContext().getContextPath()+ "/registerprofile");
         }else {
             resp.getWriter().write("sorry but user with same credentials are already registered");
-            resp.sendRedirect("login");
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
         }
     }
 }

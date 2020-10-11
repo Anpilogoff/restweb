@@ -14,9 +14,13 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.*;
+import java.net.URI;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,13 +42,29 @@ public class UploadServlet extends HttpServlet {
     private Gson gson;
     private Logger log = Logger.getLogger(UploadServlet.class);
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("img/jpg");
+        System.out.println("GETT");
+//
+//        Path path = Paths.get("E:\\restweb\\src\\main\\webapp\\resources" +"\\" +req.getSession(false).getAttribute("avatar"));
+//        byte[]bytes = Files.(path..
+//        byte[]bbytes = com.sun.xml.internal.messaging.saaj.util.Base64.encode(bytes);
+//        System.out.println(Arrays.toString(bbytes));
+//      String g = new String(bbytes, "UTF-8");
+//        int xxx = bytes.length;
+//        req.getSession(false).setAttribute("bytes",g);
+//        resp.setContentLength(xxx);
+//        resp.getWriter().write(g,0,g.length());
+
+        //Осталось совсеееем чучуть и будет эта аватарина подгружаться, неслип девелопмент Ё
+    }
 
     @Override
     public void init() {
         dao = new UserDAO();
         gson = new Gson();
     }
-
 
     @SneakyThrows
     @Override
@@ -55,20 +75,19 @@ public class UploadServlet extends HttpServlet {
          * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
         //todo rewrite path on Jelastic disk space path
         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
-     Path dirFileNameTempDir = Paths.get("C:\\Tomcat8\\temp\\" + user.getNickname());
+        Path tempDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\");
 
 
         /**
          * @see Part - class represents a part or form item that was received within a multipart/form-data POST request
-         */
-        Part part = req.getPart("avatar");
-
+             */
+            Part part = req.getPart("avatar");
 
         /**
          * Variable represents uploaded file name, inserted in data base and setted as current session attribute
          */
         String uploadedFile = null;
-        File avatar_file = null;
+        File avatar_file;
 
         /**
          * That method use to create directory/(if not exists) for current user's images represents as
@@ -91,37 +110,54 @@ public class UploadServlet extends HttpServlet {
         if (!Files.exists(userDir)) {
             Files.createDirectory(userDir);
             log.info("User directory successfully created:  " + userDir);
-
             avatar_file = new File(userDir + File.separator + part.getSubmittedFileName());
-            Files.createFile(Paths.get(String.valueOf(avatar_file)));
+            Files.createFile(Paths.get(String.valueOf(avatar_file.toPath())));
+            System.out.println("avatar File:   "+ avatar_file);
+
             log.info("Empty avatar file successfully created:  " + avatar_file);
 
-            File tempfile = File.createTempFile(part.getName(),".jpg",new File("C:\\Tomcat8\\temp"));
-            System.out.println("Temporary file successfully created: " + tempfile.getAbsolutePath());
-            BufferedInputStream is = new BufferedInputStream(part.getInputStream());
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(avatar_file));
-            BufferedOutputStream boos = new BufferedOutputStream(new FileOutputStream(tempfile));
+          //  File tempfile = Files.createTempFile(avatar_file.getName().substring(),".jpg",new File("java.io.tmpdir"));
+            File file = new File(tempDir+ File.separator + part.getSubmittedFileName());
 
-            final byte[] bytes = new byte[16 * 1024];
 
+            System.out.println("temp file crated and marked to for deleting on exit");
+         //   log.info("Temporary file successfully created: " + tempfile.getAbsolutePath());
+
+            InputStream is = new BufferedInputStream(part.getInputStream());
+            FileOutputStream bos = new FileOutputStream(avatar_file);
+            FileOutputStream boos = new FileOutputStream(file); //tempfile
+
+
+            byte[] bytes = new byte[1024];
             while (is.read(bytes) != -1) {
                 bos.write(bytes);
                 boos.write(bytes);
             }
 
+            boos.flush();
+            bos.flush();
+
+           // Files.copy(avatar_file.toPath(),new FileOutputStream(tempfile));
+
+
             log.info("bytes successfully wrote to file:  " + avatar_file);
+
+            uploadedFile = dao.uploadPhoto(user.getNickname(), part.getSubmittedFileName());
+
+            byte []img_bytes = dao.uploadBytes(user.getNickname() ,is);
+
+            is.close();
             boos.close();
             bos.close();
-            is.close();
 
             System.out.println("upload dao method worked correctly:  dao methods!!!");
 
-            uploadedFile = dao.uploadPhoto(user.getNickname(), part.getSubmittedFileName());
             System.out.println("upload method warker successfully");
             System.out.println("photo uploaded...user has been redirected to login.html");
 
+
             req.getSession(false).setAttribute("avatar", uploadedFile);
-            Thread.sleep(5000);
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
 
 
 //           path.toFile().deleteOnExit();
@@ -153,7 +189,6 @@ public class UploadServlet extends HttpServlet {
 //
 //
 //                //req.getRequestDispatcher("/home").forward(req,resp);
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
         }
 
 

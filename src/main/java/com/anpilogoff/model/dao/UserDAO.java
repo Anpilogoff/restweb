@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
 
+import java.io.InputStream;
 import java.sql.*;
 
 
@@ -206,6 +207,41 @@ public class UserDAO implements Dao {
     }
 
 
+    public byte[] uploadBytes(String nickname,InputStream inputStream) {
+
+        String inser2 = "UPDATE  restwebdb.users SET file=(?) where nickname = (?)";
+        String blob = "SELECT * FROM  users WHERE file IS NOT NULL";
+        int ok = 0;
+        byte[] bytes = null;
+
+        try {
+           Connection connection = connectionBuilder.getPoolConnection();
+            PreparedStatement statement = connection.prepareStatement(inser2);
+            statement.setBlob(1, inputStream);
+            statement.setString(2,nickname);
+            ok = statement.executeUpdate();
+
+            if (ok > 0) {
+                statement = connection.prepareStatement(blob);
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    bytes = resultSet.getBytes("file");
+                }
+            }
+            connection.commit();
+            connection.setAutoCommit(true);
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("...error during bytes receiving process...");
+        }catch (NullPointerException e){
+            System.out.println("NPEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        }
+        return bytes;
+    }
+
+
+
     public String uploadPhoto(String nickname, String file_name) {
         String insertPhoto = "INSERT INTO AVATARS(user_nickname, file_name) VALUES ('" + nickname + "', '" + file_name + "')";
 
@@ -227,6 +263,11 @@ public class UserDAO implements Dao {
             }
         } catch (SQLException | ClassNotFoundException exception) {
             exception.printStackTrace();
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return file_name;
     }

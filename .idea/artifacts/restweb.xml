@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" build-on-make="true" name="restweb">
+    <output-path>$PROJECT_DIR$/out/artifacts/restweb</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="restweb/web/restweb" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="restweb" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.20" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.6" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

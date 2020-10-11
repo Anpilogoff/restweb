@@ -63,11 +63,13 @@ public class SessionFilter implements Filter {
 
         System.out.println("URI:  " + uri);
         System.out.println("Session:  " + session);
+
         if(request.getSession(false)!= null){
             System.out.println(request.getSession(false).getAttributeNames());
-
+            if(session.getAttribute("avatar") != null){
+                System.out.println("PLUS: " + session.getAttribute("avatar"));
+            }
         }
-        System.out.println();
 
         try {
             if (session == null) {
@@ -96,13 +98,15 @@ public class SessionFilter implements Filter {
                     request.getRequestDispatcher("/logout").forward(request,response);
                 }else if(request.getRequestURI().contains("login") && request.getSession(false).getAttribute("avatar")!= null){
                     response.sendRedirect(request.getServletContext().getContextPath()+"/home");
+                }else{
+                    response.sendRedirect(request.getServletContext().getContextPath() + "/userhome");
                 }
 //                else if(request.getRequestURI().contains("index.html")){
 //                    request.getRequestDispatcher("index.html").forward(request,response);
 //                }
-                else {
+
                     filterChain.doFilter(request, response);
-                }
+
             }
         } catch (IOException | ServletException e) {
             //todo

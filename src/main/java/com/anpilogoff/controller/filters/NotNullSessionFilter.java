@@ -49,8 +49,7 @@ public class NotNullSessionFilter implements Filter {
                 filterChain.doFilter(req, resp);
             } else if (req.getRequestURI().endsWith("uploadservlet") && req.getMethod().equals("POST")) {
                 req.getRequestDispatcher("uploadservlet").forward(req, resp);
-            } else if (req.getRequestURI().endsWith("uploadservlet") && req.getMethod().equals("GET") ||
-            req.getRequestURI().contains("logout") && req.getMethod().equals("GET")) {
+            } else if (req.getRequestURI().contains("logout") && req.getMethod().equals("GET")) {    /*(req.getRequestURI().endsWith("uploadservlet") && req.getMethod().equals("GET") ||*/
                 System.out.println("passed to logoutservlet ");
                req.getRequestDispatcher("logout").forward(req,resp);
             }

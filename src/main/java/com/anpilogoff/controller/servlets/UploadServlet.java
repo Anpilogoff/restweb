@@ -75,7 +75,7 @@ public class UploadServlet extends HttpServlet {
          * @see Paths#get(URI) method and in success case will represent content-directory of current user session */
         //todo rewrite path on Jelastic disk space path
         Path userDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
-        Path tempDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\");
+        Path tempDir = Paths.get("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname());
 
 
         /**
@@ -116,8 +116,11 @@ public class UploadServlet extends HttpServlet {
 
             log.info("Empty avatar file successfully created:  " + avatar_file);
 
-          //  File tempfile = Files.createTempFile(avatar_file.getName().substring(),".jpg",new File("java.io.tmpdir"));
-            File file = new File(tempDir+ File.separator + part.getSubmittedFileName());
+//            File file = new File(tempDir + File.separator + part.getSubmittedFileName());
+//            Files.createFile(file.toPath());
+
+
+//            System.out.println(file);
 
 
             System.out.println("temp file crated and marked to for deleting on exit");
@@ -125,16 +128,16 @@ public class UploadServlet extends HttpServlet {
 
             InputStream is = new BufferedInputStream(part.getInputStream());
             FileOutputStream bos = new FileOutputStream(avatar_file);
-            FileOutputStream boos = new FileOutputStream(file); //tempfile
+//            FileOutputStream boos = new FileOutputStream(file); //tempfile
 
 
             byte[] bytes = new byte[1024];
             while (is.read(bytes) != -1) {
                 bos.write(bytes);
-                boos.write(bytes);
+//                boos.write(bytes);
             }
 
-            boos.flush();
+//            boos.flush();
             bos.flush();
 
            // Files.copy(avatar_file.toPath(),new FileOutputStream(tempfile));
@@ -144,10 +147,9 @@ public class UploadServlet extends HttpServlet {
 
             uploadedFile = dao.uploadPhoto(user.getNickname(), part.getSubmittedFileName());
 
-            byte []img_bytes = dao.uploadBytes(user.getNickname() ,is);
 
             is.close();
-            boos.close();
+//            boos.close();
             bos.close();
 
             System.out.println("upload dao method worked correctly:  dao methods!!!");

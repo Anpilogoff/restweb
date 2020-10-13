@@ -5,19 +5,28 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
     <display-name>restweb</display-name>
 
-  <filter>
-          <filter-name>sessionFilter</filter-name>
-          <filter-class>com.anpilogoff.controller.filters.SessionFilter</filter-class>
-      </filter>
 
-        <filter>
-            <filter-name>notNullsessionFilter</filter-name>
-        <filter-class>com.anpilogoff.controller.filters.NotNullSessionFilter</filter-class>
+
+
+    <filter>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>com.anpilogoff.controller.filters.LoginFilter</filter-class>
     </filter>
 
     <filter>
-        <filter-name>homePageFilter</filter-name>
-        <filter-class>com.anpilogoff.controller.filters.HomePageFilter</filter-class>
+        <filter-name>homeFilter</filter-name>
+        <filter-class>com.anpilogoff.controller.filters.HomeFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>registerFiler</filter-name>
+        <filter-class>com.anpilogoff.controller.filters.RegisterFilter</filter-class>
+    </filter>
+
+
+    <filter>
+        <filter-name>resourceFilter</filter-name>
+        <filter-class>com.anpilogoff.controller.filters.ResourceFilter</filter-class>
     </filter>
 
 
@@ -56,18 +65,34 @@
         <servlet-class>com.anpilogoff.controller.servlets.LogoutServlet</servlet-class>
     </servlet>
 
+
     <filter-mapping>
-        <filter-name>sessionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>/login</url-pattern>
     </filter-mapping>
+
     <filter-mapping>
-        <filter-name>notNullsessionFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>homeFilter</filter-name>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/userhome</url-pattern>
     </filter-mapping>
+
     <filter-mapping>
-        <filter-name>homePageFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <filter-name>registerFiler</filter-name>
+        <url-pattern>/registration</url-pattern>
+        <url-pattern>/registerprofile</url-pattern>
     </filter-mapping>
+
+
+    <filter-mapping>
+        <filter-name>resourceFilter</filter-name>
+        <url-pattern>/resources/*</url-pattern>
+        <url-pattern>/dynamic/images/avatars</url-pattern>
+    </filter-mapping>
+
+
+
+
 
 
     <servlet-mapping>

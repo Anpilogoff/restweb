@@ -17,6 +17,6 @@ public class UserHomeServlet extends HttpServlet {
      * @see HttpServlet#service(ServletRequest, ServletResponse) will be called */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//      req.getRequestDispatcher("userhome.html").forward(req,resp);
+     req.getRequestDispatcher("userhome.html").forward(req,resp);
     }
 }

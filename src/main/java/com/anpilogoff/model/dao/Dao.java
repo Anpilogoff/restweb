@@ -16,7 +16,6 @@ public interface Dao{
     JsonArray loginUser(String login, String password) throws SQLException;
     String uploadPhoto(String nickname, String file_name);
     String getUserAvatar(String nickname);
-    public byte[] uploadBytes(String nickname,InputStream inputStream);
 
 
 }

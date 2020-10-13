@@ -34,7 +34,7 @@ public class ChatEndpoint {
                 System.out.println("opened sessions");
             }
             for (RemoteEndpoint.Basic endpoint : sessions.keySet()) {
-                System.out.println(endpoint);
+                endpoint.sendText("hi");
             }
         }
 

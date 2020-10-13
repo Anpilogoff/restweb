@@ -65,43 +65,57 @@ public class LoginServlet extends HttpServlet {
         System.out.println("password:  "+ password);
 
         try {
-            if(login.length()==0|| password.length()==0){
-                resp.sendRedirect(req.getServletContext().getContextPath()+"/login");
-            }else {
+            System.out.println(login + "         login");
+            System.out.println(password + "     password");
+            if(login.isEmpty()|| password.length()==0){
+                 req.getRequestDispatcher("login.html").forward(req,resp);
+            }else{
                 JsonArray array = dao.loginUser(login, password);
 
-                JsonElement object = array.get(0);
-                User user = gson.fromJson(object, User.class);
+                if(array == null){
+                    resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
+                }else if (array.get(0) != null) {
+                    JsonElement object = array.get(0);
+                    User user = gson.fromJson(object, User.class);
 
-                System.out.println("object userJson from LOGINSERVLET post method:       " + object);
-                System.out.println("user parsed from userJson object " + user.getNickname());
+                    System.out.println("User"+ user);
+
+                    System.out.println("object userJson from LOGINSERVLET post method:       " + object);
+                    System.out.println("user parsed from userJson object " + user.getNickname());
 
 
-                HttpSession session = req.getSession(true);
-                String file_name = dao.getUserAvatar(user.getNickname());
+                    HttpSession session = req.getSession(true);
+                    String file_name = dao.getUserAvatar(user.getNickname());
 
-                session.setAttribute("user", array.get(0));
-                session.setAttribute("profile", array.get(1));
-                session.setAttribute("credentials", array.get(2));
+                    session.setAttribute("user", array.get(0));
+                    session.setAttribute("profile", array.get(1));
+                    session.setAttribute("credentials"  , array.get(2));
 
-                if (file_name != null) {
-                    session.setAttribute("avatar", file_name);
-                    resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
-                } else {
-                    session.setAttribute("avatar", null);
-                    resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
+                    System.out.println(file_name    + "   from login servlet");
+
+                    if (file_name != null) {
+                        session.setAttribute("avatar", file_name);
+                        resp.setContentType("img/*");
+                        resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
+                    } else {
+                        session.setAttribute("avatar", null);
+                        resp.setContentType("img/*");
+
+                        resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
+
+
+                    }
                 }
+
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException | ServletException e) {
             log.warn("SQLexception:  " + e.getCause() );
-        } catch (NullPointerException e) {
+            req.getRequestDispatcher("login.html").forward(req,resp);
+
+        }
             //проверка наличия файла в папке temp
             //else - redirect на userhome
-            req.getRequestDispatcher("login.html").forward(req, resp);
-        }
+
+
     }
 }
-
-
-
-

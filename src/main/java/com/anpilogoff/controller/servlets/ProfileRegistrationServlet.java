@@ -28,6 +28,12 @@ import java.util.Enumeration;
  */
 public class ProfileRegistrationServlet extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("from profile register");
+        req.getRequestDispatcher("registerprofile.html").forward(req,resp);
+    }
+
     private UserDAO dao;
     private Logger log = null;
 
@@ -42,7 +48,7 @@ public class ProfileRegistrationServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         try {
-            if (req.getSession(false).getAttribute("userNickname") == null) {
+            if (req.getSession(false).getAttribute("nickname") == null) {
                 req.getSession(false).invalidate();
 
             }

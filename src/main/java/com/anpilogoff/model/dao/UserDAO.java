@@ -147,30 +147,35 @@ public class UserDAO implements Dao {
                 passwordx = resultset.getString("password");
                 nickname = resultset.getString("nickname");
                 email = resultset.getString("email");
+                System.out.println(loginx + " "+ passwordx  + " " + nickname + email );
+
                 user = new User(loginx, passwordx, nickname, email, role);
+                System.out.println("user from dao:  " + user);
             }
-            if (login.equals(loginx) && password.equals(passwordx)) {
-                if (nickname != null && loginx != null && passwordx != null) {
+            if (nickname != null) {
+                if (login.equals(loginx) && password.equals(passwordx)) {
+
                     statement = connection.prepareStatement(IF_USER_CONTAINS_SELECT_PROFILE);
                     statement.setString(1, user.getNickname());
                     ResultSet resultSet = statement.executeQuery();
-                    if (resultSet != null) {
-                        while (resultSet.next()) {
-                            name = resultSet.getString("name");
-                            surname = resultSet.getString("surname");
-                            age = resultSet.getInt("age");
-                            gender = resultSet.getString("gender");
-                            country = resultSet.getString("country");
-                        }
-                        statement.close();
-                        connection.close();
+                    //  if (resultSet != null) {
+                    while (resultSet.next()) {
+                        name = resultSet.getString("name");
+                        surname = resultSet.getString("surname");
+                        age = resultSet.getInt("age");
+                        gender = resultSet.getString("gender");
+                        country = resultSet.getString("country");
                     }
-                } else {
+                    statement.close();
+                    connection.close();
+                    //     }
+                } else {return  null;}
+            }else {
                     System.out.println(nickname + " " + loginx + " " + passwordx);
                     return null;
                 }
             }
-        }
+
         Profile profile = new Profile(nickname,name,surname,age,gender,country);
         UserCredentials credentials = new UserCredentials(login,password);
 
@@ -202,44 +207,8 @@ public class UserDAO implements Dao {
         array.add(credentialsJson);
 
         connection.close();
-
         return array;
     }
-
-
-    public byte[] uploadBytes(String nickname,InputStream inputStream) {
-
-        String inser2 = "UPDATE  restwebdb.users SET file=(?) where nickname = (?)";
-        String blob = "SELECT * FROM  users WHERE file IS NOT NULL";
-        int ok = 0;
-        byte[] bytes = null;
-
-        try {
-           Connection connection = connectionBuilder.getPoolConnection();
-            PreparedStatement statement = connection.prepareStatement(inser2);
-            statement.setBlob(1, inputStream);
-            statement.setString(2,nickname);
-            ok = statement.executeUpdate();
-
-            if (ok > 0) {
-                statement = connection.prepareStatement(blob);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    bytes = resultSet.getBytes("file");
-                }
-            }
-            connection.commit();
-            connection.setAutoCommit(true);
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println("...error during bytes receiving process...");
-        }catch (NullPointerException e){
-            System.out.println("NPEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        }
-        return bytes;
-    }
-
 
 
     public String uploadPhoto(String nickname, String file_name) {

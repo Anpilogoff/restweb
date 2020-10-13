@@ -35,6 +35,11 @@ public class RegistrationServlet extends HttpServlet {
         log = Logger.getLogger(RegistrationServlet.class);
     }
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("registration.html").forward(req,resp);
+    }
+
     /**
      * creates a new user based on request parameters and inserts him as argument in
      * @see UserDAO#registerNewUser(User) method  will taking attempt to create new user with unique nickname and login
@@ -49,15 +54,16 @@ public class RegistrationServlet extends HttpServlet {
         String email = req.getParameter("email");
         User user = new User(login, password, nickname, email,"user");
         user = dao.registerNewUser(user);
+        System.out.println(user);
         if (user != null) {
             log.info("New user registered:  " + user);
             HttpSession session = req.getSession(true);
             session.setAttribute("nickname", user.getNickname());
-           // req.getRequestDispatcher("registerprofile.html").forward(req,resp);
-            resp.sendRedirect(req.getServletContext().getContextPath()+ "/registerprofile");
-        }else {
-            resp.getWriter().write("sorry but user with same credentials are already registered");
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
+             //req.getRequestDispatcher("registerprofile.html").forward(req,resp);
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/registerprofile");
         }
-    }
+        System.out.println(("sorry but user with same credentials are already registered"));
+//req.getRequestDispatcher("registerprofile.html").forward(req,resp);
+}
+
 }

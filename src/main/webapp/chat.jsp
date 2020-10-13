@@ -8,8 +8,8 @@
     String nickname = user.getNickname();
 %>
 
-<body style="text-align: center">
 
+<body style="text-align: center">
 <br/>
 <div><textarea id="messages" cols="80" rows="20" readonly="readonly"></textarea></div>
 <div>User name: <param id="username"  type="text" size="20"  autofocus value="<%= nickname%>" name="username"><%= nickname%> </param></div>
@@ -18,5 +18,6 @@
     <button onclick="onClose()" >Exit chat</button>
 </div>
 <script src="websocket.js"></script>
+
 </body>
 </html>

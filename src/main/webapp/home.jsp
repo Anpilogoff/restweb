@@ -1,10 +1,11 @@
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="com.anpilogoff.model.entity.User" %>
 <%@ page import="com.google.gson.JsonElement" %>
-<%@ page import="java.io.File" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html datatype="img/*">
 <head>
-    <meta http-equiv="Content-Type" content="image/png; multipart/form-data; charset=utf-8">
+    <meta http-equiv="Content-Type" content="image/*; multipart/form-data; charset=utf-8">
     <style>
 
 
@@ -36,7 +37,6 @@
             margin-left: 20px;
             width: 240px;
             height: 300px;
-            text-align: center;
         }
 
 
@@ -57,6 +57,7 @@
     %>
 
 </head>
+
 <body>
 <audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
 
@@ -64,28 +65,23 @@
     <section>
 
         <tr>
-            <td><a href="chat.jsp">Let's CHAT</a></td>
+            <td><a href="chat.jsp" onclick="">Let's CHAT</a></td>
 
             <td><a href="logout" id="logout">Log_out</a></td>
         </tr>
 
 
       <td>
-            <img src="http://localhost:8080/restweb/resources/<%=avatar%>" datatype="img/jpg" id="unknown">
+            <img src="http://localhost:8080/restweb/dynamic/images/avatars/<%=nickname%>/<%=avatar%>" datatype="img/jpeg" id="unknown">
         </td>
 
-        <td>
-            <img src="http://localhost:8080/restweb/uploadservlet" datatype="img/jpg"/>
-        </td>
-
-
-        <! --  http://localhost:8080/temp/<=nickname>/<=avatar>
-        http://localhost:8080/restweb/uploadservlet
-        --->
+        <!---dynamic/images/avatars/<%=nickname%>-    -->
 
 
     </section>
 </form>
+
+
 
 </body>
 </html>

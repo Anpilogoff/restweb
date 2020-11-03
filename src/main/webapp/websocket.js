@@ -11,6 +11,8 @@ window.addEventListener("load", function () {
         // Receive WebSocket messages
         socket.onmessage = function (message) {
             messagesOutput.value += message.data + '\r';
+
+
         };
     },
     false);
@@ -18,13 +20,15 @@ window.addEventListener("load", function () {
 // Send WebSocket messages
 function sendMessage() {
     var userName = userNameInput.value == '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';
+
     socket.send(userName + (messageInput.value));
     messageInput.value = "";
     messageInput.focus();
 }
 
 function onClose() {
-    socket = null;
-
+    socket.close();
     window.location.href = 'http://localhost:8080/restweb/home';
 }
+
+

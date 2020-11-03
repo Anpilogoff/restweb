@@ -6,7 +6,10 @@
     <display-name>restweb</display-name>
 
 
-
+<filter>
+    <filter-name>uploadFilter</filter-name>
+    <filter-class>com.anpilogoff.controller.filters.UploadFilter</filter-class>
+</filter>
 
     <filter>
         <filter-name>loginFilter</filter-name>
@@ -29,6 +32,11 @@
         <filter-class>com.anpilogoff.controller.filters.ResourceFilter</filter-class>
     </filter>
 
+
+    <servlet>
+        <servlet-name>musicUploadServlet</servlet-name>
+        <servlet-class>com.anpilogoff.controller.servlets.MusicUploadServlet</servlet-class>
+    </servlet>
 
     <servlet>
         <servlet-name>registration</servlet-name>
@@ -66,6 +74,11 @@
     </servlet>
 
 
+<filter-mapping>
+    <filter-name>uploadFilter</filter-name>
+    <url-pattern>/uploadServlet</url-pattern>
+</filter-mapping>
+
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
         <url-pattern>/login</url-pattern>
@@ -88,12 +101,20 @@
         <filter-name>resourceFilter</filter-name>
         <url-pattern>/resources/*</url-pattern>
         <url-pattern>/dynamic/images/avatars</url-pattern>
+        <url-pattern>/dynamic/sounds/system/*</url-pattern>
     </filter-mapping>
 
 
 
 
 
+
+
+
+    <servlet-mapping>
+        <servlet-name>musicUploadServlet</servlet-name>
+        <url-pattern>/musicUpload</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>login</servlet-name>

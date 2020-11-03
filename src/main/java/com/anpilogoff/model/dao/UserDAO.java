@@ -6,13 +6,12 @@ import com.anpilogoff.model.entity.User;
 import com.anpilogoff.model.entity.UserCredentials;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
 
-import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
 
 
 /** The class implements logic getting from connection pool , as it contains a private variable of the ConnectionBuilder class and a setter for
@@ -23,11 +22,13 @@ public class UserDAO implements Dao {
 
     private ConnectionBuilder connectionBuilder;
 
-    public void setConnectionBuilder(ConnectionBuilder connectionBuilder)
-    { this.connectionBuilder = connectionBuilder; }
+    public void setConnectionBuilder(ConnectionBuilder connectionBuilder) {
+        this.connectionBuilder = connectionBuilder;
+    }
 
-    private Connection getPoolConnection() throws SQLException
-    { return connectionBuilder.getPoolConnection(); }
+    private Connection getPoolConnection() {
+        return connectionBuilder.getPoolConnection();
+    }
 
     private final Gson gson = new Gson();
 
@@ -91,6 +92,7 @@ public class UserDAO implements Dao {
         try{
             connection = getPoolConnection();
             PreparedStatement statement = connection.prepareStatement(REGISTER_NEW_PROFILE);
+
             statement.setString(1,nickname);
             statement.setString(2,name);
             statement.setString(3,surname);
@@ -99,6 +101,7 @@ public class UserDAO implements Dao {
             statement.setString(6,country);
 
             int isInserted= statement.executeUpdate();
+
             if(isInserted==1){
                 statement.close();
                 connection.commit();
@@ -189,6 +192,7 @@ public class UserDAO implements Dao {
         System.out.println(userJson.get("nickname") + "  nickname from userJson USERDAO login method");
 
         JsonObject profileJson = new JsonObject();
+
         profileJson.addProperty("name", profile.getName());
         profileJson.addProperty("surname",profile.getSurname());
         profileJson.addProperty("age", profile.getAge());
@@ -212,7 +216,7 @@ public class UserDAO implements Dao {
 
 
     public String uploadPhoto(String nickname, String file_name) {
-        String insertPhoto = "INSERT INTO AVATARS(user_nickname, file_name) VALUES ('" + nickname + "', '" + file_name + "')";
+        String insertPhoto = "INSERT INTO avatars(user_nickname, file_name) VALUES ('" + nickname + "', '" + file_name + "')";
 
         Connection connection;
         try {
@@ -267,6 +271,59 @@ public class UserDAO implements Dao {
 
         return file_name;
     }
+
+    @Override
+    public boolean uploadSong(String nickname, String songName) {
+        String INSERT_SONG = "INSERT INTO music(user_nickname,song_name) VALUES  (?,?)";
+
+        Connection connection;
+        try {
+            connection = getPoolConnection();
+            PreparedStatement statement = connection.prepareStatement(INSERT_SONG);
+            statement.setString(1,nickname);
+            statement.setString(2,songName);
+            int isInserted = statement.executeUpdate();
+
+            if (isInserted > 0) {
+                connection.commit();
+                statement.close();
+                connection.close();
+                return true;
+            } else {
+                connection.commit();
+                statement.close();
+                connection.close();
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getErrorCode());
+            System.out.println(e.getCause().toString());
+        }
+        return false;
+    }
+
+    @Override
+    public ArrayList<String> getUserSongs(String nickname) {
+        String SELECT_SONGS = "SELECT * FROM music WHERE user_nickname = (?)";
+        Connection connection;
+        ArrayList<String>musicList = new ArrayList<>();
+        try {
+            connection = getPoolConnection();
+            PreparedStatement statement = connection.prepareStatement(SELECT_SONGS);
+            statement.setString(1,nickname);
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()){
+                musicList.add(result.getString("song_name"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getCause());
+        }
+        return null;
+    }
+
+
 
     public boolean deleteUser() {
        return false;

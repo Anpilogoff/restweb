@@ -102,11 +102,8 @@ public class LoginServlet extends HttpServlet {
                         resp.setContentType("img/*");
 
                         resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
-
-
                     }
                 }
-
             }
         } catch (SQLException | IOException | ServletException e) {
             log.warn("SQLexception:  " + e.getCause() );

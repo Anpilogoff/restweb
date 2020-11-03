@@ -7,26 +7,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import lombok.SneakyThrows;
 import org.apache.log4j.Logger;
-import sun.awt.image.ByteArrayImageSource;
-import sun.nio.ch.IOUtil;
 
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.*;
 import java.net.URI;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileAttribute;
-import java.util.Arrays;
-import java.util.Base64;
 
 
 /**That servlet is use to get uploading from html page img/* avatar file, create directory with current user nickname,
@@ -118,7 +111,6 @@ public class UploadServlet extends HttpServlet {
 
 //            File file = new File(tempDir + File.separator + part.getSubmittedFileName());
 //            Files.createFile(file.toPath());
-
 
 //            System.out.println(file);
 

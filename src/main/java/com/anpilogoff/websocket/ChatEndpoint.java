@@ -5,7 +5,10 @@ import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,7 +19,7 @@ public class ChatEndpoint {
     private static Map<RemoteEndpoint.Basic, Session> sessions = Collections.synchronizedMap(new HashMap<>());
 
     @OnMessage
-    public void onMessage(String message, Session session){
+    public void onMessage(String message, Session session) {
         message = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " " + message;
 
         for (Session s : session.getOpenSessions()) {
@@ -45,9 +48,31 @@ public class ChatEndpoint {
     }
 
     @OnClose
-    public void onClose(Session session) {
-        System.out.println("opened session: "+ sessions);
+    public void onClose(Session session) throws IOException {
+
         sessions.remove(session.getBasicRemote());
+
+        System.out.println("opened session: " + sessions.size());
+        System.out.println("it's" + sessions.size());
+
+        for (int i = 0; i <= sessions.size() ; i++) {
+            if(i == 0){
+                System.out.println("opened sessions");
+            }
+            for (RemoteEndpoint.Basic endpoint : sessions.keySet()) {
+                endpoint.sendText("hi");
+            }
+        }
+
+        for (RemoteEndpoint.Basic session1 : sessions.keySet()) {
+            session1.sendText("disconnet: " + session.getBasicRemote().toString());
+
+        }
+
+
+
+
+
 
     }
 }

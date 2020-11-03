@@ -1,6 +1,5 @@
 package com.anpilogoff.model.entity;
 
-import com.anpilogoff.model.dao.Dao;
 import lombok.*;
 
 @Getter
@@ -27,6 +26,8 @@ public class User {
         this.email = email;
         this.role = role;
     }
+
+
 
     private String role;
     private int onlineStatus;

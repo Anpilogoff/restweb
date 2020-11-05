@@ -1,4 +1,4 @@
-var box, but, messagesOutput, userNameInput, messageInput, socket, ul, scrollUp, icon, musicBox, arrowUpIcon;
+var box, but, messagesOutput, userNameInput, messageInput, socket, ul, scrollUp, icon, musicBox, backwardBut, forwardBut, playBut, label;
 
 box = document.getElementById("chat-box");
 but = document.getElementById("but");
@@ -9,6 +9,18 @@ ul = document.getElementById("ul");
 icon  = document.getElementById("chat-icon");
 scrollUp = document.getElementById("scroll-up");
 musicBox = document.getElementById("music-box");
+backwardBut = document.getElementById("backward-button");
+forwardBut = document.getElementById("forward-button");
+playBut = document.getElementById("play-button");
+label = document.getElementById("lbl");
+
+
+function activatePlayerButtons() {
+backwardBut.style.textShadow = "0px 0px 6px 5px orangee," +
+    "0px 0px 6px 5px orangee";
+}
+
+
 
 
 function standByOn() {
@@ -50,12 +62,7 @@ function connectme() {
     standByOn();
 }
 
-// function sendMessage() {
-//     var userName = userNameInput.value == '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';
-//     // создать объект в которм будет
-//     socket.send(userName + (messageInput.value));
-//     messageInput.value = "";
-//     messageInput.focus();
+
 
     function sendMessage() {
         var userName = userNameInput.value == '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';
@@ -106,14 +113,22 @@ box.style.transform = "translateY(540px)";
 
 
 function showMusic() {
-    // musicBox.style.transform = "translateY(-509px)";
-    musicBox.style.opacity = "100%";
+    musicBox.style.transform = "translateY(350px)";
+   // activatePlayerButtons();
 
 
 
 }
 
 
+
+function lbl(){
+
+
+    document.getElementById("lbl").style.display = "block";
+
+
+}
 function hoverBut() {
     but.style.textShadow = " 0px 0px 2px white, 0px 0px 2px white";
 
@@ -132,6 +147,7 @@ function show() {
     but.addEventListener(onmouseover, hoverBut());
 
     but.setAttribute("class", "bottom-red");
+
 
     but.setAttribute("onClick", "javascript: Set();");
     scrollUp.setAttribute("onClick", "javascript: SetTopRed();")
@@ -210,7 +226,7 @@ function bottomRed () {
     box.style.transform = "translateY(0px)";
     but.style.transform = "translateY(0px)";
     scrollUp.style.transform = "translateY(0px)";
-};
+}
 
 
 

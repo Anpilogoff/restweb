@@ -1,0 +1,167 @@
+<html>
+<head>
+
+    <style>
+        body{
+            margin: 0px;
+            background-color: #292929;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .sliders-box{
+            position: absolute;
+            width: 100%;
+            background-color: #292929;
+            height: 70px;
+            box-shadow: 5px 1px 7px 3px #36b689,
+                        -5px 2px 2px #36b689;
+
+        }
+
+        .blur-background-box{
+            top: 0;
+            filter: blur(1px);
+            opacity: 90%;
+            position: absolute;
+            width: 100%;
+            height: 70px;
+        }
+        img{
+            width: 100%;
+            height: 70px;
+        }
+
+        .buttons-box{
+            position: absolute;
+            width: 100%;
+            height: 70px;
+
+        }
+
+
+
+button {
+
+    font-size: 25px;
+    font-weight: bolder;
+    position: relative;
+    margin: 10px;
+    width: 55px;
+    height: 50px;
+    text-align: center;
+    float: left;
+    border: 0px;
+    border-radius: 12px;
+
+    transition: 0.5s linear;
+    filter: drop-shadow(-1px -1px 3px black);
+
+
+    background-color: black;
+    color: #36b689;
+
+
+    box-shadow:  -2px 1px 3px #36b689,
+    inset -2px 1px 3px #36b689;
+}
+        button:hover{
+            transition: 1s ease-in-out;
+position: relative;
+            background-color: white;
+            color: black;
+            text-shadow: 0px 0px 1px black,
+            0px 0px 1px white;
+
+            box-shadow:  2px 1px 3px white,
+             -2px -1px 3px white;
+        }
+
+        .bottom-box{
+            position: relative;
+            width: 100%;
+            height: 60px;
+            top: 93%;
+            box-shadow: 5px 1px 7px 3px #36b689,
+            -0px 0px 2px #36b689;
+
+        }
+
+        .lines-box{
+            top: 30%;
+            position: relative;
+            box-shadow: white 1px 1px 1px,
+            white -1px -1px 3px;
+            width: 100%;
+            height: 100px;
+
+        }
+
+        #line1{
+            float: left;
+            width: 450px;
+            height: 10px;
+            background-color: white;
+            box-shadow: inset white 0px 0px 3px,
+                         white 0px 0px 3px;
+        }
+        #line2{
+
+
+            width: 300px; height: 10px;
+            background-color: white;
+            box-shadow: inset white 0px 0px 3px,
+            white 0px 0px 3px;
+        }
+
+        .lines{
+            margin: 20px;
+        }
+     
+
+    </style>
+    <link rel="stylesheet" href="https:/cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="sliders-box">
+        
+    </div>
+
+<div class="blur-background-box">
+    <img src="dynamic/images/static/21.png">
+</div>
+
+    <div class="buttons-box">
+        <button class="button1"><i class="fa fa-music"
+                                  ></i></button>
+        <button class="button2"><i class="fa fa-envelope-o"></i></button>
+
+        <button class="button3"><i class="fa fa-id-badge"></i></button>
+
+        <button class="button4"><i class="fa fa-question-circle-o"></i></button>
+
+
+    </div>
+
+    <div class="lines-box">
+        <div class="lines" id="line1"></div>
+
+        <div class="lines" id="line2"></div>
+
+        <div id="line3"></div>
+
+        <div id="line4"></div>
+
+        <div id="line5"></div>
+    </div>
+
+<div class="bottom-box">
+
+
+</div>
+
+
+</body>
+</html>

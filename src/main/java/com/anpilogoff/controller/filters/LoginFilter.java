@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class LoginFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig){
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -24,11 +24,11 @@ public class LoginFilter implements Filter {
             if (req.getRequestURI().endsWith("ile")) {
                 System.out.println("neusto");
                 req.getRequestDispatcher("/registerprofile").forward(req, resp);
-            }else if(sess.getAttribute("avatar")!=null){
-                resp.sendRedirect(req.getServletContext().getContextPath()+"/home");
+            } else if (sess.getAttribute("avatar") != null) {
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/home");
 
-            }else if(sess.getAttribute("avatar")==null){
-                resp.sendRedirect(req.getServletContext().getContextPath()+"/userhome");
+            } else if (sess.getAttribute("avatar") == null) {
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
             }
 //            } else if (sess.getAttribute("user") != null) {
 //                if (sess.getAttribute("avatar") != null) {
@@ -36,17 +36,17 @@ public class LoginFilter implements Filter {
 //                } else {
 //                    resp.sendRedirect(req.getServletContext().getContextPath() + "/userhome");
 //                }
-            }
-
-        else{
+        } else {
             System.out.println("else login filter");
-//            if(req.getRequestURI().endsWith("tion")){
-//                req.getRequestDispatcher("/registration").forward(req,resp);
-//            }else{
-                System.out.println("login filler"   );
-                req.getRequestDispatcher("/login").forward(req,resp);
+            if (req.getRequestURI().endsWith("tion")) {
+                req.getRequestDispatcher("/registration").forward(req, resp);
+            } else {
+                System.out.println("login filler");
+                req.getRequestDispatcher("/login").forward(req, resp);
 
             }
         }
     }
+}
+
 

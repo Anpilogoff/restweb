@@ -1,305 +1,172 @@
-
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="com.google.gson.JsonElement" %>
+<%@ page import="com.anpilogoff.model.entity.User" %>
 <html>
 <head>
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-     JS, Popper.js, and jQuery
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-          integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"/>
     <style>
+        body {position: absolute; width: 100%; height: 100%; margin: 0; background-color: #404345;
+        }
 
-        body {
+        .chat-box {
             position: absolute;
-            height: 100%;
-            background-image: url("resources/w.jpg");
+            width: 450px;
+            height: 550px;
+            box-shadow: #9aba26 1px 1px 3px 3px;
+            background-color: #292929;
+            top:-300px;
+            left: 120px;
+            transition: 1s linear;
+
         }
 
-
-
-        form {
-            position: relative;
-            width: 280px;
-            height: 200px;
-        }
-
-
-
-        table{
-            position: relative;
-        }
-
-
-
-        #unknown{
-            position: relative;
-            box-shadow: #2b542c 5px 5px 15px 15px;
-            width: 150px;
-            height: 200px;
-        }
-
-
-
-        .container-fluid{
-            position: relative;
-            opacity: 50%;
-            color: black;
-        }
-
-
-        /*nav {*/
-        /*    opacity: 50%;*/
-        /*    top: 40px;*/
-        /*    position: relative;*/
-        /*}*/
-
-
-
-        body {
-            height: 100vh;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+        .header-container{
+            z-index: 2;
             position: absolute;
-        }
-
-        header{
-            position: relative;
-            opacity: 40%;
-            width:1900px;
+            width: 100%;
             height: 60px;
-            background-color: white;
-        }
-
-        /*ul {*/
-        /*    width: 1900px;*/
-        /*    padding-left: 1px;*/
-        /*    position: relative;*/
-        /*}*/
-
-        /*li {*/
-        /*    position: relative;*/
-        /*    display: inline-grid;*/
-        /*    padding: 6px 0;*/
-        /*    margin: 2px;*/
-
-        /*}*/
-
-        a {
-            margin-right: 50px;
-            --fill-color: #e6dc19;
-            padding: 4px 0;
-            font: 500 3rem Raleway, sans-serif;
-            text-decoration: #e6dc19;
-            -webkit-text-stroke: 2px var(--fill-color);
-            background: linear-gradient(var(--fill-color) 0 100%) left / 0 no-repeat;
-            color: yellow;
+            top:1px;
             border-color: black;
-            border-width: 2px;
-            
-            transition: 0.5s linear;
-
-
+            border-width: 5px;
+            box-shadow: black 1px 1px 3px 3px;
+            background-color: #635454;
         }
 
-
-        /*ul{*/
-        /*    text-decoration: none;*/
-        /*    position: relative;*/
-        /*    background-color: black;*/
-        /*    padding-left: 0;*/
-
-        /*    opacity: 50%;*/
-        /*}*/
-        /*li {*/
-        /*    position: relative;*/
-        /*    border-width: 3px;*/
-        /*    border-radius: 6px;*/
-        /*    background: #a3a3d4;*/
-        /*    box-shadow: inset 2px 2px;*/
-        /*    margin-left: 3px;*/
-        /*    padding-left: 10px;*/
-        /*    float: left;*/
-        /*    margin-right: 5px;*/
-        /*}*/
-
-        /*a {*/
-        /*    position: relative;*/
-        /*    border-width: 3px;*/
-        /*    border-radius: 5px;*/
-        /*}*/
-
-
-
-
-        /*.button.music1{*/
-        /*    position: relative;*/
-        /*    float: left;*/
-
-        /*    left: 2%;*/
-        /*    box-shadow: inset #e0d8d8 2px 2px;*/
-        /*    border-width: 2px;*/
-        /*    border-color: #d5930f;*/
-        /*}*/
-
-
-        /*.button.music2{*/
-        /*    position: relative;*/
-        /*    float: left;*/
-        /*    left: 2%;*/
-        /*    box-shadow: inset #e0d8d8 2px 2px;*/
-        /*    border-width: 2px;*/
-        /*    border-color: #d5930f;*/
-        /*}*/
-
-        /*.button.music3{*/
-        /*    position: relative;*/
-        /*    float: left;*/
-        /*}*/
-
-        /*.button.music4{*/
-        /*    position: relative;*/
-        /*    float: left ;*/
-        /*}*/
-
-
-
-        #navbar ul {
-            display: none;
-            position: absolute;
-
-        }
-        #navbar li:hover ul { display: block; }
-        #navbar, #navbar ul {
-            background: white;
-
-
-            margin: 0;
-            padding: 0;
-            list-style-type: none;
-        }
-        #navbar {
-            opacity: 40%;
-            width: 2200px;
-            height: 60px;
-        }
-        #navbar li {
-            float: left;
+        .but{
+            text-shadow: -1px -1px #000,
+            0 1px 0 #444;
             position: relative;
+            font-family: Consolas sans-serif;
+            text-decoration: #e6dc19;
+            text-shadow: #0c9a11 1px 1px 3px 3px;
+            top: 20px;
+            float: left;
+            margin-left: 30px;
         }
-        #navbar ul li {opacity: 100%; float: none; }
+
+        textarea{
+            background-color: darkgreen;
+            opacity: 50%;
+            margin: 5px;
+            box-shadow:inset #cbbfbf 1px 1px 3px 3px;
+        }
 
         #closeButton{
             display: none;
         }
-        #sendButton{
-            display: none;
+
+
+        #connectButton{
+            position: relative;
+            color: yellow;
+            background-color:green ;
         }
 
+        #connectButton:hover{
+            color: yellow;
+            background-color:green ;
+        }
+
+        #sendButton{
+            opacity: 75%;
+            display: none;
+            background-color: darkgrey;
+            box-shadow: black 1px 1px 3px 3px;
+            border-width: 1px;
+            border-color: orangered;
+
+        }
+        #sendButton:focus{
+            border-width: 2px;
+
+            box-shadow: inset black 2px 2px;
+        }
+        #sendButton:hover{
+            opacity: 100%;
+            box-shadow: green 1px 1px 3px 3px;
+        }
+
+        #message{
+            display: none;
+            width: 300px;
+            height: 50px;
+            font-weight: bold;
+        }
+
+
+        #closeButton {
+            box-shadow:  2px 2px 5px rgba(154, 147, 140, 0.5)
+        }
+        #closeButton:hover {
+
+            box-shadow: inset 2px 2px 5px rgba(154, 147, 140, 0.5), 1px 1px 5px rgba(255, 255, 255, 1);
+        }
+
+        #username{
+            box-shadow:inset 1px 1px 4px 4px;
+
+        }
+        #message{
+            color: black;
+            opacity: 80%;
+            box-shadow: inset black 1px 1px 4px 3px;
+        }
+        #messages{
+            color: #e6dc19;
+        }
     </style>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script type="text/javascript" src="https://atuin.ru/demo/sound/loudlinks.min.js"></script>
-
-
 </head>
-
-
 <body>
-<audio src="dynamic/sounds/system/jbl.mp3" hidden autoplay="autoplay"></audio>
 
-<!--<header class="head_menu" style="background-color: rgba(255,255,255,0.91); opacity: 50%; box-shadow:inset black  5px 5px; z-index: 0">;-->
-<!--<ul id="navbar">-->
-<!--    <li>-->
-<!--    <div class="button music1" style=" float: left;">-->
-<!--        <a href="chat.jsp">CHAT</a>-->
-<!--    </div>-->
+<%
+    Gson gson = new Gson();
+    JsonElement userJson = (JsonElement) request.getSession(false).getAttribute("user");
+    User user = gson.fromJson(userJson, User.class);
+    String nickname = user.getNickname();
 
-<!--    <audio src="resources/2.mp3" id="sound-link1" preload="auto"></audio>-->
-
-<!--    </li>-->
-
-<!--    <li>-->
-<!--    <div class="button music2" style=" float: left;">-->
-<!--        <a href="#">Friend</a>-->
-<!--    </div>-->
-<!--    <audio src="resources/1.mp3" id="sound-link2" preload="auto"></audio>-->
-<!--    </li>-->
-
-<!--    <li>-->
-<!--    <div class="button music3" style="float: left;">-->
-<!--        <a href="#">About us</a>-->
-
-<!--    </div>-->
-<!--    <audio src="resources/6.wav" id="sound-link3" preload="auto"></audio>-->
-<!--    </li>-->
+%>
 
 
-<!--    <li>-->
-<!--    <div class="button music4" style=" float: left;">-->
-
-<!--        <a href="#">Contacts</a>-->
-
-
-<!--    </div>-->
-
-<!--    <audio src="resources/1.1.wav" id="sound-link4" preload="auto"></audio>-->
-
-<!--    </li>-->
-
-<!--    <li>-->
-<!--        <ul>-->
-<!--            <li>-->
-<!--                <iframe>sss</iframe>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </li>-->
-<!--</ul>-->
-
-<!--</header>-->
-
-
-<ul id="navbar">
-<!--    <li><a href="chat.jsp">CHAT</a></li>-->
-    <li><a href="#">1</a></li>
-    <li><a href="#">chat</a>
-        <ul>
-            <li value="chat">
-
-                <div><textarea id="messages" cols="60" rows="20" readonly="readonly"></textarea></div>
-                <div>User name: <param id="username"  type="text" size="20"  autofocus value="<%= nickname%>" name="username"><%= nickname%> </param></div>
-                <div>Message: <input id="message" type="text" size="60"/>
-                    <button id="sendButton" onclick="sendMessage()">Send</button>
-                    <button id="closeButton" onclick="onClose(),hideCloseBut(),hideSendBut(),showConnBut()" >Exit chat</button>
-                    <button id="connectButton" onclick="connectme(), hideConnBut(),showCloseBut(),showSendBut()">Connect</button>
-                </div>
-
-            </li>
-        </ul>
-    </li>
-    <li><a href="#">3</a></li>
-</ul>
-
-    <form class="avatar_form" name="avatar_form" enctype='multipart/form-data' method="post" action="uploadservlet"
-          style="position: relative; left: 1250px">
-            <img src="resources/w.jpg" datatype="img/*" id="unknown">
-        <tr>
-            <td><input type="file" accept="image/*" id="x" name="avatar"><input type="submit" value="send photo" id="submit_button" name="picss"></td>
-        </tr>
-    </form>
+<div class="header-container">
 
 
 
-<!--<form class="music-form" name="music_form" enctype="multipart/form-data" method="post" action="musicUpload">-->
-<!--    <input type="file" accept="multipart/form-data" name="song">-->
-<!--    <input type="submit" value="save" id="save_button">-->
-<!--</form>-->
+    <a href="#" type="button" class="but" id="but3">chat</a>
 
+
+    <a href="#" type="button" class="but" id="but4">messages</a>
+
+    <a href="#" type="button" class="but" id="but5">contacts</a>
+</div>
+
+
+<div class="chat-box" id="chat-box">
+    <textarea style="width: 440px; height: 400px" id="messages"  readonly="readonly" ></textarea>
+    <div style="position: relative;">User name: <param id="username"  type="text"  style="position: relative"><%=nickname%>< </div>
+    <div style="color: #36b689; position: relative" id="status"  >status:  offline </div>
+    <div style="position: relative;">
+        <input id="message" type="text" width="280"  placeholder="type message" style="position: relative" />
+        <button id="sendButton" onclick="sendMessage()">Send</button>
+        <button id="closeButton" onclick="onClose(), hideCloseBut(), hideSendBut(), showConnBut(),hideMessageInput(), changeStatusOffline()">Exit chat</button>
+        <button id="connectButton" onclick="connectme(), hideConnBut(),showCloseBut(),showSendBut(),showMessageInput(), changeStatusOnline()">Connect</button>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    let goButton = document.querySelector('.but');
+    var cont = document.querySelector('.chat-box');
+
+    goButton.addEventListener('click', function (e) {
+        cont.style.transform = 'translateY(370px)'
+    })
+</script>
 
 <script>
     var messagesOutput, userNameInput, messageInput, socket;
+
     function connectme() {
 
         messagesOutput = document.getElementById("messages");
@@ -314,31 +181,31 @@
             messagesOutput.value += message.data + '\r';
         };
 
-      var cls =  document.getElementById("closeButton");
-      cls.style.display = "block";
+        var cls = document.getElementById("closeButton");
+        cls.style.display = "block";
 
     }
 
-        function onClose() {
-            socket.close();
-            //window.location.href = 'http://localhost:8080/restweb/home';
-            document.getElementById("connectButton").style.display = 'inline';
-        }
+    function onClose() {
+        socket.close();
+        //window.location.href = 'http://localhost:8080/restweb/home';
+        document.getElementById("connectButton").style.display = 'inline';
+    }
 
-        function sendMessage() {
-            var userName = userNameInput.value == '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';
-            socket.send(userName + (messageInput.value));
-            messageInput.value = "";
-            messageInput.focus();
-        }
+    function sendMessage() {
+        var userName = userNameInput.value == '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';
+        socket.send(userName + (messageInput.value));
+        messageInput.value = "";
+        messageInput.focus();
+    }
 
-        function hideConnBut() {
-            document.getElementById("connectButton").style.display = 'none';
-        }
+    function hideConnBut() {
+        document.getElementById("connectButton").style.display = 'none';
+    }
 
-        function showConnBut() {
-            document.getElementById("connectButton").style.display = 'inline';
-        }
+    function showConnBut() {
+        document.getElementById("connectButton").style.display = 'inline';
+    }
 
 
     function hideCloseBut() {
@@ -358,11 +225,38 @@
         document.getElementById("sendButton").style.display = 'inline';
     }
 
-</script>
-<script src="sound.js"></script>
-<script src="sound2.js"></script>
-<script src="sound3.js"></script>
-<script src="sound4.js"></script>
-</body>
+    function hideMessageInput(){
+        document.getElementById("message").style.display = 'none';
+    }
 
+    function showMessageInput(){
+        document.getElementById("message").style.display = 'inline';
+    }
+
+    // function changeStatusOnline() {
+    //     document.getElementById("status").textContent = 'status: ONLINE';
+    //     document.getElementById("status").style.color = 'green';
+    //     var soundLink2 = $("#saber")[0];
+    //     soundLink2.play();
+    // }
+    //
+    // function changeStatusOffline(){
+    //     document.getElementById("status").textContent = 'status: OFFLINE';
+    //     document.getElementById("status").style.color = 'red';
+    //
+    //
+    // }
+
+</script>
+<script src="resources/js/js-audio/sound.js"></script>
+<script src="resources/js/js-audio/sound2.js"></script>
+<script src="resources/js/js-audio/sound3.js"></script>
+<script src="resources/js/js-audio/sound4.js"></script>
+
+
+<audio src="dynamic/sounds/system/jbl.mp3" autoplay="autoplay" hidden="hidden" class="b"></audio>
+
+
+
+</body>
 </html>

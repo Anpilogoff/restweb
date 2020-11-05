@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.html").forward(req, resp);
+        req.getRequestDispatcher("login.html").forward(req, resp);
     }
 
 
@@ -61,13 +61,13 @@ public class LoginServlet extends HttpServlet {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        System.out.println("login:  " + login.length());
-        System.out.println("password:  "+ password);
+//        System.out.println("login:  " + login.length());
+//        System.out.println("password:  "+ password);
 
         try {
             System.out.println(login + "         login");
             System.out.println(password + "     password");
-            if(login.isEmpty()|| password.length()==0){
+            if(login == null|| password.length()==0){
                  req.getRequestDispatcher("login.html").forward(req,resp);
             }else{
                 JsonArray array = dao.loginUser(login, password);

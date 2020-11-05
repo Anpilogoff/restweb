@@ -28,7 +28,7 @@ public class HomeFilter implements Filter {
                if(uri.endsWith("home") && sess.getAttribute("avatar")!=null){
                    req.getRequestDispatcher("/home.jsp").forward(req,resp);
                }else if(uri.endsWith("userhome")&& sess.getAttribute("avatar")==null){
-                   req.getRequestDispatcher("/userhome.jsp").forward(req,resp);  //html
+                   req.getRequestDispatcher("/userhome_new.jsp").forward(req,resp);  //html
                }else if(uri.endsWith("userhome") && sess.getAttribute("avatar")!= null){
                       resp.sendRedirect(req.getServletContext().getContextPath()+"/home");
                }else if(uri.equals("/restweb/home")&& sess.getAttribute("avatar")==null){

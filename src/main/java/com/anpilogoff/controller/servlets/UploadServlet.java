@@ -75,6 +75,10 @@ public class UploadServlet extends HttpServlet {
          * @see Part - class represents a part or form item that was received within a multipart/form-data POST request
              */
             Part part = req.getPart("avatar");
+            //todo: тут и закончили
+        File file = new File("E:\\restweb\\src\\main\\webapp\\dynamic\\images\\avatars\\" + user.getNickname() +"\\"+ part.getSubmittedFileName());
+        Files.createFile(file.toPath());
+
 
         /**
          * Variable represents uploaded file name, inserted in data base and setted as current session attribute
@@ -102,6 +106,7 @@ public class UploadServlet extends HttpServlet {
          */
         if (!Files.exists(userDir)) {
             Files.createDirectory(userDir);
+            Files.createFile(Paths.get(userDir + part.getSubmittedFileName()));
             log.info("User directory successfully created:  " + userDir);
             avatar_file = new File(userDir + File.separator + part.getSubmittedFileName());
             Files.createFile(Paths.get(String.valueOf(avatar_file.toPath())));

@@ -19,13 +19,23 @@ public class RegisterFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         if(session == null){
-            System.out.println("----");
+            if (req.getRequestURI().endsWith("profile")){
+                resp.sendRedirect(req.getServletContext().getContextPath()+ "/registration");
+            }else if(req.getRequestURI().endsWith("registration")){
 
-                req.getRequestDispatcher("registration").forward(req, resp);
+                System.out.println("----");
 
+                req.getRequestDispatcher("registration").forward(req,resp);
+            }else{
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
+            }
 
 
         }else{
+            if(req.getSession(false).getAttribute("user") != null){
+                req.getSession(false).invalidate();
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/login");
+            }
             if(req.getRequestURI().endsWith("ile") && session.getAttribute("nickname")!=null){
                 req.getRequestDispatcher("/registerprofile").forward(req,resp);
             }else {

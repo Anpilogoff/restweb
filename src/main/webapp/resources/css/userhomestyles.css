@@ -4,12 +4,66 @@ body{
 position: absolute; width: 100%; height: 100%; margin: 0;
     z-index: 1;
 
-    background-color: #393939;
+    background-color: #171717;
 }
 
-button{
-    margin: 20px;
-    float: left;
+.avatar-upload-form{
+    top: 45%;
+    left: 5%;
+    position: relative;
+    width: 80px;
+    height: 70px;
+}
+input{
+    margin: 10px;
+    background-color: #e6dc19;
+    display: none;
+    position: relative;
+
+
+}
+#lbl{
+    display: inline;
+}
+
+
+.icon-button{
+text-shadow: black 2px 2px 4px;
+    top: 30%;
+    border: 1px #292929;
+    border-radius: 10px;
+    position: relative;
+    width: 25px;
+    height: 25px;
+}
+
+
+.icon-button2{
+    border-radius: 10px;
+    position: relative;
+    width: 25px;
+    height: 25px;
+}
+
+
+label{
+
+        top: 40%;
+    position: relative;
+    border-radius:15px;
+    font-size:15px;
+
+color:#e6dc19}
+
+.avatar{
+    z-index: 10;
+    background-color: #3b3b3b;
+    left: 80%;
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    box-shadow: greenyellow 0px 0px 7px ;
 }
 
 
@@ -46,8 +100,8 @@ button{
     text-shadow: 0px 0px 3px white,
     0px 0px 3px white;
 
-    box-shadow: inset 1px 1px 3px rgba(9, 9, 9, 0.91),
-    inset -1px -1px 3px rgba(0, 0, 0, 0.91);
+    box-shadow: inset 1px 1px 3px white,
+    inset -1px -1px 3px white;
 
 }
 
@@ -64,7 +118,8 @@ box-shadow: inset 1px 1px 3px orangered,
 
 
 #but{
-    transition: 0.5s ease-in-out;
+    z-index: 7;
+    transition: 0.5s ease-in;
 
     text-shadow: -2px -1px 2px black,
     -1px -1px 5px black;
@@ -88,11 +143,10 @@ box-shadow: inset 1px 1px 3px orangered,
 }
 
 #but:hover{
-    transition: 1s linear;
 color: white;
 
-    box-shadow: inset 0px 1px 3px rgba(9, 9, 9, 0.91),
-    inset 0px -1px 3px rgba(0, 0, 0, 0.91);
+    box-shadow: inset 0px 1px 3px white,
+    inset 0px -1px 3px white;
     text-shadow: 0px 0px 2px white,
     0px 0px 2px white;
 
@@ -120,9 +174,9 @@ color: white;
 
 .contacts-button{
 
-    text-shadow: -3px -2px 2px black,
+    text-shadow: -2px -1px 2px black,
     -1px -1px 5px black;
-    color: #07c8f8;   /* rgba(34, 168, 32, 0.85); */
+    color: greenyellow;      /* rgba(217, 5, 23, 0.82);   !* rgba(34, 168, 32, 0.85); *!*/
     font-size: 25px;
     font-weight: bolder;
     position: relative;
@@ -142,12 +196,43 @@ color: white;
 }
 
 .contacts-button:hover{
+    color: white;
+    text-shadow: 0px 0px 2px white,
+    0px 0px 2px white;
+
+    box-shadow: inset 1px 1px 3px white,
+    inset -1px -1px 3px white;
+
+}
+
+.question-button{
+
+    text-shadow: -3px -2px 2px black,
+    -1px -1px 5px black;
+    color: rgba(179, 0, 255, 0.82);   /* rgba(34, 168, 32, 0.85); */
+    font-size: 25px;
+    font-weight: bolder;
+    position: relative;
+    margin: 10px;
+    width: 55px;
+    height: 50px;
+    text-align: center;
+    border:  solid 4px #292929;
+    border-radius: 12px;
+    background: #292929;
+    box-shadow: inset 1px 1px 2px rgba(52, 51, 51, 0.91),
+    1px 2px 3px rgba(31, 31, 31, 0.91);
+    transition: 0.5s ease-in;
+    filter: drop-shadow(-1px -1px 3px black  );
+}
+
+.question-button:hover{
+    color: white;
     text-shadow: 0px 0px 2px white,
     0px 0px 2px white;
 
     box-shadow: inset 1px 1px 3px rgba(9, 9, 9, 0.91),
     inset -1px -1px 3px rgba(0, 0, 0, 0.91);
-
 }
 
 /*button{*/
@@ -177,32 +262,32 @@ color: white;
 
 
 
-/*}*/
+/*!*}*!*/
 
-button:hover {
+/*button:hover {   <!-- красивый эффект --> */
 
-    text-shadow: 1px 1px 3px black,
-    -1px -1px 3px black;
-    color: #ffffff;   /* rgba(34, 168, 32, 0.85); */
-    font-size: 25px;
-    font-weight: bolder;
-    position: relative;
-    margin: 10px;
-    width: 55px;
-    height: 50px;
-    text-align: center;
-    float: left;
-    border:   4px #212121;
-    border-radius: 12px;
-    background: #3b3b3b;
-    box-shadow: inset 1px 2px 3px rgba(9, 9, 9, 0.91),
-    inset -1px 2px 3px rgba(0, 0, 0, 0.91);
-    transition: 0.5s ease-in;
-    filter: drop-shadow(1px -1px 3px black  );
+/*    text-shadow: 1px 1px 3px black,*/
+/*    -1px -1px 3px black;*/
+/*    color: #ffffff;   !* rgba(34, 168, 32, 0.85); *!*/
+/*    font-size: 25px;*/
+/*    font-weight: bolder;*/
+/*    position: relative;*/
+/*    margin: 10px;*/
+/*    width: 55px;*/
+/*    height: 50px;*/
+/*    text-align: center;*/
+/*    float: left;*/
+/*    border:   4px #212121;*/
+/*    border-radius: 12px;*/
+/*    background: #3b3b3b;*/
+/*    box-shadow: inset 1px 2px 3px rgba(9, 9, 9, 0.91),*/
+/*    inset -1px 2px 3px rgba(0, 0, 0, 0.91);*/
+/*    transition: 0.5s ease-in;*/
+/*    filter: drop-shadow(1px -1px 3px black  );*/
 
 
 
-}
+
 #status{
     font-family: Comfortaa;
     font-weight: bolder;
@@ -212,16 +297,18 @@ button:hover {
     position: relative;
 }
 
-.ul{
-z-index: 5;
+.ul {
+    z-index: 5;
     position: absolute;
     width: 100%;
     height: 70px;
     border-width: 10px;
-    box-shadow: #9aba26 1px 1px 3px 3px;
-    background-color: #292929;
-    transition: 1s linear;
-}
+    /*box-shadow: white 1px 1px 3px 3px;*/
+    background: #242424;
+    border-radius: 1px;
+    box-shadow: inset 0.9px 0.9px 3px #121212, inset -0.9px -0.9px 3px #363636;}
+
+
 
 .chat-box {
     filter: drop-shadow(0px 0px 3px #9aba26);
@@ -283,7 +370,6 @@ position: relative;
 #gear-button{
     text-shadow: 1px 1px 5px black,
     -1px -1px 5px black;
-    border-right: none;
     top: 10%;
     left: 75%;
     box-shadow: none;
@@ -291,17 +377,21 @@ position: relative;
     position: relative;
     width: 34px;
     height: 34px;
-    transition:  3s;
+    transition:  2s;
+    background-color: #1c1c1c;
+
+    border-right: none;
 
 }
 
 
 
 #gear-button:hover{
-    text-shadow: #00c0d7 0px 0px 3px;
+    text-shadow: black 1px 1px 3px,
+                black -1px -1px 3px;
     border-radius: 20px;
 box-shadow:inset black 0px 0px 10px;
-
+color: #00c0d7;
     transform: rotate(720deg);
 }
 #gear-button:focus{
@@ -312,57 +402,25 @@ box-shadow:inset black 0px 0px 10px;
 
 
 .bottom-block{
-
-    z-index: 2;
+opacity: 30%;
+    z-index: 6;
     top:93%;
     position: absolute;
     width: 100%;
     height: 70px;
     background-color: #292929;
-    box-shadow: #1a1a19 1px 1px 8px;
+    box-shadow:white 1px 1px 8px;
     filter: drop-shadow(2px 0px 3px #000000);
 
 }
 
 
-
-audio{
+.fa-arrow-circle-o-up{
     position: relative;
-    transform: scale(0.6);
-width: 400px;
-
+        left: 0px;
 }
 
-.audios{
-    background-color: #131313;
 
-    position: relative;
-    box-shadow:  -11px 13px 3px 3px black,
-              inset -18px -18px 3px  black  ;
-right: 50px;
-    transform: scale(0.8);
-
-width: 300px;
-    height: 700px;
-overflow: paged-y-controls;
-
-}
-
-.music-box{
-    opacity: 0%;
-    background-color: #131313;
-    box-shadow:inset  black 11px 5px 24px 14px,
-                 black -11px -12px 14px 14px;
-    filter: drop-shadow(5px 5px 10px black);
-    position: relative;
-    width: 300px;
-    height: 800px;
-    left: 70%;
-    top: 3%;
-    transform: skewY(15deg);
-    z-index: -1;
-    transition: 1.5s linear;
-}
 
 #scroll-up{
     text-Shadow:  black 2px 1px 5px,  black -1px -1px 5px;
@@ -371,31 +429,33 @@ overflow: paged-y-controls;
     /*position: absolute;*/
     /*width: 37px;*/
     /*height: 60px;*/
-    left: 83px;
-    top: -5px;
+    left: 85px;
+    top: -7px;
 
 
     font-size: 25px;
     font-weight: bolder;
     position: absolute;
     margin: 10px;
-    width:40px;
-    height: 40px;
+    width:35px;
+    height: 35px;
     text-align: center;
     border:  1px #212121;
     border-radius: 20px;
     background: #3b3b3b;
 
-    filter: drop-shadow(1px -1px 3px black  );
+    filter: drop-shadow(1px -1px 3px black);
     transition: 1.5s linear;
 }
 
 #scroll-up:hover{
+    transition: 1.5s ease-out;
+transform: rotate(360deg);
     text-shadow: 0px 0px 2px white,
     0px 0px 2px white;
+        box-shadow:inset  3px 2px 4px rgba(9, 9, 9, 0.91),
+    inset -3px -2px 4px rgba(0, 0, 0, 0.91);
 
-    box-shadow: inset 1px 1px 3px rgba(9, 9, 9, 0.91),
-    inset -1px -1px 3px rgba(0, 0, 0, 0.91);
 }
 
 
@@ -404,6 +464,7 @@ overflow: paged-y-controls;
     font-family: Comfortaa, serif;
     font-weight: bold;
 }
+
 
 #messages-area {
     resize: none;
@@ -421,6 +482,7 @@ overflow: paged-y-controls;
 
     font-family: Comfortaa, sans-serif; color: lightgreen;
 }
+
 
 
 #sendButton{
@@ -484,6 +546,161 @@ outline: none;
     color: red;
     text-shadow: 1px 1px 3px black;
     box-shadow: 1px 1px 3px black;
+}
+
+
+.music-box{
+    top: 300px;
+    left: 60%;
+    position: absolute;
+    width: 350px;
+    height: 200px;
+    transition: 1.5s ease-in;
+    background: #1c1c1c;
+    border-radius: 18px;
+    box-shadow: 3.3px 3.3px 3px #1A1A1A, -3.3px -3.3px 1px #1E1E1E;
+}
+
+.music-player{
+    z-index: 3;
+margin: 25px;
+    position: relative;
+    width: 330px;
+    height: 81px;
+    box-shadow: 1px 1px 3px white;
+    border-radius: 20px;
+
+
+
+
+
+}
+
+.player-screen{
+    border-width: 3px;
+    left: 1%;
+    top: 3%;
+    bottom: 10%;
+    width: 320px;
+    height: 80px;
+    position: relative;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 20px;
+    box-shadow: inset black  2px 1px 3px,
+                inset black -2px -2px 3px;
+        margin: 5px;
+    background-color: darkcyan;
+    opacity: 80%;
+
+}
+
+#track-road{
+    position: relative;
+    width: 200px ;
+    height: 2px;
+    background-color: #e6dc19;
+    top: 20%;
+    left: 50px;
+}
+
+#span{
+    position: relative;
+width: 6px;
+    height: 5px;
+    background-color: #0a3e0c;
+}
+
+#song-name-field{
+left: 30%;
+    position: relative;
+    width: 90px;
+    height: 35px;
+}
+
+#current-track-time{
+    position: relative;
+    width: 60px;
+    height: 25px;
+}
+
+.button-block{
+    z-index: 2;
+    background-color: #1f5a5a;
+align-content: baseline;
+    position: relative;
+        border: #1f1f1f 2px;
+border-radius: 17px;
+    box-shadow:inset 6px 2px 3px black;
+    top: 5px;
+    left: 4%;
+    width: 337px;
+    height: 50px;
+    filter: blur(2px);
+    opacity: 70%;
+
+}
+
+.player-buttons{
+top: 10%;
+    left: 20px;
+bottom: 40%;
+    font-size: 16px;
+    margin: 10px ;
+border: none;
+
+    width: 40px;
+    height:40px;
+    background: linear-gradient(145deg, #252525, #191919);
+    border-radius: 27%;
+    box-shadow: 1.2px 1.2px 1px #191919, -2.2px -2.2px 1px #252525;
+position: relative;
+    transition: 0.5s linear;
+    float: left;
+
+}
+
+.player-buttons:hover{
+overflow: hidden;
+    color: white;
+    transition: 0.5s ease-in ;
+    background: #1f1f1f;
+    border-radius: 27%;
+    box-shadow: inset 1.2px 1.2px 1px #191919, inset -1.2px -1.2px 1px #252525;
+
+    text-shadow: orangered 0px 0px 2px,
+                    orangered 0px 0px 3px;);
+
+}
+
+.player-buttons:focus{
+}
+
+.fa-backward{
+
+    position: relative;
+
+}
+
+
+.playlist{
+    z-index: -1;
+    overflow: scroll;
+    position: relative;
+    width: 150px;
+    height: 50px;
+    box-shadow: 1px 1px 3px blue;
+    top: -80%;
+    left: 15%;
+}
+
+.ns{
+    font-family: Comfortaa, sans-serif;
+    color: white;
+    text-shadow: white 1px 1px 3px 3px, white -1px -1px 3px 3px, white 1px 1px 3px 3px;
+    font-weight: bolder;
+    font-size: 10px;
 }
 
 

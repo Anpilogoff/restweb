@@ -259,6 +259,13 @@ III) FILTER CHAIN  |    /
 -           //todo: Describing of Chat connecting
 
 
+OMG... about 4 week i had practice with element's visual  disposition and design using css, learn how to write js-scripts to
+  make them 'alive' and i can really say  - "result will be at least unsusual" maybe even unique :D"
+  (had to try a lot of my child code, but now my understanding of that questions gives me opportunity to go forward )..
+
+  ohhh..i'm really forget to describe all here, but all will be here, maximal soon
+
+
 
 
 

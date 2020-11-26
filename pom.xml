@@ -6,7 +6,7 @@
 
     <version>1.0-SNAPSHOT</version>
     <groupId>com.anpilogoff</groupId>
-    <artifactId>webapp</artifactId>
+    <artifactId>restweb</artifactId>
     <packaging>war</packaging>
     <build>
         <plugins>

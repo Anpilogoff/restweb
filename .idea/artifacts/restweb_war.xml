@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="restweb:war">
     <output-path>$PROJECT_DIR$/out/artifacts/restweb_war</output-path>
-    <root id="archive" name="restweb_war.war">
+    <root id="archive" name="restweb.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="restweb" />

@@ -24,6 +24,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="javax.jms-api.jar-1.1" level="project" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="jquery-3.5.1.slim" level="application" />
+    <orderEntry type="library" name="loudlinks" level="application" />
+    <orderEntry type="library" name="pup" level="application" />
+    <orderEntry type="library" name="brusher" level="application" />
+    <orderEntry type="library" name="parallax" level="application" />
     <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.1.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
@@ -33,8 +39,5 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.12" level="project" />
     <orderEntry type="library" name="Maven: javax.websocket:javax.websocket-api:1.1" level="project" />
-    <orderEntry type="library" name="bootstrap" level="application" />
-    <orderEntry type="library" name="jquery-3.5.1.slim" level="application" />
-    <orderEntry type="library" name="popper.js" level="application" />
   </component>
 </module>

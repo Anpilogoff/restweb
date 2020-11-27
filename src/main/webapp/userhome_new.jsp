@@ -132,7 +132,7 @@
                     var canvas3 = document.getElementById("canvas3");
                     var canvas4 = document.getElementById("canvas4");
 
-                    canvas2.width = window.innerWidth*4;
+                    canvas2.width = window.innerWidth*3;
                     canvas2.height = window.innerHeight;
                     canvas3.width = window.innerWidth*3;
                     canvas3.height = window.innerHeight;
@@ -173,8 +173,8 @@
                         // ctx2.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
 
 
-                        ctx2.fillStyle = "rgb(" + g + "," + b + "," + g + ")"; //brr - white  //rrg- yellow //gbb-blue(goluboi(
-                        ctx2.fillRect(x*2, HEIGHT - barHeight, barWidth*2, barHeight+100);
+                        ctx2.fillStyle = "rgb(" + g + "," + b + "," + b + ")"; //brr - white  //rrg- yellow //gbb-blue(goluboi(
+                        ctx2.fillRect(x*2, HEIGHT - barHeight, barWidth/0.5, barHeight+40);
 
                         ctx3.fillStyle = "rgb(" + r + "," + g + "," + r +")";
                         ctx3.fillRect(x*2, HEIGHT - barHeight, barWidth*2, barHeight-20);

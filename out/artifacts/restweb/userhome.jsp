@@ -117,14 +117,6 @@
 </head>
 <body>
 
-<%
-    Gson gson = new Gson();
-    JsonElement userJson = (JsonElement) request.getSession(false).getAttribute("user");
-    User user = gson.fromJson(userJson, User.class);
-    String nickname = user.getNickname();
-
-%>
-
 
 <div class="header-container">
 
@@ -141,7 +133,7 @@
 
 <div class="chat-box" id="chat-box">
     <textarea style="width: 440px; height: 400px" id="messages"  readonly="readonly" ></textarea>
-    <div style="position: relative;">User name: <param id="username"  type="text"  style="position: relative"><%=nickname%>< </div>
+    <div style="position: relative;">User name: <param id="username"  type="text"  style="position: relative">< </div>
     <div style="color: #36b689; position: relative" id="status"  >status:  offline </div>
     <div style="position: relative;">
         <input id="message" type="text" width="280"  placeholder="type message" style="position: relative" />

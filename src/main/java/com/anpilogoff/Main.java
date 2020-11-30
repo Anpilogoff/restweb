@@ -1,4 +1,4 @@
-package com.anpilogoff.controller;
+package com.anpilogoff;
 
 public class Main {
     public static void main(String[] args) {

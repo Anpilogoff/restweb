@@ -4,6 +4,7 @@ com\anpilogoff\controller\servlets\RegistrationServlet.class
 com\anpilogoff\model\entity\UserCredentials.class
 com\anpilogoff\controller\servlets\UserHomeServlet.class
 com\anpilogoff\controller\listeners\ActiveSessionListener.class
+com\anpilogoff\Main.class
 com\anpilogoff\model\connection\ConnectionBuilder.class
 com\anpilogoff\controller\filters\RegisterFilter.class
 com\anpilogoff\controller\servlets\LoginServlet.class

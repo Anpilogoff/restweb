@@ -1,21 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="restweb:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/restweb_war</output-path>
-    <root id="archive" name="restweb.war">
-      <element id="directory" name="WEB-INF">
-        <element id="directory" name="classes">
-          <element id="module-output" name="restweb" />
-        </element>
-        <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:3.4.5" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
-          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
-          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.20" />
-          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
-          <element id="library" level="project" name="Maven: org.json:json:20160810" />
-        </element>
-      </element>
-      <element id="javaee-facet-resources" facet="restweb/web/restweb" />
-    </root>
+  <artifact type="war" build-on-make="true" name="restweb:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="restweb-1.0-SNAPSHOT.war" />
   </artifact>
 </component>

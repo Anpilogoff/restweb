@@ -10,9 +10,9 @@ position: absolute; width: 100%;
 }
 
 .avatar-upload-form{
-    top: 45%;
-    left: 5%;
-    position: relative;
+
+    float: left;
+position: center;
     width: 80px;
     height: 70px;
 }/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -39,8 +39,8 @@ color:#e6dc19}
 .avatar{
     z-index: 10;
     background-color: #3b3b3b;
-    left: 80%;
-    position: absolute;
+    left: 87%;
+    position: relative;
     width: 90px;
     height: 90px;
     border-radius: 20px;
@@ -306,6 +306,12 @@ color: white;
 
 
 
+#choose-file-button{
+    width: 1%;
+    height: 1%;
+    position: relative;
+    box-shadow: white 0px 0px 3px 1px;
+}
 
 
 
@@ -374,7 +380,7 @@ position: relative;
     text-shadow: 1px 1px 5px black,
     -1px -1px 5px black;
     top: 10%;
-    left: 70%;
+    left: 50%;
     box-shadow: none;
     border-radius: 20px;
     position: relative;
@@ -383,7 +389,6 @@ position: relative;
     transition:  2s;
     background-color: #1c1c1c;
 
-    border-right: none;
 
 }
 
@@ -391,10 +396,10 @@ position: relative;
 
 #gear-button:hover{
     text-shadow: black 1px 1px 3px,
-                black -1px -1px 3px;
+    #000000 -1px -1px 3px;
     border-radius: 20px;
-box-shadow:inset black 0px 0px 10px;
-color: #00c0d7;
+box-shadow:inset #000000 0px 0px 10px;
+color: #292929;
     transform: rotate(720deg);
 }
 #gear-button:focus{

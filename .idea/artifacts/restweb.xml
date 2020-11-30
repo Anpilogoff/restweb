@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="restweb">
+  <artifact type="exploded-war" name="restweb">
     <output-path>$PROJECT_DIR$/out/artifacts/restweb</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="restweb/web/restweb" />

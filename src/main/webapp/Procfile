@@ -1,1 +1,1 @@
-web: java -jar target/restweb-1.0-SNAPSHOT.jar com.anpilogoff.Main.class
+web: java -jar target/restweb-1.0-SNAPSHOT.jar

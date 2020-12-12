@@ -14,6 +14,9 @@ public class User {
     private String nickname;
     private String email;
 
+    private String role;
+    private int onlineStatus;
+
     public User(String login, String password, String nickname, String role) {
         this.login = login;
         this.password = password;
@@ -29,8 +32,7 @@ public class User {
 
 
 
-    private String role;
-    private int onlineStatus;
+
 
     public User(String login, String password, String nickname, String email, String role) {
         this.login = login;
@@ -43,5 +45,9 @@ public class User {
     public User(String nickname, String role) {
         this.nickname = nickname;
         this.role = role;
+    }
+
+    public void sayHello(){
+        System.out.println("Дратути");
     }
 }

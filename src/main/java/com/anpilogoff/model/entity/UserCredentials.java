@@ -1,7 +1,6 @@
 package com.anpilogoff.model.entity;
 
 
-import com.google.gson.annotations.Expose;
 import lombok.*;
 
 @Getter

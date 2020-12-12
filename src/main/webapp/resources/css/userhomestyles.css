@@ -1,12 +1,12 @@
 
 
 body{
+    overflow: hidden;
+    background-color: #171717;
     margin: 0;
 position: absolute; width: 100%;
     z-index: 2;
     height: 100%;
-    background-color: #171717;
-    overflow: hidden;
 }
 
 .avatar-upload-form{
@@ -37,9 +37,8 @@ label{
 color:#e6dc19}
 
 .avatar{
-    z-index: 10;
+    float: right;
     background-color: #3b3b3b;
-    left: 87%;
     position: relative;
     width: 90px;
     height: 90px;
@@ -49,20 +48,19 @@ color:#e6dc19}
 
 
 #music-button{
-    top: 5%;
+    top: 8%;
 left: 5%;
-z-index:2;
     text-shadow: -1px -1px 2px black,
     -1px -1px 5px black;
     color: #f84b07;   /* rgba(34, 168, 32, 0.85); */
     font-size: 25px;
-    font-weight: bolder;
+    font-weight: bold;
     position: relative;
-    margin: 10px;
+    margin: 0px;
     width: 55px;
     height: 50px;
     text-align: center;
-    float: left;
+float: left;
     border:  solid 4px #1d1d1d;
     border-radius: 12px;
     background: #292929;
@@ -147,19 +145,18 @@ box-shadow: inset 1px 1px 3px orangered,
 
 
 #but{
-    top: 13%;
+    top: 8%;
     left: 5%;
+    margin-left: 1%;
 
-    z-index: 7;
-    transition: 0.5s ease-in;
+    transition: 0.5s linear;
 
-    text-shadow: -1px -1px 2px black,
-    -1px -1px 5px black;
+    text-shadow: 0px 0px 2px black,
+    0px 0px 5px black;
     color: #07c8f8;   /* rgba(34, 168, 32, 0.85); */
     font-size: 25px;
     font-weight: bolder;
     position: relative;
-    margin: 10px;
     width: 55px;
     height: 50px;
     text-align: center;
@@ -201,7 +198,7 @@ color: white;
     /*}*/
 }
 .contacts-button{
-    top: 21%;
+    top: 8%;
     left: 5%;
     text-shadow: -2px -1px 2px black,
     -1px -1px 5px black;
@@ -209,7 +206,7 @@ color: white;
     font-size: 25px;
     font-weight: bolder;
     position: relative;
-    margin: 10px;
+    margin-left: 1%;
     width: 55px;
     height: 50px;
     text-align: center;
@@ -219,7 +216,7 @@ color: white;
     background: #292929;
     box-shadow: inset 1px 1px 2px rgba(52, 51, 51, 0.91),
     1px 2px 3px rgba(31, 31, 31, 0.91);
-    transition: 0.5s ease-in;
+    transition: 0.5s linear;
     filter: drop-shadow(-1px -1px 3px black  );
 
 }
@@ -235,15 +232,16 @@ color: white;
 }
 
 .question-button{
-    top: 29%;
+    float: left;
+    top: 8%;
     left: 5%;
     text-shadow: -1px -1px 2px black,
     -1px -1px 2px black;
     color: rgba(0, 255, 183, 0.82);   /* rgba(34, 168, 32, 0.85); */
     font-size: 25px;
-    font-weight: bolder;
+    font-weight: bold;
     position: relative;
-    margin: 10px;
+    margin-left: 1%;
     width: 55px;
     height: 50px;
     text-align: center;
@@ -280,7 +278,7 @@ color: white;
     position: absolute;
     width: 30px;
     height: 30px;
-    z-index: 100;
+    z-index: 3;
     top: 40%;
     left: 40%;
 
@@ -290,21 +288,26 @@ color: white;
 
 
 .ul {
-    left: -1%;
-    margin-left: 0px;
-    opacity: 98.5%;
-    z-index: 2;
+    opacity: 100%;
+overflow: hidden;
+    z-index: 5;
     position: absolute;
-    width: 101%;
-    height: 100px;
-    border: white 10px;
+    width: 100%;
+    height: 10%;
+    border: 1px black;
+    border-radius: 2%;
+background-color: #1f1f1f;
+    box-shadow: 0px 8px 6px -4px #171717, /*#1cc1b4 */ inset -2px -2px 9px 3px black, -2px 0px 5px 7px black;
+}
 
-    background: #550a38;
-    border-radius: 1px;
-    box-shadow:     inset 4px 0px 19px 9px black,  -0px 9px 16px #5a0b3b;}
 
 
+.demo-2 .large-header {
 
+    background-position: center bottom;
+    color: #07c8f8;
+
+}
 
 #choose-file-button{
     width: 1%;
@@ -317,14 +320,14 @@ color: white;
 
 .chat-box {
     filter: drop-shadow(0px 0px 3px #9aba26);
-    z-index: 1;
-    border-radius: 15px;
-    position: relative;
+    z-index: 4;
+    border-radius: 13px;
+    position: absolute;
     width: 450px;
     height: 550px;
     box-shadow:inset #9aba26 0px 0px 1px 1px;
     background-color: #6f6f6f;
-    top:-495px;
+    top:-65%;
     left: 153px;
     transition:linear 1.5s;
 }
@@ -335,7 +338,7 @@ color: white;
     position: relative;
     alignment: center;
 
-    color: #9aba26;
+    color: #279245;
 }
 
 
@@ -377,10 +380,9 @@ position: relative;
 }
 
 #gear-button{
+    float: left;
     text-shadow: 1px 1px 5px black,
     -1px -1px 5px black;
-    top: 10%;
-    left: 50%;
     box-shadow: none;
     border-radius: 20px;
     position: relative;

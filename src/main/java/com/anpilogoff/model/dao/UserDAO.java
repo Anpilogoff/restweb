@@ -144,6 +144,7 @@ public class UserDAO implements Dao {
         if (connection != null) {
             PreparedStatement statement = connection.prepareStatement(IS_DB_CONTAIN_USER);
             ResultSet resultset = statement.executeQuery();
+
             while (resultset.next()) {
 
                 loginx = resultset.getString("login");
@@ -153,6 +154,8 @@ public class UserDAO implements Dao {
                 System.out.println(loginx + " "+ passwordx  + " " + nickname + email );
 
                 user = new User(loginx, passwordx, nickname, email, role);
+                user.sayHello();
+
                 System.out.println("user from dao:  " + user);
             }
             if (nickname != null) {
@@ -172,11 +175,13 @@ public class UserDAO implements Dao {
                     statement.close();
                     connection.close();
                     //     }
-                } else {return  null;}
-            }else {
-                    System.out.println(nickname + " " + loginx + " " + passwordx);
+                } else {
                     return null;
                 }
+            } else {
+                System.out.println(nickname + " " + loginx + " " + passwordx);
+                return null;
+            }
             }
 
         Profile profile = new Profile(nickname,name,surname,age,gender,country);

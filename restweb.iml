@@ -30,8 +30,6 @@
     <orderEntry type="library" name="pup" level="application" />
     <orderEntry type="library" name="brusher" level="application" />
     <orderEntry type="library" name="parallax" level="application" />
-    <orderEntry type="library" name="Maven: org.ehcache:ehcache:3.1.3" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.20" level="project" />

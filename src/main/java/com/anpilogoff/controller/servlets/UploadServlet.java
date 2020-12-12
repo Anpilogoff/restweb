@@ -39,7 +39,6 @@ public class UploadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("img/jpg");
         System.out.println("GETT");
-//
 //        Path path = Paths.get("E:\\restweb\\src\\main\\webapp\\resources" +"\\" +req.getSession(false).getAttribute("avatar"));
 //        byte[]bytes = Files.(path..
 //        byte[]bbytes = com.sun.xml.internal.messaging.saaj.util.Base64.encode(bytes);
@@ -50,7 +49,6 @@ public class UploadServlet extends HttpServlet {
 //        resp.setContentLength(xxx);
 //        resp.getWriter().write(g,0,g.length());
 
-        //Осталось совсеееем чучуть и будет эта аватарина подгружаться, неслип девелопмент Ё
     }
 
     @Override

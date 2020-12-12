@@ -23,6 +23,8 @@ public class ResourceFilter implements Filter {
         filterChain.doFilter(request,response);
     }
 
+
+    //todo: Exception during file uploading from "on that moment" userhome_new.jsp page<<<<<<<
     @Override
     public void destroy() {
 

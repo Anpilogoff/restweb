@@ -43,7 +43,7 @@ ul.style.boxShadow = "#9aba26 1px 1px 3px 3px";
 
 
 var Set = function() {
-    if (but.getAttribute("class") == "bottom-red") { //из show
+    if (but.getAttribute("class") === "bottom-red") { //из show
 
         socket = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/restweb/chat");
         socket.onmessage = function (message) {
@@ -61,7 +61,7 @@ var Set = function() {
         changeStatusOnline();
         but.style.boxShadow = "0px 0px 8px green";
 
-    } else if (but.getAttribute("class") == "top-red") {
+    } else if (but.getAttribute("class") === "top-red") {
         scrollUp.style.transform = "translateY(95px)";
         scrollUp.setAttribute("onClick", scrollUp)
         scrollUp.style.boxShadow = "0px 0px 8px rgba(255, 157, 0, 1)";
@@ -71,7 +71,7 @@ var Set = function() {
         but.style.boxShadow = "0px 0px 8px rgba(255, 157, 0, 1)";
         but.setAttribute("class", "bottom-red");
         but.setAttribute("onClick", "javascript: Set();");
-    }else if(but.getAttribute("class") == "bottom-green"){
+    }else if(but.getAttribute("class") === "bottom-green"){
 
         socket.close();
         standByOff();
@@ -80,7 +80,7 @@ var Set = function() {
         but.setAttribute("onClick", "Set();");
         hideSendBut(),hideMessageInput(), changeStatusOffline()
         scrollUp.setAttribute("onClick", "javascript: Set2();")
-    }else if(but.getAttribute("class")== "top-green"){
+    }else if(but.getAttribute("class")=== "top-green"){
         but.setAttribute("onClick", "javascript: Set4();");
     }
 }
@@ -167,7 +167,7 @@ function connectme() {
 
 
 function sendMessage() {
-    var userName = userNameInput.value == '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';
+    var userName = userNameInput.value === '' ? "[Anonymous] " : '[' + userNameInput.value + '] ';  /* added === not == */
     // создать объект в которм будет
     socket.send(userName + (messageInput.value));
     messageInput.value = "";
@@ -176,44 +176,41 @@ function sendMessage() {
 
 
 
-function f() {
 
-}
-
-
-
-function hideSendBut() {
-
-    document.getElementById("sendButton").style.display = 'none';
-
-}
-
-function showSendBut() {
-    document.getElementById("sendButton").style.display = 'block';
-}
-
-function hideMessageInput(){
-    document.getElementById("message").style.display = 'none';
-}
-
-function showMessageInput(){
-    document.getElementById("message").style.display = 'inline';
-}
-
-function changeStatusOnline() {
-    document.getElementById("status").textContent = 'online';
-    document.getElementById("status").style.color = 'green';
-    // var soundLink2 = $("#saber")[0];
-    // soundLink2.play();
-}
-
-function changeStatusOffline(){
-    document.getElementById("status").textContent = 'offline';
-    document.getElementById("status").style.color = 'red';
-
-
-}
-
+//
+//
+// function hideSendBut() {
+//
+//     document.getElementById("sendButton").style.display = 'none';
+//
+// }
+//
+// function showSendBut() {
+//     document.getElementById("sendButton").style.display = 'block';
+// }
+//
+// function hideMessageInput(){
+//     document.getElementById("message").style.display = 'none';
+// }
+//
+// function showMessageInput(){
+//     document.getElementById("message").style.display = 'inline';
+// }
+//
+// function changeStatusOnline() {
+//     document.getElementById("status").textContent = 'online';
+//     document.getElementById("status").style.color = 'green';
+//     // var soundLink2 = $("#saber")[0];
+//     // soundLink2.play();
+// }
+//
+// function changeStatusOffline(){
+//     document.getElementById("status").textContent = 'offline';
+//     document.getElementById("status").style.color = 'red';
+//
+//
+// }
+//
 
 
 function showMusic() {

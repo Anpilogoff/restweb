@@ -11,7 +11,6 @@ body{
 
 #line1{
     opacity: 0;
-
     filter: blur(1px);
     border: none;
     z-index: 3;
@@ -20,11 +19,10 @@ body{
     width: 1px;
     height: 10px;
     background: #07c8f8;
-    box-shadow:  0px 1px 3px  black,inset -0px 0px 2px black;
+    box-shadow:  0 1px 3px  black,inset 0 0 2px black;
 }
 
 #line2{
-
     z-index: 3;
     transform: rotate(-60deg);
     position: absolute;
@@ -38,7 +36,6 @@ body{
 
 #line3{
     box-shadow: 2px 1px 3px #07c8f8, -2px -1px 3px black;
-
     z-index: 2;
     transform: rotate(70deg);
     position: absolute;
@@ -49,6 +46,4 @@ body{
     background: #07c8f8;
 }
 
-#line4{
-    position: absolute;
-}
+#line4{ position: absolute;}

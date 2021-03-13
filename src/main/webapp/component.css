@@ -1,0 +1,366 @@
+@keyframes connected {
+	0%{
+		box-shadow: 0px 0px 1px 1px white;
+	}
+	10%{
+		box-shadow: 0px 0px 3px 1px white;
+	}
+	20%{
+		box-shadow: 0px 0px 1px 1px white;
+
+	}
+	30%{
+		box-shadow: 0px 0px 3px 1px white;
+	}
+	40%{
+		box-shadow: 0px 0px 1px 1px white;
+	}
+	50%{
+		box-shadow: 0px 0px 3px 1px #00ff68;
+	}
+	60%{
+		box-shadow: 0px 0px 1px 1px white;
+	}
+	70%{
+		box-shadow: 0px 0px 3px 1px white;
+	}
+	80%{
+		box-shadow: 0px 0px 1px 1px white;
+
+	}
+	90%{
+		box-shadow: 0px 0px 3px 1px white;
+	}
+	100%{
+		box-shadow: 0px 0px 1px 1px white;
+	}
+
+}
+
+/*@keyframes size {*/
+/*	from{*/
+/*		width: 0px;*/
+/*		height: 0px;*/
+/*	}*/
+/*	to{*/
+/*		width: 25px;*/
+/*		height: 25px;*/
+/*	}*/
+/*}*/
+
+@keyframes songnamerun {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
+@keyframes rotatedisk {
+
+	0% {
+		transform: rotate(0deg);
+	}
+
+	50% {
+		transform: rotate(360deg);
+	}
+
+	100% {
+		transform: rotate(0deg);
+	}
+
+}
+
+
+@keyframes gradient {
+	0% {
+		background-position: 200% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+
+	80% {
+		background-position: 20% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+
+
+}
+
+
+.list {
+
+	transition: 0.5s linear;
+	text-shadow: /*3px -1px 0px rgb(1 1 1), 1px 0px 2px #01ffc6, 2px 3px 3px black */ 0px -1px 3px rgb(0 0 0), -1px 0px 1px #01ffc6, -2px 0px 2px #000000, -3px 1px 1px black;
+
+	font-family: 'Iceland';
+	color: #00ff68;
+	white-space: nowrap;
+	overflow: hidden;
+	transform-origin: right center;
+	font-size: 21px;
+	width: 150px;
+	height: 20px;
+	position: absolute;
+}
+
+
+.list:hover {
+	cursor: pointer;
+	color: white;
+	text-shadow: 0px 0px 2px white, 1px 1px 2px white, 1px 0px 2px white;
+}
+
+
+.newElem {
+	box-shadow: black 0px 0px 3px 1px inset;
+}
+
+.newElem:hover {
+	box-shadow: inset white 0px 0px 3px 1px;
+
+}
+
+
+.track {
+	text-shadow: 1px 1px 1px black, -1px -1px 1px black;
+	color: white;
+	font-size: 17px;
+	transform-origin: 0% 120%;
+	left: 320px;
+	padding: 5px;
+	position: absolute;
+	width: 50%;
+	margin-left: 3px;
+	height: 20%;
+
+}
+
+
+#audioHolder {
+	display: none;
+	top: 20%;
+	position: absolute;
+	background: white;
+	height: 150px;
+	width: 610px;
+}
+
+#audioBox {
+
+	border-radius: 10px;
+	top: 30%;
+	height: 80px;
+	position: relative;
+	background: linear-gradient(red, black);
+	color: white;
+}
+
+
+#volume {
+	position: relative;
+	z-index: 6;
+	top: 0%;
+	left: 49%;
+	opacity: 100%;
+	width: 10px;
+	height: 19px;
+	transform: rotate3d(0, 0, 1, 90deg) translate3d(247px, 48px, 99px);
+
+	box-shadow: 0px 0px 10px 2px white;
+	transition: 1s ease-in-out;
+	border-radius: 10px;
+
+}
+
+
+.wraper {
+	background-position: center;
+	position: absolute;
+	left: 29%;
+	top: 24%;
+	z-index: 5;
+	transition: 1.5s linear;
+	width: 425px;
+	height: 470px;
+	perspective: 600px;
+	border-radius: 240px;
+	overflow: hidden;
+}
+
+
+@keyframes rotateBackward {
+
+	0% {
+		transform: rotateZ(175deg) rotateY(227deg) rotateX(-45deg);
+	}
+
+	50% {
+		transform: rotateZ(175deg) rotateY(227deg) rotateX(-65deg);
+	}
+
+	100% {
+		transform: rotateZ(175deg) rotateY(227deg) rotateX(-45deg);
+	}
+}
+
+
+@keyframes wraperShadowChange {
+	0% {
+		box-shadow: rgb(49, 239, 109) -3px 1px 0px -2px, rgb(2, 239, 160) 0px 2px 6px 1px inset;
+	}
+
+	50% {
+		box-shadow: rgb(49, 239, 109) -3px 1px 0px 1px, rgb(2, 239, 160) 0px 2px 6px 1px inset;
+	}
+
+	100% {
+		box-shadow: rgb(49, 239, 109) -3px 1px 0px 4px, rgb(2, 239, 160) 0px 2px 6px 1px inset;
+	}
+}
+
+
+@keyframes rotateForward {
+	0% {
+		transform: rotateZ(175deg) rotateY(227deg) rotateX(-45deg);
+		text-shadow: 0px 0px 0px red;
+		box-shadow: 0px 0px 0px 0px white;
+	}
+
+	50% {
+		transform: rotateZ(175deg) rotateY(227deg) rotateX(-25deg);
+		text-shadow: 2px 1px 30px yellow;
+		box-shadow: 0px 0px 5px 13px white;
+	}
+
+	100% {
+		transform: rotateZ(175deg) rotateY(227deg) rotateX(-45deg);
+		text-shadow: 0px 0px 0px red;
+		box-shadow: 0px 0px 0px 0px white;
+	}
+}
+
+@keyframes indicateOnScroll {
+	0% {
+		text-shadow: 0px 0px 0px red;
+		box-shadow: black 0px 0px 5px 5px inset, black 0px 0px 10px 6px;
+		border: white 2px solid;
+	}
+
+	50% {
+		text-shadow: 2px 1px 30px yellow;
+		box-shadow: black 0px 0px 5px 5px inset, white 0px 0px 10px 6px;
+		border: #f60228 1px solid;
+	}
+
+	100% {
+
+		text-shadow: 0px 0px 0px red;
+		box-shadow: black 0px 0px 5px 5px inset, white 0px 0px 10px 6px;
+		border: white 2px solid;
+	}
+}
+
+
+@keyframes brightCube {
+	0% {
+		border: 3px solid green;
+	}
+	50% {
+		border: 9px solid white;
+	}
+	100% {
+		border: 3px solid green;
+	}
+}
+
+
+.cube {
+	top: 50%;
+	left: 40%;
+	animation: rotateCube 180s linear infinite;
+	position: absolute;
+	width: 55px;
+	height: 55px;
+	transition: 3s linear;
+	transform-style: preserve-3d;
+}
+
+
+@keyframes elemBlockRotate {
+	from {
+		transform: rotate(360deg);
+	}
+	to {
+		transform: rotate(0deg);
+	}
+}
+
+
+
+
+
+.side {
+	text-shadow: 1px -1px 0px rgb(0 0 0), 1px 0px 2px #169bff, 2px 3px 1px #000000;
+	box-shadow: #00000000 0px 0px 3px 2px inset, black 0px 0px 0px 3px, 0px 0px 6px 1px inset, 1px 0px 2px #169bff, 0px 0px 1px 0px black,/*rgb(20, 230, 150) 0px 0px 2px 0px inset, black 0px 0px 2px 2px ; */ /* rgb(20, 230, 150) 0px 0px 5px 1px inset, black 0px 0px 2px 7px; */ /*rgb(20, 230, 150) 0px 0px 2px 1px inset, black 0px 0px 2px 2px ; */ /*#000000 0px 0px 0px 3px, #08ffd1 0px 0px 5px 8px inset;*/  /*black 0px 0px 5px 5px inset, black 0px 0px 9px 2px;*/
+		/*rgb(20, 230, 150) 0px 0px 2px 0px inset, black 0px 0px 2px 2px ; */ /* rgb(20, 230, 150) 0px 0px 5px 1px inset, black 0px 0px 2px 7px; */ /*rgb(20, 230, 150) 0px 0px 2px 1px inset, black 0px 0px 2px 2px ; */ /*#000000 0px 0px 0px 3px, #08ffd1 0px 0px 2px 3px inset;*//*rgb(20, 230, 150) 0px 0px 2px 0px inset, black 0px 0px 2px 2px ; */ /* rgb(20, 230, 150) 0px 0px 5px 1px inset, black 0px 0px 2px 7px; */ /*rgb(20, 230, 150) 0px 0px 2px 1px inset, black 0px 0px 2px 2px ; */ /*#000000 0px 0px 0px 3px, #08ffd1 0px 0px 5px 8px inset;*/black 0px 0px 3px 2px inset, black 0px 0px 2px 2px, 0px 0px 4px 3px inset #9c27b0;
+	border: 3px solid black;
+	border-radius: 11px;
+	outline: none;
+	position: absolute;
+	opacity: 100%;
+	height: 65px;
+	color: rgb(0, 218, 253);;
+	width: 65px;
+	text-align: center;
+	font-weight: bolder;
+	/*background: url(MPAw.gif); *//*MPAw   F6VQ  7zn2    HCMd   AGiu   cFv  7ZN2  SImg    930Z   XaUj  3kvd   A44T   9LId  9viJ   ElI8   7rg   2MdY   7Z9m   TnYr   PAM   Nxh6   7Z9m    QFno  Zi9B   IxN  gyp  slt   PAA   8fvm  1zLU   SlJB  VJl  SlJO   2eRd   K6XH  P7UA   TIQo  SdGh*/
+	background: linear-gradient(45deg, #00000017, #000000);
+
+}
+
+.front {
+	transition: 1.3s linear;
+	transform: translateZ(34px);
+}
+
+
+.right {
+	text-shadow: 0px 0px 3px 5px #00ebff85;
+
+	transform: translateX(34px) rotateY(90deg);
+	transition: 1.7s linear;
+}
+
+.left {
+	transform: rotateY(-90deg) translateZ(34px);
+	transition: 1.2s ease-in-out;
+}
+
+.top {
+	transform: rotateX(90deg) translateZ(-34px);
+	transition: 1.9s ease-out;
+}
+
+.bottom {
+	transform: rotateX(-90deg) translateZ(-34px);
+	transition: 1s linear;
+}
+
+.back {
+	transform: translateZ(-34px);
+	transition: 2.2s ease-in-out;
+	overflow: hidden;
+}
+#s4 {
+	transition: 5.2s ease-in-out;
+	animation: rotateCube 3s linear infinite;
+	overflow: hidden;
+}

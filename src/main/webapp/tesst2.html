@@ -1,0 +1,1378 @@
+<html>
+<head>
+<title>NSocical</title>
+<meta charset="utf-8" type="text/css; text/html;text/javascript; application/json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="settingsPane.css"/>
+
+    <link rel="stylesheet"  href="component.css"/>
+
+    <link rel="stylesheet" type="text/css" href="userhomestyles.css"/>
+<!--    <link rel="stylesheet" type="text/css" href="player.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="volBar.css">-->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="websocket.js"></script>
+
+
+<!--    <script src="js.js"></script>-->
+
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="settingsPane.js"></script>
+    <script type="text/javascript" src="circletyp.min.js"></script>
+    </head>
+    <body  id="body" style="background: url(https://media.giphy.com/media/2lx83o4ZJIxYA/giphy.gif); background-size: 100% 1%; ">
+    <!-- <img src="ccc.png" id="imgx" style="width: 100%; height: 100%; float: right; position: absolute; z-index: 3; box-shadow:0px 0px 0px 0px black; "> -->
+
+    
+<!--/////////////////////////////////////////-->
+
+<script>
+
+    var request = new XMLHttpRequest();
+    var arrString;
+    request.responseType ='json';
+    request.open('POST', "http://localhost:8080/restweb/play");
+
+    request.onload = function(ev){
+
+        var arr = JSON.stringify(request.response);
+        var all = document.querySelectorAll('.list');
+            var i = 0;
+            arrString = arr.split("\",\"");
+                arrString.map(item => {
+                    all[i].innerHTML = item;
+                    i++
+                });
+                all[i].style.transformOrigin = 'center right';
+            };
+    request.send();
+</script>
+
+<!--/////////////////////////////////////////-->
+
+
+
+
+
+<canvas id="canvas4"
+style="opacity:100%; position: relative ; width:100%; height: 5%; top: 51%; left: -6px; z-index:3; filter: blur(2px);transform:skew(7deg, 0deg) skewX(10deg);">
+    </canvas>
+
+    <div class="avatar">
+    <img src="ava.png" style="left:10%; top: 10%; position: relative;">
+
+    <form class="avatar-upload-form" enctype="multipart/form-data" method="post" action="uploadservlet">
+
+    <label for="choose-file-button"  style="position: relative; left: 45%" ><i class="fa fa-refresh"></i> </label>
+
+<input type="file" accept="image/*" id="choose-file-button" onclick="lbl()" >
+
+    <input type="submit" value="send photo" id="submit_button" name="picss" style=" display: none">
+
+    <label for="submit_button" id="lbl"><i class="fa fa-upload" style="position: relative; display: none"></i> </label>
+
+</form>
+</div>
+    <button id="status";  ><i id="off" class="fa fa-power-off" style="top: -3%; left: -21%; position: relative; color: red;"></i></button>
+<div id="chat-wraper">
+    <div id="perspective" style="perspective: 1000px; position: relative; width: 100%; height: 100%">
+    <div id="users-online" readonly="readonly" contenteditable="false"></div>
+
+    <div class="chat-box" id="chat-box" readonly="readonly" contenteditable="false"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div  id="canWraper" style="z-index: 3;box-shadow: black 0px -106px 84px -84px inset; overflow: hidden;  position:relative; width:102%; height:10%; filter: blur(1px); float: left; top: 49%; left:-1%; transition: 5.5s linear;   transform: rotateX(-180deg);" >
+
+    <canvas id="canvas2" style=" position:relative; width:100%; height:60%; top: 80%; filter: blur(2px); transition: 5.1s; transform: 	skewX(9deg);"></canvas>
+
+</div>
+
+<div id="messageBlock">
+    <input id="message" type="text" style="/* background: linear-gradient(to right, #00000091,#00000030); */position: relative;float: left;" minlength="1" >
+    <text id="u">You </text>
+    <button id="sendButton"><i class="fa fa-envelope"></i></button>
+</div>
+
+
+
+    <canvas id="canvas" style=" display: none; position:relative; transform: rotateY(180deg)"></canvas>
+
+
+
+    <!--
+    <div id="large-header" class="large-header" style="background-image: url(cxz.jpg); filter: blur(1px);">
+
+    </div> -->
+
+
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+src="http://localhost:8080/restweb/dynamic/sounds/music/Smare-TurnupTonight.mp3" crossOrigin = "anonymous"
+    <script src="demo-2.js"></script>  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+
+    <audio id="audio3" src="" hidden></audio>
+
+
+<!-- div id="audioHolder">
+    <div id="audioBox">
+
+
+    <button id="muteButton" style="left: 	30%; width: 30px; height: 20px; background-color: 	white; position: 	relative;	"><i class="fa fa-stop"></i> </button>
+<div id="volumeBar" style="width:700px; height: 15px; background: purple; padding: 	2px;">
+    <div id="volumeP" style="width:0px; height: 12px; background: linear-gradient(to right   ,black,pink, purple, #f60228); padding: 3px; border-radius: 12px;"></div>
+    </div>
+    </div>
+    </div>
+
+
+    </div> -->
+
+
+    <canvas id="canvas3"
+style="opacity:100%; position: relative	; width:102%; height: 5%; top: 36%;    filter: blur(8px); left: -1%; transform: rotateX(45deg) skewX(6deg); transform-style: preserve-3d; transform:skewX(12deg);">
+    </canvas>
+
+    <div id="progressBar" style="transition: 1s ease-in-out;position: 	absolute;width: 103%;z-index: 3;top: 53%;left: -1%;height: 6px;border-radius:10px;padding: 2px;box-shadow: 0px 0px 2px 1px #000000b3, 0px -1px 5px 4px #0d0d0d inset; ">
+
+
+    <div id="progress" style="height: 0px; width: 0%; position: relative; box-shadow: rgb(2 246 123) 0px 0px 1px 1px, rgb(0 215 136) 0px 0px 3px 2px inset; top: 32%; border-radius: 15px;">
+
+    </div>
+    </div>	        <!-- width: 394px; height: 330px; left:31%; top: 34%;   transform: skew(30deg, -32deg) -->
+
+
+    <div class="wraper" id="wraper">
+
+        <div id="centertimebar"
+             style="overflow: hidden; position: relative;	 box-shadow: 	rgb(255 255 255) 0px 0px 2px 2px, rgb(255 255 255) 0px 0px 5px 0px inset; width: 154px; height: 23px; left: 161%; top: 52%; transition: 2.5s ease-in-out; border-radius: 4px; border: white; background:rgb(12 13 12);">
+
+            <div id="timeBox"
+                 style="top: -20%; left: 25%; position: relative; width: 192px; border-radius: 2px; height: 40px; font-family: 'Iceland', cursive; color: rgb(183, 254, 16);  font-size: 31px;  text-shadow:0px 1px 3px, rgb(1 2 0) 1px 1px 5px, black 1px 1px 1px, 0px 1px 1px; transition: 3.2s ease-in-out; overflow: hidden;    z-index: 4;">
+                00:00/00:00
+            </div>
+
+
+        </div>
+
+        <div id="screenwraper"
+             style="transition: 1.5s ease-in-out; left: 9px;  overflow: hidden; float: left;width: 211px;height: 421px;position: relative;top: 22px;">
+
+            <div id="screen1block" style="
+overflow: hidden;
+left: 16px;
+top: 6px;
+position: relative;
+width: 202px;
+height: 201px;
+box-shadow:rgb(243 243 243 / 93%) -1px 1px 7px 0px inset, rgb(7 7 7) 0px 29px 64px -4px inset;
+border-radius: 	228px 10px 14px 10px;
+transition: 1s ease-in-out;
+transform: translate(199px, -13px) rotate(90deg); background: 	radial-gradient(black, #00ffd230);
+">
+
+
+                <div id="screen"
+                     style="transition: 3s ease-in-out;   position: relative; width: 197px; height: 196px; transform:translate(406px, -104px) rotate(90deg); background: rgba(0, 0, 0, 0.54); top: 109px; left: -212px; box-shadow:rgb(49, 239, 109) -3px 1px 0px -2px, rgb(2, 239, 160) 0px 2px 6px 0px inset; border-top-left-radius: 215px; border-top-right-radius: 20px;  border-bottom-right-radius: 19px; border-bottom-left-radius: 14px"></div>
+
+                <div class="unhovered2" id="playlist"
+                     style="transition: all 1.5s linear 0s;top: 0px;margin: 0px;position: relative;transform:  rotate(0deg);left: 0px;width: 391px;height: 391px;border-radius: 304px;">
+
+                    <div class="list" id="track1" style="; width: 150px; height: 15px; ;">!st Track - Artist</div>
+
+                    <div class="list" id="track2" style="; width: 150px; height: 15px;">!st Track - Artist</div>
+
+                    <div class="list" id="track3" style="width: 150px;height: 15px;"></div>
+
+
+
+                    <div class="list" id="track4" style="">!st Track - Artist</div>
+
+                    <div class="list" id="track5" style="">!st Track - Artist</div>
+
+                    <div class="list" id="track6" style="">!st Track - Artist</div>
+
+                    <div class="list" id="track7" style="" onclick="xxx()">!st Track - Artist</div>
+
+                    <div class="list" id="track8" style="">!st Track - Artist</div>
+
+
+                    <div class="list" id="track10" style="">!st Track - Artist</div>
+
+                    <div class="list" id="track11" style="">!st Track - Artist</div>
+
+                    <div class="list" id="track12" style="">!st Track - Artist</div>
+
+                </div>
+            </div>
+
+
+            <div id="screen2block"
+                 style="overflow: hidden;	 transform: translate(199px, -13px) rotate(-90deg);transition: 1s ease-in-out;position: relative;width: 202px;height: 201px;top: 12px; left: 16px;box-shadow: 0px 0px 9px 8px #070707fc inset;border-top-left-radius: 16px;border-bottom-right-radius: 14px;background: radial-gradient(black, #00ffd230); border-bottom-left-radius: 248px;border-top-right-radius: 20px;">
+                <div id="screen2"
+                     style="border: 3px solid white; transition: 1s ease-in-out;  transform:    translate(0px, -8px) rotate(-180deg); position: relative; width: 197px; height: 196px; background:rgb(0 0 0 / 11%); top: 1px; left: -1px; transform-origin:100% 0%; box-shadow:rgb(255 255 255) 121px 18px 33px 26px, rgb(255 255 255 / 100%) 25px -14px 11px -26px inset; border-radius: 16px 35px 0px 425px;  "></div>
+
+
+                <div id="playlistwraper"
+                     style="overflow:hidden;position: 	absolute;width: 207px;height: 234px;left: -10px;transform: skewY(-1deg);top: -10px;top: -3px;top: -1px;top: 6px;">
+                    <div class="unhovered" id="playlist1"
+                         style="transition:  1.5s linear;top: -208px;/* transform: skew(14deg, 10deg); */margin: 0px;position: relative;transform: rotate(126deg) translate(5px, 2px);/* left: -7;left: 11px;;;left: 12px;;;;*/left: 19px;left: 19px;width: 400px;height: 391px;border-radius: 304px;">
+
+                        <div class="list" id="tracx1"
+                             style="margin: 	2px;border-radius: 8px;position: relative;font-size: 22px;left: 3px;height: 25px;position: absolute;width: 197px;top: 3px;left: -3%;z-index: 56;transform-origin: 100% 0%;transform: rotate(82deg) translate(192px, 19px);">
+                            !st Track - Artist
+                        </div>
+
+                        <div class="list" id="tracx2"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 203px;left: 50%;transform: rotate(68deg) translate(111px, 263px);font-size: 22px;transform-origin: 100% 0%;">
+                            !st Track - Artist
+                        </div>
+
+
+                        <div class="list" id="tracx3"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 203px;left: 50%;transform: rotate(54deg) translate(20px, 263px);font-size: 22px;transform-origin: 100% 0%;text-shadow: -2px;">
+                            !st Track - Artist
+                        </div>
+
+
+                        <div class="list" id="tracx4"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;left: 20%;box-shadow: none;font-size: 22px;transform-origin: 100% 0%;transform: rotate(41deg) translate(29px, 163px);">
+                            !st Track - Artist
+                        </div>
+
+                        <div class="list" id="tracx5"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;left: 20%;box-shadow: none;font-size: 22px;transform-origin: 0% 100%;transform: rotate(27deg) translate(-69px, 29px);">
+                            !st Track - Artist
+                        </div>
+
+
+
+                        <div class="list" id="tracx6"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;left: 20%;box-shadow: none;font-size: 22px;transform-origin: 0% 100%;transform: rotate(-5deg) translate(-91px, 34px);">
+                            !st Track - Artist
+                        </div>
+
+
+                        <div class="list" id="tracx7"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;transform: translate(3px, 59px) rotate(-19deg);box-shadow: none;font-size: 22px;transform-origin: 0% 100%;">
+                            !st Track - Artist
+                        </div>
+
+                        <div class="list" id="tracx8"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 10px;width: 100px;left: 87%;box-shadow: none;font-size: 22px;transform-origin: 0% 100%;"></div>
+
+
+                        <div class="list" id="tracx9"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;left: 20%;box-shadow: none;font-size: 22px;transform-origin: 0% 100%;transform: rotate(-34deg) translate(-77px, 25px);">
+                            !st Track - Artist
+                        </div>
+
+
+                        <div class="list" id="tracx10"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;left: 20%;box-shadow: none;font-size: 22px;transform-origin: 0% 100%;transform: rotate(-47deg) translate(-63px, 33px);">
+                            !st Track - Artist
+                        </div>
+
+
+                        <div class="list" id="tracx11"
+                             style="margin: 	2px;border-radius: 8px;position: relative;height: 25px;width: 205px;left: 20%;box-shadow: none;font-size: 22px;transform-origin: 0% 100%;transform: rotate(-61deg) translate(-48px, 51px);">
+                            !st Track - Artist
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div id="line"
+             style="position: relative	; background: white; height: 0px; transition: 	1s linear; top: 50%;	left: 	49%; z-index: 3; width: 1px;  box-shadow: white 0px 0px 4px 2px;"></div>
+
+        <div id="circle-wraper"
+             style="overflow: hidden; z-index: -6;  border-radius: 10px; position: absolute; height: 85%; width: 64%; left: 53%; top: 12%; transform: rotate(-180deg);">
+
+            <div id="circleblock"
+                 style="transition: 1.2s linear; position: relative; height: 94%; width: 143%; box-shadow:/*rgb(5 69 216 / 0%) 0px 0px 4px 5px, rgb(0 0 0 / 77%) 0px 0px 9px 8px inset; border:4px solid #00000096*/ rgb(55 17 255 / 23%) 0px 0px 6px 4px, rgb(0 0 0 / 75%) 0px 0px 9px 8px inset; top: 14px; left: 280px; border-radius: 190px; overflow: hidden; ">
+
+                <div id="circle"
+                     style="float: left; background:url('e.png') -263% -26%, url('e.png') -8% -38%,url('e.png') 57% 17%, url('e.png') -55% 85%, url('e.png') 39% 97%; transition: 1.4s ease-in-out; left: 280px; top: 6%; position: relative; width: 85%; height: 85%; border-radius: 290px;border:9px solid rgb(255 87 34 / 7%); transform: rotate3d(10, , 10, 136deg) translateX(0px); box-shadow:rgb(13 255 246) 0px 0px 2px 2px, rgb(0 0 0) 0px 0px 10px 7px inset, rgb(41 14 27 / 19%) 0px 0px 10px 14px; position: relative;">
+
+                    <div id="circle-middle"
+                         style="position: relative; width: 25%; height: 25%; border-radius: 55px; border:2px solid #000000; left: -3px; box-shadow:#00ffa2 0px 0px 2px 3px, inset #00dab3 0px 0px 1px 2px; top: 37%; left: 37%; ">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div id="elemBlock" style="position: absolute;  width: 491px; height: 437px; left:27%; top: 231px; border-radius: 518px; text-shadow:rgb(0 0 0 / 69%) 1px -1px 2px, rgb(0 0 0 / 69%) -1px -2px 4px, rgb(0 0 0 / 1%) 2px -4px 3px, rgb(0 255 175 / 49%) -1px 36px 1px, rgb(6 189 209 / 58%) -2px 1px 2px, rgb(0 0 0 / 43%) 2px -1px 3px;  font-size: 19px;  font-family: Comfortaa, cursive; color: rgb(57 220 199);  " ></div>
+
+    <div class="cube" id="cube" style="z-index: 5">
+
+    <button class="side front" id="front" ><i class="fa fa-forward" style="font-size: 15px;"></i></button>
+<!--
+<input type="range" id="volume"  min="0" max="100"  value="100" step="2" style="z-index: 1111"> -->
+    <button class="side back" id="back" ></button>
+
+        <button class="side right" id="right" ><i class="fa fa-cube"></i></button>
+
+    <button class="side left" id="left"><i class="fa fa-play" style="font-size: 15px;" id="play"></i></button>
+
+    <button class="side top" id="topp" ></button>
+
+    <button class="side bottom" id="bottom" ><i class="fa fa-backward" style="font-size: 15px"></i></button>
+
+
+    <button class="side s2" id="s2" style="  transform: translate3d(3px, 4px, 3px); display: none;  box-shadow: 0 0 0 0;transition: 0.8s linear;  opacity: 90%;"></button>
+
+    <button class="side s3" id="s3" style="  box-shadow: 0 0 0 0; display: none;  opacity: 90%;transition: 0.7s linear; "><i class="fa fa-music" style="font-size: 15px;"></i></button>
+
+    <button class="side s4" id="s4" style="transition:linear 0.8s; display: none;  width:  10px; height:   inherit;     box-shadow: 0px 0px 0px 0px inset white;opacity: 90%;"><i class="fa fa-music" style="font-size: 15px"></i></button>
+
+
+<div class="side s5" id="s5" style=" box-shadow: white 0px -1px 43px 2px, #23d3f1 0px 0px 20px 10px; color: #ffffff; transform:translate3d(60px,133px, 130px) rotate3d(409, -339, 28, -255deg); opacity: 90%; background: #e15b32ba; width: 0px; height: 0px; border: 2x solid; border-radius: 13px;"></div>
+
+    <div class="side s6" id="s6" style="box-shadow: white 0px -1px 43px 2px, #23d3f1 0px 0px 20px 10px; color: #ffffff; transform: translate3d(-49px,-65px, -39px) rotate3d(159, 131, 94, -128deg);opacity: 90%; background: #e15b32ba; width: 0px; height: 0px; border: 2px solid; border-radius: 13px;"></div>
+
+    <div class="side s7" id="s7" style="box-shadow: white 0px -1px 43px 2px,#23d3f1 0px 0px 20px 10px; color: #ffffff;  transform: translate3d(103px, 125px, -104px) rotate3d(259, 162, 79, -231deg);opacity: 90%; background: #e15b32ba; width: 0px; height: 0px; border: 2px solid; border-radius: 13px; border-radius: 7px"></div>
+
+    </div>
+
+    <input id="enterBtn">
+<!-- 
+    <div id="xz" style="position: absolute;	bottom: 5%; width: 150px">
+    <input type="file"  accept="audio/*" id="thefile2" style="position: absolute	; width: 140px; /*height: 40px */">
+-->
+    <button id="gear-button"><i class="fa fa-gear" style="color: #00c0d7; text-shadow: 0px 0px 3px black,-1px -1px 2px black"></i></button>
+<button id="scroll-up"><i class="fa fa-arrow-circle-o-up"></i></button>
+
+    <div id="settingsWindow">
+        <div class="icons-container">
+            <button id="cubeSettingButton"><i class="fa fa-cube"></i></button>
+            <button id="equalizerSettingButton"><i class="fa fa-music"></i></button>
+            <button id="chatWindowSettingButton"><i class="fa fa-envelope"></i> </button>
+            <button id="personalWindowSettingButton"><i class="fa fa-user"></i></button>
+            <button id="settingsWindowSettingButton"><i class="fa fa-gear"></i></button>
+
+        </div>
+<!--        <div id="cubeStyle">-->
+<!--        <div><input type="color" id="in1" class="inputs" value="#f60228"><label for="in1" class="inputLabel">left</label></div>-->
+<!--        <div><input type="range" id="in2" class="inputs" min="0" max="20" value="0"  step="1"><label for="in2" class="inputLabel">right</label></div>-->
+<!--        <div><input type="range" id="in3" class="inputs"><label for="in3" class="inputLabel">top</label></div>-->
+<!--        <div><input type="range" id="in4" class="inputs"><label for="in4" class="inputLabel">bottom</label></div>-->
+<!--        <div><input type="range" id="in5" class="inputs"><label for="in5" class="inputLabel">front</label></div>-->
+<!--        <div><input type="range" id="in6" class="inputs"><label for="in6" class="inputLabel">back</label></div>-->
+<!--    </div>-->
+    </div>
+
+
+    <!--
+    translate3d(70px,25px, -71px) rotate3d(159, 131, 94, -128deg)         transform: translate3d(70px,80px, -162px) rotate3d(159, 131, 94, -126deg);    translate3d(70px,25px, -162px) rotate3d(159, 131, 103, -187deg)
+
+
+    translate3d(-60px,133px, 130px) rotate3d(409, -339, 28, -255deg)
+
+
+     -->
+
+<script>
+
+
+ 
+
+var innText = '';
+var elements =  document.querySelectorAll('.list');
+elements.forEach(function(currentElem){
+    currentElem.addEventListener("click", function(){
+        innText = currentElem.innerHTML;
+
+        callToServer();
+
+    });
+});
+
+
+var gear = document.getElementById('gear-button');
+var settingsWindow = document.getElementById('settingsWindow');
+var equalizerSetBut = document.getElementById('equalizerSettingButton');
+var chatWindowSetBut = document.getElementById('chatWindowSettingButton');
+var perslWindSettBut = document.getElementById('personalWindowSettingButton');
+var setWindSetBut = document.getElementById('settingsWindowSettingButton');
+
+var opened = 0;
+gear.addEventListener("click", function(){
+    if(opened == 0){
+        setTimeout(function(){
+            equalizerSetBut.style.left = '2.5%';
+
+
+        }, 1500);
+        
+        setTimeout(function (){
+            chatWindowSetBut.style.left = '2.5%';
+        },2000);
+
+        setTimeout(function (){
+            perslWindSettBut.style.left = '2.5%';
+        },2500);
+        setTimeout(function (){
+            setWindSetBut.style.left = '2.5%';
+        },3000);
+        opened = 1;
+        gear.style.boxShadow = '0px 0px 3px 2px rgb(0, 192, 215)';
+        gear.style.transform = 'rotate(720deg)';
+        settingsWindow.style.left = '95%';
+
+    }else if(opened == 1){
+        opened = 0;
+        gear.style.boxShadow = '0px 0px 0px 0px';
+        gear.style.transform = 'rotate(0deg)';
+        settingsWindow.style.left = '100%';
+    }
+
+});
+
+
+
+
+
+
+
+
+
+var volume = document.getElementById('volume');
+var ul = document.getElementById('ul');
+var progress = document.getElementById('progress');
+
+topp = document.getElementById('topp');
+wraper = document.getElementById('wraper');
+cube = document.getElementById('cube');
+right = document.getElementById('right');
+bottom = document.getElementById('bottom');
+front = document.getElementById('front');
+back = document.getElementById('back');
+left = document.getElementById('left');
+s2 = document.getElementById('s2');
+s3 = document.getElementById('s3');
+s4 = document.getElementById('s4');
+
+let status = document.getElementById('status');
+let off = document.getElementById('off');
+
+message = document.getElementById('message');
+envelope = document.getElementById('sendButton');
+enterBtn = document.getElementById('enterBtn');
+
+        message.addEventListener('keyup', function(event){
+            if(message.value === '' || event.which === 13){
+                envelope.style.right = '-13%';
+                  envelope.style.boxShadow = '0px 0px 0px 0px #00000000';
+        
+                sendMessage();
+
+        }
+    });
+
+        message.oninput = function(event){
+            envelope.style.right = '25px';
+            envelope.style.boxShadow = '0px 0px 3px 2px #0bffdf';
+        };
+
+        message.onclick = function(event){
+            envelope.onclick = function(){
+                sendMessage();
+                envelope.style.right = '-13%';
+                envelope.style.boxShadow = '0px 0px 0px 0px #00000000';
+
+            };
+
+            if(event.which === 13){
+                 sendMessage();
+            envelope.style.right = '-13%';
+            envelope.style.boxShadow = '0px 0px 0px 0px #00000000';  
+            }
+        };
+
+
+
+var chat = document.getElementById('chat-box');
+var wrap = document.getElementById('chat-wraper');
+var users = document.getElementById('users-online');
+
+        status.onclick = function(){
+            
+        connectLiveChat();
+                off.id = 'on';
+                setTimeout(function(){
+                    status.style.backgroundPositionY = '28px';
+                    off.style.color = 'rgb(0, 255, 98)';status.style.background = 'linear-gradient(to bottom, rgb(0, 255, 98), #00000000)'; status.style.boxShadow = 'rgb(0 255 127) 0px 0px 1px 2px';
+                                status.style.textShadow = '1px 1px 1px black,-1px -1px 1px black,0px 0px 1px black,0px 0px 1px black,0px 0px 3px green,0px 0px 3px green';
+                }, 3000);
+
+                off.style.animation = 'turnOn 3s linear';        
+                status.style.animation = '3s reclick linear ';
+
+
+            // else if(off.id === 'on'){
+            //      off.id = 'off';
+            //      off.style.animation = 'turnOff 3s linear';
+            //
+            //     setTimeout(function(){status.style.backgroundPositionY = '111px';off.style.color = 'red';status.style.background = 'linear-gradient(to bottom, #f60228, #00000000)'; status.style.boxShadow = 'red 0px 0px 1px 2px';
+            //
+            //      status.style.textShadow = '1px 1px 1px black,-1px -1px 1px black,0px 0px 1px black,0px 0px 1px black,0px 0px 3px green,0px 0px 3px red';
+            //     }, 3000);
+            //
+            //     status.style.animation = '3s click linear';
+            //     closeWebSocket();
+            //
+            // };
+            //
+        };
+
+
+
+wrap.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        const centerX = wrap.offsetLeft + wrap.clientWidth / 2;
+        const centerY = wrap.offsetTop + wrap.clientHeight / 2;
+
+        const percentX = (mouseX - centerX) / (wrap.clientWidth / 2);
+        const percentY = -((mouseY - centerY) / (wrap.clientHeight / 2));
+
+        chat.style.transform = "perspective(400px) rotateY(" + percentX * 5 + "deg) rotateX(" + percentY * 5 + "deg)";
+
+
+});
+/////////////////////////////////////////////////
+    // var in1 = document.getElementById('in1');
+    // var in2 = document.getElementById('in2');
+    // var in3 = document.getElementById('in3');
+    //
+    // in1.addEventListener("input", function () {
+    //     left.style.boxShadow = '0px 0px 5px 1px ' +  in1.value;
+    // });
+    //
+    // in2.addEventListener("input", function () {
+    //     left.style.boxShadow = '0px 0px '+ in2.value + 'px 0px '+ in1.value;
+    // });
+    //
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////
+        status.addEventListener("mousedown",function(){
+            status.style.width = '24px';
+            status.style.height = '25px';
+            status.style.fontSize = '20px';
+        });
+
+
+  status.addEventListener("mouseup",function(){
+            status.style.width = '27px';
+            status.style.height = '28px';
+            status.style.fontSize = '25px';
+        });
+
+
+
+// topp.style.transform = 'rotateX(-90deg) translateZ(32px)';
+// topp.style.boxShadow = 'rgb(0 254 255) 0px 0px 2px 0px';
+// topp.style.color = 'white';
+// front.style.transform = 'translateZ(32px)';
+// front.style.boxShadow = 'rgb(0 254 255) 0px 0px 2px 0px';
+// back.style.transform = 'translateZ(-32px)';
+// back.style.boxShadow = 'rgb(0 254 255) 0px 0px 2px 0px';
+// right.style.boxShadow = 'rgb(0 254 255) 0px 0px 2px 0px';
+// right.style.transform = 'rotateY(-90deg) translateZ(32px)';
+// left.style.boxShadow = 'rgb(0 254 255) 0px 0px 20px 0px';
+// left.style.transform = 'rotateY(90deg) translateZ(32px)';
+// bottom.style.transform = 'rotateX(90deg) translateZ(32px)';
+// bottom.style.boxShadow = 'rgb(0 254 255) 0px 0px 2px 0px';
+
+var  screen2 =  document.getElementById('screen2block');
+var timeBox = document.getElementById('timeBox');
+let hovered = 0; circleWraper = document.getElementById('circle-wraper');
+wraper.addEventListener("mouseover", function(){
+    if(hovered == 1){
+        ////////////////////
+    }else{
+        cube.style.animation = 'none';
+        cube.style.transform = 'rotateZ(286deg) rotateY(283deg) rotateX(305deg)';
+        line.style.top = '6%';
+        line.style.left = '52%';
+        setTimeout(function(){cube.style.animation = 'rotateCube 50s linear infinite';}, 150);
+        setTimeout(function(){ line.style.height = '86%'; }, 100);
+    }
+
+
+    s2 = document.getElementById('s2');
+    s5 = document.getElementById('s5');
+    s6 = document.getElementById('s6');
+    s7 = document.getElementById('s7');
+    progressBar = document.getElementById('progressBar');
+    screen1block = document.getElementById('screen1block');
+    screen2block = document.getElementById('screen2block');
+
+    circle = document.getElementById('circle');
+    screenwraper = document.getElementById('screenwraper');
+    centertime = document.getElementById('centertimebar');
+   
+
+
+    screen1 = document.getElementById('screen');
+    screen2 = document.getElementById('screen2');
+    screen1.style.transition = '1.3s ease-in-out';
+// screen1.style.left = '-40px';
+// screen1.style.transform = 'rotate3d(96, -30, -21, 369deg) translateY(-8px) translate(27px, -9px)';
+// screen1.style.top = '25px';
+    circleWraper.style.transition = '1.5s ease';
+    centertime.style.left = '58%';
+    timeBox.style.left = '-1%';
+
+    // screen2.style.transform = '';
+    // screen2.style.boxShadow = 'rgb(49 239 109) -3px 1px 0px -2px, rgb(2 239 160) 0px 2px 6px 0px inset';
+
+    circle.style.left = '18px';
+    circle.style.transform = '';
+    circle.style.boxShadow = 'rgb(13 255 246) 0px 0px 7px 4px, rgb(0 0 0) 0px 0px 10px 7px inset, rgb(41 14 27 / 19%) 0px 0px 10px 14px';
+
+
+// screen.style.transition = '1s linear';
+// 	            screen.style.transform = 'translate3d(-110px, -584px, 97px) rotate3d(578, 299, 266, 166deg)';
+// 	            screen.style.width = '357px';
+// 	            screen.style.borderRadius = '16px';
+// 	            screen.style.height = '396px';
+// 	            screen.style.boxShadow = '-4px 5px 4px 5px white, inset black 2px 3px 15px 3px, 5px -4px 25px 11px black inset';
+// 	            screen.style.background = '#00bcd43d';
+// 	            screen.style.borderBottomLeftRadius = '163px';
+// 	            screen.style.borderBottomRightRadius = '21px';
+    timeBox.style.width = '191px';
+    if(hovered == 0){
+
+        setTimeout( playlistShow, 1700);
+        hovered = 1;
+    }else if(hovered == 1){
+
+    }
+});
+
+
+var current = 0;
+var rotate = 0;
+var rotate2 = 0;
+wraper.addEventListener("wheel", function(event){
+    list =  document.getElementById('playlist');
+    list2 =  document.getElementById('playlist1');
+
+    if(event.deltaY == 112){
+        list.style.transform = 'rotate('+ rotate+'deg)';
+        list2.style.transform = 'rotate('+ rotate2+'deg)';
+        rotate -= 3;
+        rotate2 +=3;
+    }else if(event.deltaY == -112){
+        list.style.transform = 'rotate('+ rotate+'deg)';
+        list2.style.transform = 'rotate('+ rotate2+'deg)';
+
+        rotate += 3;
+        rotate2-=3;
+    }
+
+});
+
+
+
+var playlist2 = document.getElementById('playlist1');
+function playlistShow(){
+
+    line.style.height = '405px';
+    screen1block.style.transform = 'rotate(0deg)';
+    screen2block.style.transform = 'rotate(0deg)';
+    setTimeout(function(){screen2.style.transform = 'translate(0px, 0px) rotate(0deg)';}, 500);
+    circleblock.style.left = '85px';
+    setTimeout(function(){playlist.style.transform = 'rotate(0deg)'; playlist2.style.transform = 'rotate(-75deg) ';1500});
+
+
+
+};
+
+
+
+
+
+
+function playerHide(){
+    screen2.style.transform = 'rotate(-180deg)';
+    setTimeout(function(){
+        playlist.style.transform = 'rotate(-150deg)';
+    }, 300);
+
+    setTimeout(function(){
+        screen2block.style.transform = 'translate(199px, -13px) rotate(-90deg)';},500);
+
+    setTimeout(function(){
+        screen1block.style.transform = 'translate(199px, -13px) rotate(90deg)';}, 500);
+
+    setTimeout(function(){
+        line.style.height = '0%';},1600);
+
+    setTimeout(function(){circleblock.style.left = '280px';},900);
+
+};
+
+
+
+
+cube.addEventListener("mouseover", function(){
+
+    cube.style.animation = 'none';
+    cube.style.transform = 'rotateZ(175deg) rotateY(227deg) rotateX(-45deg)';
+
+    topp.style.boxShadow = '#169bff 0px 0px 10px 2px inset, #169bff 0px 0px 10px 0px';
+    topp.style.border = '3px solid #169bff';
+    topp.style.color ='#00dafd';topp.style.background = 'linear-gradient(to right, #000000b8, black)';
+    topp.style.transform = 'rotateX(90deg) translateZ(45px) ';
+
+    front.style.boxShadow = '#169bff 0px 0px 10px 2px inset,#169bff 0px 0px 10px 0px';
+    front.style.border = '3px solid #169bff';
+    front.style.color = '#00dafd';front.style.background = 'linear-gradient(to right, #000000b8, black)';
+    front.style.transform = 'translateZ(-45px)  rotate3d(0, 0, -1, 180deg)';
+
+    back.style.boxShadow = '#169bff 0px 0px 10px 2px inset, #169bff 0px 0px 10px 0px';
+    back.style.border = '3px solid #169bff';
+    back.style.color = '#00dafd';back.style.background = 'linear-gradient(to right, #000000b8, black)';
+    back.style.transform = 'translateZ(45px)';
+
+
+    right.style.boxShadow = '#169bff 0px 0px 10px 2px inset, #169bff 0px 0px 10px 0px';
+    right.style.border = '3px solid #169bff';
+    right.style.color = '#00dafd';right.style.background = 'linear-gradient(to right, #000000b8, black)';
+    right.style.transform	= 'rotateY(-90deg) translateZ(45px)';
+
+    left.style.transform = 'rotateY(90deg) translateZ(45px)';
+    left.style.boxShadow = '#169bff 0px 0px 10px 2px inset, #169bff 0px 0px 10px 0px';
+    left.style.border = '3px solid #169bff';
+    left.style.color = '#00dafd';left.style.background = 'linear-gradient(to right, #000000b8, black)';
+
+    bottom.style.boxShadow	= '#169bff 0px 0px 10px 2px inset, #169bff 0px 0px 10px 0px';
+
+    bottom.style.border = '3px solid #169bff';
+    bottom.style.color = '#00dafd';bottom.style.background = 'linear-gradient(to right, #000000b8, black)';
+    bottom.style.transform = ' rotateX(90deg) translateZ(-45px) rotate3d(0, 0, 2, -90deg)';
+
+    // s6.style.transform = 'translate3d(72px, -94px, -99px) rotate3d(108, 343, 116, -79deg)';
+    // s5.style.transform = 'translate3d(73px, 123px, 91px) rotate3d(35, -26, 28, -187deg)';
+    // s5.style.transform = 'translate3d(73px, 123px, 91px) rotate3d(35, -26, 28, -187deg)';
+    // s7.style.transform = 'translate3d(103px, 125px, -104px) rotate3d(259, 162, 79, -175deg)';
+});
+
+
+cube.addEventListener("mouseleave", function(){
+
+    front.style.boxShadow = 'rgb(0 0 0) 0px 0px 5px 3px, rgb(8 255 209) 0px 0px 5px 2px inset';
+    front.style.border = '4px solid rgb(0 0 0 / 77%)';
+    front.style.transform = 'translateZ(34px) rotate3d(0,0,0,0deg)';
+
+    back.style.transform = 'translateZ(-34px)';
+
+    back.style.boxShadow = 'rgb(0 0 0) 0px 0px 5px 3px, rgb(8 255 209) 0px 0px 5px 3px inset';
+    back.style.border = '4px solid rgb(0 0 0 / 77%)';
+
+
+    right.style.transform = 'translateX(34px) rotateY(90deg)'
+
+    right.style.boxShadow = 'rgb(0 0 0) 0px 0px 5px 3px, rgb(8 255 209) 0px 0px 5px 3px inset';
+    // right.style.transform = 'rotateY(190deg) translateZ(32px)';
+    right.style.border = '4px solid rgb(0 0 0 / 77%)';
+
+
+    left.style.transform = 'rotateY(-90deg) translateZ(35px)';
+    left.style.boxShadow = 'rgb(0 0 0) 0px 0px 5px 3px, rgb(8 255 209) 0px 0px 5px 2px inset';
+    topp.style.transform = 'rotateX(90deg) translateZ(-35px)';
+    topp.style.boxShadow ='rgb(0 0 0) 0px 0px 5px 3px, rgb(8 255 209) 0px 0px 3px 2px inset';
+    topp.style.border = '3px solid rgb(0 0 0 / 77%)';
+
+    left.style.border = '4px solid rgb(0 0 0 / 77%)';
+
+    bottom.style.transform	= 'rotateX(-90deg) translateZ(-35px) rotate3d(0, 0, 2, 0deg)';
+    bottom.style.boxShadow = 'rgb(0 0 0) 0px 0px 5px 3px, rgb(8 255 209) 0px 0px 5px 2px inset';
+    bottom.style.border = '4px solid rgb(0 0 0 / 77%)';
+
+});
+
+
+
+cube.addEventListener("mouseover", function(){
+    cube.addEventListener("wheel", function(event){
+        front.style.animation = 'none';
+        bottom.style.animation = 'none';
+        circleblock = document.getElementById('circleblock');
+
+
+        if(event.deltaY ==112){
+
+            cube.style.animation = 'rotateBackward	0.6s linear';
+
+            front.style.animation = 'indicateOnScroll 0.6s ease-in-out';
+
+
+
+        }else if(event.deltaY== -112){
+
+            cube.style.animation = 'rotateForward 0.6s ease-out';
+
+            bottom.style.animation = 'indicateOnScroll 0.6s  ease-in-out';
+        }
+
+    });
+    // cube.style.animation = 'rotateCube 210s linear';
+});
+
+
+
+
+// var body = document.querySelector('.body');
+// cube.addEventListener("mouseover", function(){
+
+// 	document.body.style.backgroundImage = 'url(zzz.jpg)';
+
+// });
+
+
+
+
+
+
+wraper.addEventListener("mouseleave", function(){
+    hovered = 0;
+
+    playerHide();
+    setTimeout(function(){
+        line.style.top	= '50%';
+    },1500);
+
+
+    block1 = document.getElementById('screen1block');
+    block2 = document.getElementById('screen2block');
+    screen1 = document.getElementById('screen');
+    screen2 = document.getElementById('screen2');
+
+
+    screen1.style.transform = 'translate(406px, -104px) rotate(90deg)';
+
+    // screen2.style.top = '4px';
+    // screen2.style.left = '3px';
+
+    circleWraper.style.borderRadius = '10px';
+    screen2.style.transform = 'translate(0px, -8px) rotate(-180deg)';
+
+
+
+    block2.style.boxShadow = 'rgb(7 7 7 / 99%) 0px 0px 9px 8px inset';
+    circle.style.left = '280px';
+    circle.style.boxShadow = 'rgb(0 0 0) 0px 0px 13px 9px, rgb(209 209 209) 0px 0px 7px 0px inset, 0px 0px 10px 14px #f9f9f9';
+
+
+
+
+
+
+    centertimebar.style.left = '150%';
+    timeBox.style.left = '-214%';
+
+
+
+
+
+
+
+});
+
+// var cubeId = 'BeginState';
+// var offX = 26;
+//     	var offY = 47;
+//     wraper.addEventListener("mousedown", function(event){
+
+
+
+//     	cube.style.animation = 'none';
+//     	cube.style.transition = '0.7s ease-in-out';
+//     	cube.style.transform = 'rotateZ(175deg) rotateY(227deg) rotateX(-45deg)' ;
+//     }
+let i = 35;
+
+
+
+
+
+// document.getElementById('wraper').addEventListener("wheel", function(event){
+//cube.style.transform = 'rotateY(' + event.offsetX+ 'deg) rotateX(' + event.offsetY +'deg)';
+// alert(event.clientX);
+// alert(event.clientY);
+
+
+// if(event.clientX >= 660 && event.clientX <=741 && event.clientY >= 403 && event.clientY <= 490){
+// 	cube.style.transform = 'rotateZ(205deg) rotateY(266deg) rotateX(-74deg)';
+
+// if(event.clientX>= 514 && event.clientX<= 707 && event.clientY >= 444 && event.clientY<= 656){
+// 		cube.style.transform = 'rotateZ(104deg) rotateZ(-186deg) rotateX(84deg)';
+// 		s6.style.transform = 'translate3d(-83px, 90px, 87px) rotate3d(159, 3, 136, 124deg)';
+// 		s5.style.transform = 'translate3d(97px, 134px, 99px) rotate3d(55, 67, 99, -166deg)';
+// 		s7.style.transform = 'translate3d(32px, 204px, -105px) rotate3d(259, 162, 79, -218deg)';
+// 		bottom.style.boxShadow = ' 0px 0px 1px 1px inset white, yellow 0px 0px 1px 1px';
+// 		bottom.style.border = '2px solid rgb(8 227 251)';
+// 		bottom.style.color = 'rgb(2 246 225)';
+// 	}else if(event.clientX>=708 && event.clientX <=912 && event.clientY>=460 && event.clientY<=655){
+
+// 		cube.style.transform = 'rotateZ(157deg) rotateY(180deg) rotateX(78deg)';
+// 		s6.style.transform = 'translate3d(-108px, -42px, 41px) rotate3d(108, 343, 192, 256deg)';
+// 		s5.style.transform = 'translate3d(172px, 99px, 127px) rotate3d(9, 16, 28, -187deg)';
+// 		s7.style.transform = 'translate3d(103px, 125px, -131px) rotate3d(259, 162, 79, -128deg)';
+// 	}else if(event.clientX>=657 && event.clientX<=741 && event.clientY<=490){    //play
+// 		cube.style.transform = 'rotateZ(205deg) rotateY(266deg) rotateX(-74deg)';
+// 		s7.style.transform = 'translate3d(103px, 125px, -104px) rotate3d(259, 162, 4, -115deg)';
+// 		s5.style.transform = 'translate3d(73px, 123px, 97px) rotate3d(37, 71, 28, -97deg)';
+// 		s6.style.transform = 'translate3d(72px, -94px, -93px) rotate3d(108, 254, 95, 80deg)';
+
+// 	}else if(event.clientX>= 517 && event.clientX<= 730 && event.clientY >= 261 && event.clientY <= 382){
+// 		cube.style.transform = 'rotateZ(343deg) rotateY(86deg) rotateX(-28deg)';
+// 	}
+// bottom.style.animation = 'none';
+// 		front.style.animation = 'none';
+// 		cube.style.animation = 'rotateCube 120s linear';
+// 		circleblock = document.getElementById('circleblock');
+
+
+// if(event.deltaY == 112){
+// 	if(audio3.volume <= 0.1){
+// 		current += 10;
+// 		audio3.volume += 0.010;
+// 		circleblock.style.boxShadow = 'inset #9e9e9e 34px' +  current + 'px 2px -31px';
+// 	}else if(event.deltaY == -112){
+// 	i = i+5;
+// 					current -= 10;
+// 				circleblock.style.boxShadow = 'inset #9e9e9e 34px' +  current + 'px 2px -31px';
+// 			audio3.volume  -= 0.010;
+// 		}}
+
+
+
+// 		    });
+
+// });
+
+
+
+function contMenu(){
+
+
+    //     	topp = document.getElementById('topp');
+
+    //     	 s2 = document.getElementById('s2');
+    cube.style.animation = 'none 0s';
+    cube.style.transition = '2.5s linear';
+
+    // cube.style.transform = 'rotate3d(152, 235, 67, 279deg)';
+
+
+    // volume.style.transform = 'rotate3d(0, 0, 1, 90deg) translate3d(51px, 48px, 99px) ';
+
+
+
+
+    cube.style.border = '1px solid #14e696';
+
+    s2.style.transform = 'translate3d(0px, 2px, -30px)';
+    s2.style.width = '150x';
+
+
+    // volume.style.left = '-20%';
+    // volume.style.width = '230px';
+    // 	volume.style.left = '39%';
+    // 	volume.style.opacity = '90%';
+    // 	volume.style.boxShadow = '0px 0px 0px 5px rgba(9, 9, 9, 0.91) inset, 0px 0px 20px 3px black';
+    // 	volume.style.border ='4px solid #f60228';
+
+
+
+
+    s2.style.background = 'linear-gradient(black , #f60228)';
+    s2.style.display = 'inline';
+
+    s3.style.background = '#292929';
+    s3.style.height = '295px';
+    s3.style.width = '210px';
+    s3.style.transform = 'translate3d(-2px, -3px, -30px)';
+
+
+    s3.style.opacity = '70%';
+
+    s4.style.width = '215px';
+    s4.style.transform = 'rotate3d(1,0,0,90deg) translateZ(-270px)';
+
+
+    left.style.transform = 'rotateY(-120deg) translateZ(30px)';
+
+    right.style.transform = 'rotateY(90deg) translateZ(-30px)';
+    right.style.height = '295px';
+
+    bottom.style.width = '290px';
+    bottom.style.transform = 'rotateX(180deg) translateZ(-68px) rotate3d(0px, 0px, 1px, 90deg)';
+
+    bottom.style.boxShadow = 'black 0px 0px 5px 5px inset, #f30f0f 0px 0px 4px 1px,0px 0px 5px 1px inset #14e696';
+    front.style.boxShadow = 'black 0px 0px 5px 5px inset,#f30f0f 0px 0px 4px 1px, 0px 0px 5px 1px inset #14e696';
+
+
+
+    right.style.boxShadow = 'black 0px 0px 5px 5px inset, #f30f0f 0px 0px 4px 10px	, 0px 0px 5px 1px inset #14e696';
+    left.style.boxShadow = 'black 0px 0px 5px 5px inset, #f30f0f 0px 0px 4px 1px, 0px 0px 5px 1px inset #14e696';
+
+    back.style.boxShadow = 'yellow 0px 0px 0px 2px inset, rgb(8,255,255) 11px -5px 14px 8px inset';
+    back.style.width = '210px';
+    back.style.height = '295px';
+    back.style.transform = 'translateZ(30px)';
+
+
+    left.style.transform = 'rotateY(-270deg) translateZ(180px)';
+    left.style.height = '295px';
+    front.style.transform = 'translateZ(30px)';
+    front.style.width = '210px';
+    front.style.height = '290px';
+    play = document.getElementById('play');
+
+
+    front.style.borderRadius = '19px';
+
+
+    topp.style.transform = 'rotateX(-90deg) translateZ(30px)';
+    topp.style.width = '240px';
+
+    audio.play();
+    return false;
+
+
+
+};
+
+
+
+
+
+// cube.addEventListener('mouseleave', function(){
+// 	body.style.animation = 'unshad 3s linear';
+// 	setTimeout(function(){body.style.background = 'url(https://media.giphy.com/media/2lx83o4ZJIxYA/giphy.gif)'; body.style.backgroundSize ='100% 1%',2500});
+// 	left.style.transform = 'rotateY(90deg) translateZ(35px)';
+
+
+// 	bottom.style.boxShadow = 'black 0px 0px 5px 5px inset, black 0px 0px 10px 6px';
+// 	front.style.boxShadow = 'black 0px 0px 5px 5px inset, black 0px 0px 10px 6px';
+// 	right.style.boxShadow = 'black 0px 0px 5px 5px inset, black 0px 0px 10px 6px';
+// 	back.style.boxShadow   = 'black 0px 0px 1px 5px inset, black 0px 0px 4px 6px';
+// 	s4.style.width = '65px';
+
+// 	right.style.height = '65px';
+// 	right.style.transform = 'rotateY(-90deg) translateZ(-35px)';
+// 	bottom.style.transform = 'rotateX(90deg) translateZ(35px)';
+// 	bottom.style.width = '65px';
+// 	front.style.transform = 'translateZ(-35px)';
+// 	front.style.borderRadius = '12px';
+// 	front.style.width = '65px';
+// 	front.style.height = '65px';
+// 	back.style.transform = 'translateZ(-35px)';
+// 	back.style.width = '65px';
+// 	back.style.height = '65px';
+
+// 	left.style.transform = 'rotateY(90deg) translateZ(-35px)';
+// 	left.style.height = '65px';
+
+// 	s2.style.width = '65px';
+// 	s2.style.height = '65px';
+// 	s2.style.border = '2px solid #14e696';
+// 	s3.style.height = '65px';
+// 	s3.style.width = '65px';
+// 	s4.style.transform = 'rotate3d(1,0,0,90deg) translateZ(-35px)';
+// 	s4.style.width = '65px';
+// 	topp.style.width = '65px';
+
+
+//         topp.style.border = '3px solid #14e696';
+
+//                  front.style.transform = 'translateZ(35px)';
+
+// });
+
+
+
+
+let play = document.getElementById('play');
+
+let count = 0;
+
+
+
+left.addEventListener("click", function(){
+
+
+
+    circleBlock =document.getElementById('circle-block');
+
+
+
+    elemBlock.innerHTML = innText;
+
+    if(audio3.paused == true){
+        play.classList.remove('fa-pause');
+        play.classList.add('fa-play');
+        audio3.play();
+        circle.style.animation = '93s linear infinite songnamerun';
+        elemBlock.style.animation = 'elemBlockRotate 83s linear infinite';
+
+    }else{ play.classList.remove('fa-play');
+        play.classList.add('fa-pause');
+        audio3.pause();
+        circle.style.animation = 'none';
+        elemBlock.style.animation = 'none';
+    }
+
+
+
+    // arr1 = ['rotate(158deg) translate(-100px, 10px)', 'rotate(157deg) translate(-100px, 29px)', 'rotate(153deg) translate(-103px, 50px)', 'rotate(150deg) translate(-107px, 70px)',
+    // 		'rotate(147deg) translate(-116px, 88px)', 'rotate(142deg) translate(-120px, 106px)', 'rotate(139deg) translate(-129px, 122px)', 'rotate(129deg) translate(-232px, 129px)',
+    // 		'rotate(130deg) translate(-211px, 142px)', 'rotate(130deg) translate(-193px, 148px)', 'rotate(131deg) translate(-177px, 158px)', 'rotate(124deg) translate(-181px, 143px)',
+    // 		'rotate(118deg) translate(-183px, 132px)', 'rotate(114deg) translate(-174px, 127px)', 'rotate(108deg) translate(-175px, 118px)', 'rotate(102deg) translate(-173px, 111px)',
+    // 		'rotate(102deg) translate(-160px, 122px)' ]		;
+
+    // for(i=0; i<= arr.length; i++){
+    // elem = document.createElement('div');
+    // 	elem.className = 'sub';
+    // 	elem.innerHTML = arr[i];
+    // 		elem.style.float = 'left';
+    // 	elem.style.color = 'rgb(34, 255, 175)';
+    // 	elem.style.position = 'relative';
+    // 	elem.style.margin = '1px';
+    // 	elemBlock.appendChild(elem);
+    // circleBlock.appendChild(elemBlock);
+     new CircleType(document.getElementById('elemBlock')).radius(220);
+    elemBlock.style.fontFamily = 'Comfortaa, cursive';
+
+
+});
+
+
+
+
+
+var audio3 = document.getElementById("audio3");
+progress = document.getElementById('progress');
+
+
+
+bodys = document.getElementById('body');
+bodys.addEventListener("mousemove", function(event){
+    sc1 = document.getElementById('screen1block');
+    sc2 = document.getElementById('screen2block');
+
+    if(event){
+
+
+        sc1.style.backgroundPosition =  -event.clientX + 'px ' + '' + event.clientY+ 'px'  ;
+        sc2.style.backgroundPosition =  event.clientX + 'px ' + '-' +event.clientY+ 'px' ;
+    }else{
+        return	false;
+    }
+
+
+});
+
+var source;
+var audioCtx;
+
+audio3.addEventListener("timeupdate", function(){
+    var currentMinutes, currentSeconds, totalMinutes, totalSeconds, currentTime, totalTime;
+
+    currentMinutes = smartTime(Math.floor(audio3.currentTime/60));
+    totalMinutes =smartTime(Math.floor(audio3.duration /60));
+
+    currentSeconds = smartTime(Math.floor(audio3.currentTime % 60));
+    totalSeconds = smartTime(Math.floor(audio3.duration % 60));
+
+    currentTime = currentMinutes + ":" + currentSeconds;
+    totalTime = totalMinutes + ":" + totalSeconds;
+
+
+    timeBox.innerHTML = currentTime + "/" + totalTime;
+
+    function smartTime(time){  return time < 10 ? "0" + time.toString().trim() :  time;  };
+
+    progress.style.width = ((audio3.currentTime / audio3.duration) * 100) + "%";
+});
+
+
+
+
+
+
+progressBar.addEventListener("mousedown", function(event){
+    var clickedPosition = event.clientX - event.target.offsetLeft;
+    audio3.currentTime = clickedPosition / progressBar.offsetWidth * audio3.duration;
+
+});
+
+
+////////////////
+// volumeBar.addEventListener("mousedown", function(){
+//     volumeBar.addEventListener("mousemove", function(event){
+//         var clickedPosition = event.clientX - event.offsetLeft;
+//         audio3.volume = clickedPosition / volumeBar.offsetWidth;
+//         volumeP.style.width = (clickedPosition / volumeBar.offsetWidth) * 100 + "%";
+
+//     });
+
+// });
+/////////////////////////
+
+var arr;
+var all;
+/////////////////////////////////////////////////////////////////////////////
+// var audio3 = document.getElementById('audio3');
+var audioCtx = undefined;
+
+function callToServer(){
+    if(audioCtx === undefined){
+        audioCtx = new AudioContext();
+    }
+   
+var source = audioCtx.createBufferSource();
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'http://localhost:8080/restweb/play?name='+innText, true);
+    xhr.responseType = 'arraybuffer';
+    xhr.onload = function(e) {
+             var src1 = null;
+
+        audio3.src = URL.createObjectURL(new Blob([xhr.response]));
+        //var audioData = xhr.response;
+        //audioCtx.decodeAudioData(audioData, function(buffer){
+        // IN CASE IF AUDIO NODE REPRESENTS AS !!!BUFFERSOURCE!!! BUT ON MY CASE I INSERT BYTE ARRAY(ARRAY BUFFER) IMMEDIATELY IN BLOBE REPRESENTS AUDIO SOURSE
+        //source.buffer = buffer;
+        //var analyser = audioCtx.createAnalyser();
+        //source.connect(analyser).connect(audioCtx.destination);
+        var analyser = audioCtx.createAnalyser();
+        var gainNode = audioCtx.createGain();
+
+        //RENDERING CODE BELOW //
+       
+
+        if(src1 == null){
+           src1 = audioCtx.createMediaElementSource(audio3);
+        }else{
+            return;
+        }
+        src1.connect(gainNode).connect(analyser).connect(audioCtx.destination);
+
+
+        var canvas = document.getElementById("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var ctx = canvas.getContext("2d");
+
+        analyser.fftSize = 2048;
+
+        var bufferLength = analyser.frequencyBinCount;
+        var dataArray = new Uint8Array(bufferLength);
+
+        var WIDTH = canvas.width;
+        var HEIGHT = canvas.height;
+        var barWidth = (WIDTH / bufferLength)/1.3// дели на 2
+        var barHeight;
+        var x = 0;
+
+        function renderFrame() {
+            requestAnimationFrame(renderFrame);
+            x = 0;
+            var canvas2 = document.getElementById("canvas2");
+            var canvas3 = document.getElementById("canvas3");
+            var canvas4 = document.getElementById('canvas4');
+
+            canvas2.width = window.innerWidth;
+            canvas2.height = window.innerHeight*2;
+
+            canvas3.width = window.innerWidth;
+            canvas3.height = window.innerHeight*2;
+
+            canvas4.width = window.innerWidth;
+            canvas4.height = window.innerHeight*2;
+
+
+           var  ctx2 = canvas2.getContext("2d");
+
+            var ctx3 = canvas3.getContext("2d");
+
+            var ctx4 = canvas4.getContext("2d");
+
+            gradient = ctx2.createLinearGradient(111,110,0,1001);
+            gradient.addColorStop(".05","purple");
+            gradient.addColorStop(".95","#27d788");
+            gradient.addColorStop(".45","white");
+
+            analyser.getByteFrequencyData(dataArray);
+            ctx2.clearRect(0, 0, canvas.width, canvas.height);
+            ctx3.clearRect(0, 0, canvas.width, canvas.height);
+            ctx4.clearRect(0,0,0, canvas.height);
+
+            for (var i = 0; i < bufferLength; i++) {
+                barHeight = dataArray[i]*4;
+                var r = i * 25;
+                var g = (r, 10,10,10,0);
+                var b = 310;
+                // ctx.fillStyle = "rgb(" + r + "," + r + "," + b + ")";
+                // ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+                ctx2.fillStyle = "rgb(" + g + "," + b + "," + b + ")"; //brr - white  //rrg- yellow //gbb-blue(goluboi(
+                ctx2.fillRect(x *3	, HEIGHT - barHeight, barWidth *3, barHeight);
+
+                ctx3.fillStyle = "white"; //##27d788    ccff0af9;  02b4bb
+                ctx3.fillRect(x *3, HEIGHT - barHeight, barWidth*3 , barHeight    );
+
+                ctx4.fillStyle = "white";
+                ctx4.fillRect(x*3,HEIGHT - barHeight, barWidth*3, barHeight);
+
+
+                x += barWidth +1;
+            }
+        }
+        // audio.play();
+        // source.start(0);
+        renderFrame();
+    }
+    xhr.send();
+}
+
+////////////////////////////////////////////////////////////////////
+window.onload = function () {};
+
+</script>
+
+</body>
+</html>
